@@ -1,0 +1,78 @@
+import { BrowserRouter, Routes,Route} from 'react-router-dom';
+import './App.css';
+import Login from './components/admin/login/AdminLogin'
+// import AdminHome from './components/admin/adminHome/AdminHome';
+import UserSignup from './components/user/UserSignup/UserSignup';
+import UserHomePage from './pages/user/UserHomePage'
+import UserLogin from './components/user/UserLogin/UserLogin'
+import AdminLayout from './pages/admin/AdminLayout';
+// import AdminDashboad from './components/admin/dashboard/AdminDashboard';
+import VenueManager from './components/admin/manager/VenueManager';
+import AdminDashboardPage from './pages/admin/adminDashboardPage';
+import AdminVenueManagerPage from './pages/admin/AdminVenueManagerPage';
+import AdminUsersPage from './pages/admin/adminUsersPage';
+import PartnerLogin from './components/partner/login/PartnerLogin';
+import PartnerSignup from './components/partner/signup/PartnerSignup';
+import PartnerDashboard from './components/partner/Dashboard/PartnerDashboard';
+import Sidebar from './components/admin/sidebar/Sidebar';
+import Navbar from './components/admin/navbar/Navbar';
+import AdminUsers from './components/admin/users/AdminUsers';
+import PartnerNavbar from './components/partner/header/partnerNavbar'
+import UserTurfPage from './pages/user/UserTurfPage';
+import AddTurf from './components/partner/addTurf/AddTurf';
+import Turfs from './components/admin/turfs/AdminTurfs';
+import PartnerTurfs from './components/partner/Turf/PartnerTurfs';
+import UserProfile from './components/user/profile/UserProfile';
+import VenueHome from './components/partner/venue/VenueHome';
+import UserTurfDetail from './components/user/userTurfDetail/UserTurfDetails';
+import RegTurf from './components/partner/addTurf/RegTurf';
+
+
+function App() {
+  return (
+
+    <BrowserRouter>
+      <Routes>
+
+        {/* admin */}
+        <Route path="/adminlogin" element={<Login />}> </Route>
+        {/* <Route path='/users' element={<AdminUsers />}></Route> */}
+        <Route path='/admin' element={<AdminLayout />}>
+          <Route path='dashboard' element={<AdminDashboardPage />}></Route>
+          <Route path='managers' element={<VenueManager />}></Route>
+          <Route path='users' element={<AdminUsers />}></Route>
+          <Route path='turfs' element={<Turfs />}></Route>
+        </Route>
+        
+        
+        {/* user */}
+        <Route path='/signup' element={<UserSignup/>}>  </Route>
+        <Route path='/login' element={<UserLogin/>}>  </Route>
+        <Route path='/' element={<UserHomePage/>}></Route>
+        <Route path='/userturf' element={<UserTurfPage/>}></Route>
+
+          <Route path='/userprofile' element={<UserProfile/>}>  </Route>
+          <Route path='/turfs-details' element={<UserTurfDetail/>}>  </Route>
+          
+
+        
+
+        {/* partner */}
+        <Route path='/partnerlogin' element={<PartnerLogin/>}>  </Route>
+        <Route path='/partnersignup' element={<PartnerSignup/>}>  </Route>
+        <Route path='/partnerdashboard' element={<PartnerDashboard/>}>  </Route>
+        <Route path='/partnernavbar' element={<PartnerNavbar/>}>  </Route>
+        <Route path='/addturf' element={<AddTurf/>}>  </Route>
+        <Route path='/partnerturfs' element={<PartnerTurfs/>}>  </Route>
+        <Route path='/venuehome' element={<VenueHome/>}>  </Route>
+        <Route path='/regturf' element={<RegTurf/>}>  </Route>
+        
+        
+
+        
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;

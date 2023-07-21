@@ -1,0 +1,77 @@
+/* .bodyLogin {
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .containerL {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .containerL h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .containerL input[type="text"],
+  .containerL input[type="password"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  .containerL button {
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .containerL button:hover {
+    background-color: #45a049;
+  }
+
+   .thosterror{
+    font-size: 15px;
+    width: 20px;
+    height:20px
+  }
+
+  .doyouhave{
+    font-size: 10;
+    margin-right: '5px';
+    color: #333;
+  }
+  
+  .navigateSignup{
+    color: black;
+    text-decoration: 'underline';
+    cursor: 'pointer'
+  } */
+
+  
+.login,
+.image {
+  min-height: 100vh;
+  mix-blend-mode: multiply;
+}
+
+
+.bg-image {
+    /* background-image: url('/home/zeheer/Desktop/turf/frontend/public/image/turf6.png'); */
+    background-size: cover;
+    background-position: center center;  
+    mix-blend-mode: multiply;
+  }   

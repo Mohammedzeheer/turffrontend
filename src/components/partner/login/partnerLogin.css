@@ -1,0 +1,29 @@
+
+.login,
+.image {
+  min-height: 100vh;
+  mix-blend-mode: multiply;
+  /* color:rgb(152, 172, 148) */
+  /* color:aquamarine */
+}
+
+
+/* .bg-image {
+  background-image: url('https://images.unsplash.com/photo-1479064555552-3ef4979f8908?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
+  background-size: cover;
+  background-position: center center;
+} */
+
+.bg-image {
+    /* background-image: url('/home/zeheer/Desktop/turf/frontend/public/image/turf6.png'); */
+    background-size: cover;
+    background-position: center center;  
+    mix-blend-mode: multiply;
+  }   
+  
+  .side-image {
+    /* background-image: url('/home/zeheer/Desktop/turf/frontend/public/image/turf6.png'); */
+    background-size: cover;
+    background-position: center center;  
+    mix-blend-mode: multiply;
+  } 

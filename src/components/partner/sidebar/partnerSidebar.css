@@ -1,0 +1,36 @@
+
+
+/* Add your custom styles here */
+.sidebar {
+  background-color:  #24945e; 
+  width: 250px;
+  height: 100vh;
+}
+
+.sidebar-header {
+  padding: 1rem;
+  background-color:  #24945e; 
+  color: white;
+  font-weight: bold;
+}
+
+.sidebar-content {
+  padding: 1rem;
+  color: white;
+}
+
+.sidebar-content ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-content li {
+  margin-bottom: 0.5rem;
+}
+
+.sub-menu {
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid white;
+  }
