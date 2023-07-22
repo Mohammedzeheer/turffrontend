@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import {ToastContainer , toast } from 'react-toastify'  // for error npm 
+import { PartnerPort } from "../../../store/port";
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -15,7 +16,7 @@ function PartnerSignup() {
     const navigate = useNavigate()
 
     const handleSubmit1 = () => {
-        axios.post('http://localhost:4000/partner/partnersignup', { ...partner }, { withCredential: true }).then((res) => {
+        axios.post(`${PartnerPort}partnersignup`, { ...partner }, { withCredential: true }).then((res) => {
             console.log(res)
         })
     }
@@ -23,10 +24,9 @@ function PartnerSignup() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const {data} = await axios.post('http://localhost:4000/partner/partnersignup', { ...partner }, { withCredential: true })
+            const {data} = await axios.post(`${PartnerPort}partnersignup`, { ...partner }, { withCredential: true })
             console.log(data,"---------")
-            if (data) {
-           
+            if (data) {     
                 if (data.errors) {
                     const { username, password, email, phonenumber } = data.errors
                     if (username) generateError(username)
@@ -34,8 +34,12 @@ function PartnerSignup() {
                     else if (password) generateError(password)
                     else if (email) generateError(email)
                 }
+                else if(data.otp){
+                    navigate("/partnerotp")
+                }
                 else {
-                    navigate("/partnerlogin")
+                    navigate("/partnerotp")
+                    // navigate("/login")
                 }
             }
         } catch (error) {

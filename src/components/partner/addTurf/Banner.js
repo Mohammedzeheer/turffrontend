@@ -1,5 +1,6 @@
 import React from 'react'
-import Image from "../../../assets/Banner.jpg"
+
+let image 
 
 // import Nav from '../Layout/Nav'
 

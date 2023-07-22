@@ -3,17 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { getTimeSlot } from "./TimeSlot";
 import Calendar from "react-calendar";
 import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { userUrl } from "../../../../API/API";
-// import { Axiosuser } from '../../../../API/AxiosInstance';
-// import { AdminPort, UserPort, PartnerPort } from '../../../store/port';
+import axios from "axios";
 import { UserPort } from '../../../../store/port';
+import {stripeKey} from '../../../../helpers/StripeKey'
 
-let stripeKey;
 // import { stripeKey } from '../../../../Helpers/StripeKey.js';
 
+
 const Booking = ({ ID, openingTime, closingTime, setShowCalender }) => {
-    const token = localStorage.getItem('userToken')
+    const token = localStorage.getItem('user')
     const [date, setDate] = useState(new Date());
     const [bookedTime, setBookedTime] = useState([]);
     const Navigate = useNavigate();
@@ -46,7 +44,7 @@ const Booking = ({ ID, openingTime, closingTime, setShowCalender }) => {
     const slots = getTimeSlot(openingTime, closingTime, 60);
     const getSlots = async (date) => {
         try {
-            const response = await UserPort.get(`bookingslots/${date}/${ID}`)
+            const response = await axios.get(`${UserPort}bookingslots/${date}/${ID}`)
             if (response.status === 200) {
                 const bookedTimes = response?.data.map((x) => x.time);
                 setBookedTime(bookedTimes);

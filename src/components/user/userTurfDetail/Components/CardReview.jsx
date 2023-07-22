@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-// import { AdminPort, UserPort, PartnerPort } from '../../../store/port';
 import { UserPort } from '../../../../store/port';
+import axios from 'axios'
 import './CardReview.css'
 
 
@@ -9,7 +9,7 @@ const CardReview = ({ id,refresh }) => {
 
     const fetchReviews = async (id) => {
         try {
-            const response = await UserPort.get(`getReviews/${id}`)
+            const response = await axios.get(`${UserPort}getReviews/${id}`)
             setReviews(response.data.reviews)
         } catch (error) {
             console.error(error);
@@ -40,8 +40,7 @@ const CardReview = ({ id,refresh }) => {
                     </div>
                 </div>
             </div>
-        </>
-        
+        </>       
     );
 }
 

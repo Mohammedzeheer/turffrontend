@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { changeUser } from '../../../redux/adminSlice';
+// import { changeUser } from '../../../redux/adminSlice';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import BlockIcon from '@mui/icons-material/Block';
-import { CgUnblock } from "react-icons/cg";
-import { AdminPort, UserPort, PartnerPort } from "../../../store/port";
+// import DeleteIcon from '@mui/icons-material/Delete';
+// import BlockIcon from '@mui/icons-material/Block';
+// import { CgUnblock } from "react-icons/cg";
+import { AdminPort, UserPort } from "../../../store/port";
 import TurfModal from './TurfModal';
 import { AiFillEye } from "react-icons/ai";
+import { AiOutlinePullRequest } from "react-icons/ai";
 import '../users/AdminUsers.css';
 
 function AdminTurfs() {
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState('');
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
   const [refreshFlag, setRefreshFlag] = useState(false); 
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -29,6 +30,37 @@ function AdminTurfs() {
     setSelectedUser(null);
   };
 
+//pagination
+const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 4; // Change this number to adjust the number of items per page
+
+const getCurrentItems = () => {
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  return users.slice(indexOfFirstItem, indexOfLastItem);
+};
+
+const handleNextPage = () => {
+  setCurrentPage((prevPage) => prevPage + 1);
+};
+
+const handlePrevPage = () => {
+  setCurrentPage((prevPage) => prevPage - 1);
+};
+
+
+  const approveTurfs = (userId) => {
+    axios.post(`${AdminPort}approveTurfs`, { userId }, { withCredentials: true })
+      .then((res) => {
+        console.log(res, 'fdsfsddhsfdfsdffd');
+       })
+      .catch((error) => {
+        console.log(error);
+      });
+      setRefreshFlag(!refreshFlag); 
+  };
+
+
   useEffect(() => {
     axios.get(`${AdminPort}turfs`, { withCredentials: true })
       .then((res) => {
@@ -38,7 +70,7 @@ function AdminTurfs() {
       .catch((error) => {
         console.log(error);
       });
-  },);
+  },[]);
 
 
 
@@ -76,11 +108,11 @@ function AdminTurfs() {
             <th>District</th>
             <th>Location</th>
             <th>view</th>
-            {/* <th>Control</th> */}
+            <th>Control</th>
           </tr>
         </thead>
         <tbody>
-          {users
+          {getCurrentItems()
             .filter((user) => user.courtName.toLowerCase().includes(query))
             .map((user, index) => (
               <tr key={index}>
@@ -109,6 +141,17 @@ function AdminTurfs() {
       <AiFillEye />
     </button>
               </td>
+
+                 <td>
+                  {user.isApprove==false ? (
+                    <Button onClick={() => approveTurfs(user._id)} variant="outlined" startIcon={<AiOutlinePullRequest />}>
+                      Approve
+                    </Button>
+                  ) : (
+                    <h5>approved</h5>
+                  )}             
+                </td>
+
               </tr>
             ))}
         </tbody>
@@ -116,6 +159,21 @@ function AdminTurfs() {
         <TurfModal open={Boolean(selectedUser)} onClose={handleModalClose} user={selectedUser} />
       )}
       </table>
+
+      <div className="flex justify-center mt-5">
+        <div className="flex gap-4">
+          <Button onClick={handlePrevPage} disabled={currentPage === 1}>
+            Previous Page
+          </Button>
+          <Button
+            onClick={handleNextPage}
+            disabled={currentPage === Math.ceil(users.length / itemsPerPage)}
+          >
+            Next Page
+          </Button>
+        </div>
+      </div>
+
     </div>
   );
 }

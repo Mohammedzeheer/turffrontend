@@ -30,7 +30,7 @@ function PartnerLogin() {
             }else{
               localStorage.setItem('partner',JSON.stringify(data))
              dispatch(updatePartner({username:data.partner.username,userId:data.partner._id,token:data.token}))
-             navigate('/partnerdashboard')
+             navigate('/partner')
             }
           }      
       }

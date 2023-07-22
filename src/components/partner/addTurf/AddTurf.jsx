@@ -4,6 +4,8 @@ import PartnerNavbar from "../header/partnerNavbar";
 import TopBar from '../sidebar/TopBar';
 import { AdminPort, UserPort, PartnerPort } from '../../../store/port';
 import { useSelector } from 'react-redux';
+import {ToastContainer , toast } from 'react-toastify'  // for error npm 
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const AddTurf = () => {
@@ -124,11 +126,31 @@ const AddTurf = () => {
         },
       });
       console.log('Form submitted successfully:', response.data);
+      console.log('Form submitted message:', response.data.message);
+      generateMessage(response.data.message)
+      setFormData({
+        courtName: '',
+        mobileNumber: '',
+        state: '',
+        district: '',
+        description: '',
+        location: '',
+        venueTypes: [],
+        prices: {},
+      });
+      setSelectedImages([]);
+      setImages([]);
     } catch (error) {
       console.error('Error submitting form:', error);
     }
   };
   
+
+const generateMessage = (message) => toast.success(message, {
+  autoClose: 1000, 
+  position: toast.POSITION.TOP_CENTER
+});
+
   return (
     <>
          <PartnerNavbar />
@@ -237,7 +259,7 @@ const AddTurf = () => {
         />
       </div>
 
-
+      {/* <div className="grid grid-cols-2 gap-4 mb-4"> */}
       <div className="mb-4">
         <label className="block mb-2 text-white">Venue Types</label>
         <div className="flex">
@@ -283,7 +305,7 @@ const AddTurf = () => {
           ))}
 
       <div className="mb-4">
-        <label htmlFor="photos" className="block mb-2 text-white">
+       <label htmlFor="photos" className="block mb-2 text-white">
           Photos
         </label>
         <input
@@ -295,14 +317,16 @@ const AddTurf = () => {
           className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
         />
       </div>
+   
 
       <button
         type="submit"
-        className="w-full py-2 mt-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
+        className="w-full py-2 mt-2 text-white bg-customBlue rounded-md hover:bg-blue-600"
       >
         Submit
       </button>
     </form>
+    <ToastContainer/>
     </>
   )
   }

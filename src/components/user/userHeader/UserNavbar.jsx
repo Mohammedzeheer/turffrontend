@@ -38,7 +38,7 @@ const PartnerNavbar = () => {
           <div className="flex items-center justify-between h-16">
             <div className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-white">
               <Image />
-              A one Turf
+              {/* A one Turf */}
             </div>
             <div className="hidden md:block flex items-center space-x-4">
               {isLogin && (
@@ -100,7 +100,7 @@ const PartnerNavbar = () => {
               {!isLogin && (
                 <button
                   type="button"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-transparent hover:bg-indigo-700"
                   onClick={() => Navigate("/login")}
                 >
                   Get Started

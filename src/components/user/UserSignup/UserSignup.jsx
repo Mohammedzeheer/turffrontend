@@ -2,9 +2,10 @@ import React, { useState, useEffect, Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify'  // for error npm 
+import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import 'react-toastify/dist/ReactToastify.css';
+import { UserPort } from '../../../store/port';
 import './userSignup.css'
 
 
@@ -23,10 +24,9 @@ function UserSignup() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const { data } = await axios.post('http://localhost:4000/signup', { ...user }, { withCredential: true })
-            console.log(data, "---------")
+            const { data } = await axios.post(`${UserPort}signup`, { ...user }, { withCredential: true })
+            console.log(data, "---hello iam data------")
             if (data) {
-
                 if (data.errors) {
                     const { username, password, email, phonenumber } = data.errors
                     if (username) generateError(username)
@@ -34,8 +34,12 @@ function UserSignup() {
                     else if (password) generateError(password)
                     else if (email) generateError(email)
                 }
+                else if(data.otp){
+                    navigate("/userotp")
+                }
                 else {
-                    navigate("/login")
+                    navigate("/userotp")
+                    // navigate("/login")
                 }
             }
         } catch (error) {
@@ -73,17 +77,16 @@ function UserSignup() {
                                             <h3 className="display-4">Aone Turf</h3>
                                             <p className="text-muted mb-4">Register Here</p>
                                             <form action="/userlogin" method="post">
-                                                <div className="form-group mb-3">
-                                                    <input type="text" placeholder="User Name" name="username" onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })} autoComplete="new-password" autofocus="" className="form-control rounded-pill border-2 shadow-sm px-4 " />
-                                                </div>
-                                                {/* <div className="form-group mb-3">
-                                                    <input type="password" name="password" placeholder="Password" onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })} className="form-control rounded-pill border-2 shadow-sm px-4 text-primary" />
-                                                </div> */}
+                                                
+
                                                 <div className="form-group mb-3">
                                                     <input type="email" placeholder="Email" name="email" onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })} autofocus="" className="form-control rounded-pill border-2 shadow-sm px-4" />
                                                 </div>
                                                 <div className="form-group mb-3">
-                                        <input type="password" name="phonenumber" placeholder="Phone Number"  onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })} className="form-control rounded-pill border-0 shadow-sm px-4 text-primary" />
+                                                    <input type="text" placeholder="User Name" name="username" onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })}   className="form-control rounded-pill border-2 shadow-sm px-4 " />
+                                                </div>
+                                                <div className="form-group mb-3">
+                                        <input type="text" name="phonenumber" placeholder="Phone Number"  onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })} className="form-control rounded-pill border-2 shadow-sm px-4 text-primary" />
                                     </div>
 
                                                 <div className="form-group mb-3">

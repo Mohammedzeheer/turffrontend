@@ -9,7 +9,7 @@ const TopBar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link
-              to="/partnerdashboard"
+              to="/partner"
               className="text-white font-medium cursor-pointer no-underline px-3 py-2 rounded-md hover:bg-customGreen"
             >
               Dashboard

@@ -1,56 +1,91 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { changeUser } from '../../../redux/adminSlice';
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import BlockIcon from '@mui/icons-material/Block';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { changeUser } from "../../../redux/adminSlice";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import BlockIcon from "@mui/icons-material/Block";
 import { CgUnblock } from "react-icons/cg";
-import { AdminPort, UserPort, PartnerPort } from "../../../store/port";
-import './AdminUsers.css';
+import { AdminPort } from "../../../store/port";
+import "./AdminUsers.css";
+import UserDetailsModal from "./UserDetailsModal";
 
 function AdminUsers() {
   const [users, setUsers] = useState([]);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [refreshFlag, setRefreshFlag] = useState(false); 
+  const [refreshFlag, setRefreshFlag] = useState(false);
 
+
+  //for view  modaal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);//for modaal
+
+  const handleViewUser = (user) => {
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+
+ //pagination
+   const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Change this number to adjust the number of items per page
+
+  const getCurrentItems = () => {
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    return users.slice(indexOfFirstItem, indexOfLastItem);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
 
   useEffect(() => {
-    axios.get(`${AdminPort}users`, { withCredentials: true })
+    axios
+      .get(`${AdminPort}users`, { withCredentials: true })
       .then((res) => {
-        console.log(res, '------------------------------------------');
+        console.log(res, "------------------------------------------");
         setUsers(res.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [refreshFlag]);
+  },[refreshFlag]);
 
   const blockUser = (userId) => {
-    axios.post(`${AdminPort}blockuser`, { userId }, { withCredentials: true })
+    axios
+      .post(`${AdminPort}blockuser`, { userId }, { withCredentials: true })
       .then((res) => {
-        console.log(res, 'fdsfsddhsfdfsdffd');
-     })
+        console.log(res, "fdsfsddhsfdfsdffd");
+      })
       .catch((error) => {
         console.log(error);
       });
-      setRefreshFlag(!refreshFlag); 
+    setRefreshFlag(!refreshFlag);
   };
 
-
-  const UnblockUser =(userId)=>{
-    axios.post(`${AdminPort}unblockuser`, { userId }, { withCredentials: true })
-    .then((res) => {
-      console.log(res, 'fdsfsddhsfdfsdffd');
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-    setRefreshFlag(!refreshFlag); 
-};
+  const UnblockUser = (userId) => {
+    axios
+      .post(`${AdminPort}unblockuser`, { userId }, { withCredentials: true })
+      .then((res) => {
+        console.log(res, "fdsfsddhsfdfsdffd");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setRefreshFlag(!refreshFlag);
+  };
 
   return (
     <div>
@@ -64,9 +99,17 @@ function AdminUsers() {
           autoComplete="off"
           onChange={(e) => setQuery(e.target.value)}
         />
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="icon"
+        >
           <g strokeWidth="0" id="SVGRepo_bgCarrier" />
-          <g strokeLinejoin="round" strokeLinecap="round" id="SVGRepo_tracerCarrier" />
+          <g
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            id="SVGRepo_tracerCarrier"
+          />
           <g id="SVGRepo_iconCarrier">
             <rect fill="white" />
             <path
@@ -84,17 +127,22 @@ function AdminUsers() {
             <th>Image</th>
             <th>Name</th>
             <th>Email</th>
+            <th>View</th>
             <th>Control</th>
           </tr>
         </thead>
         <tbody>
-          {users
+          {getCurrentItems()
             .filter((user) => user.username.toLowerCase().includes(query))
             .map((user, index) => (
               <tr key={index}>
                 <td>
                   {user.image ? (
-                    <img src={`/images/${user.image}`} alt="placeholder" width={100} />
+                    <img
+                      src={`/images/${user.image}`}
+                      alt="placeholder"
+                      width={100}
+                    />
                   ) : (
                     <img
                       src="https://static-00.iconduck.com/assets.00/profile-minor-icon-256x256-6u3v5w0z.png"
@@ -105,33 +153,57 @@ function AdminUsers() {
                 </td>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
+                <td><Button
+                    onClick={() => handleViewUser(user)}
+                    variant="outlined"
+                  >
+                    View
+                  </Button></td>
                 <td>
-                  {user.isBlock==false ? (
-                    <Button onClick={() => blockUser(user._id)} variant="outlined" startIcon={<BlockIcon />}>
+                  {user.isBlock == false ? (
+                    <Button
+                      onClick={() => blockUser(user._id)}
+                      variant="outlined"
+                      startIcon={<BlockIcon />}
+                    >
                       Block
                     </Button>
                   ) : (
-                    <Button onClick={() => UnblockUser(user._id)} variant="outlined" startIcon={<CgUnblock />}>
+                    <Button
+                      onClick={() => UnblockUser(user._id)}
+                      variant="outlined"
+                      startIcon={<CgUnblock />}
+                    >
                       Unblock
                     </Button>
                   )}
-                  {/* <button
-                    onClick={() => {
-                      dispatch(changeUser({ id: user._id, name: user.username }));
-                      navigate('/admin/edituser');
-                    }}
-                    className="edit-btn"
-                  >
-                    <i className="fas fa-edit" />
-                  </button>
-                  <button onClick={() => deleteUser(user._id)} className="delete-btn">
-                    <i className="fa fa-trash-alt" />
-                  </button> */}
                 </td>
               </tr>
             ))}
         </tbody>
       </table>
+
+      <div className="flex justify-center mt-5">
+        <div className="flex gap-4">
+          <Button onClick={handlePrevPage} disabled={currentPage === 1}>
+            Previous Page
+          </Button>
+          <Button
+            onClick={handleNextPage}
+            disabled={currentPage === Math.ceil(users.length / itemsPerPage)}
+          >
+            Next Page
+          </Button>
+        </div>
+      </div>
+
+      <UserDetailsModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        user={selectedUser}
+      />
+
+
     </div>
   );
 }

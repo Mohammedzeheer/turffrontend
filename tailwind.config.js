@@ -10,6 +10,7 @@ module.exports = {
         'light-white': 'rgba(255,255,255,0.18)',
         customBlue: '#0b2239ff',
         customGreen: '#24945e',
+        customLightGreen: '#8be68b',
        
       }
     },

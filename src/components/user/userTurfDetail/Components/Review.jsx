@@ -32,7 +32,7 @@ const ReviewModal = ({ isOpen, toggle, id,refresh,setRefresh }) => {
                             {/*content*/}
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 {/*header*/}
-                                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                                <div className="flex items-start justify-between p-3 border-b border-solid border-slate-200 rounded-t">
                                     <h3 className="text-3xl font-semibold">
                                         Review & Ratings
                                     </h3>
@@ -76,7 +76,7 @@ const ReviewModal = ({ isOpen, toggle, id,refresh,setRefresh }) => {
                                                 Review
                                             </label>
                                             <textarea
-                                                className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                                className="block appearance-none w-full  bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                 id="review"
                                                 rows="5"
                                                 value={review}

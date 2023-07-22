@@ -30,8 +30,8 @@ function UserLogin() {
       if (res) {
         console.log(res);
         if (res.errors) {
-          const { username, password } = res.errors
-          if (username) generateError(username)
+          const { email, password } = res.errors
+          if (email) generateError(email)
           else if (password) generateError(password)
         } else {
           localStorage.setItem('user', JSON.stringify(res))
@@ -71,7 +71,7 @@ function UserLogin() {
                       <form action="/userlogin" method="post">
 
                         <div className="form-group mb-3">
-                          <input type="text" placeholder="User Name" name="username" onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })} autofocus="" className="form-control rounded-pill border-2 shadow-sm px-4" />
+                          <input type="text" placeholder="Email" name="email" onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })} autofocus="" className="form-control rounded-pill border-2 shadow-sm px-4" />
                         </div>
 
 

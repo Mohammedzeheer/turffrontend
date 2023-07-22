@@ -36,7 +36,6 @@ const PartnerNavbar = () => {
           <div className="flex items-center justify-between h-16">
             <div className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-white">
               <Image />
-              A one Turf
             </div>
             <div className="hidden md:block flex items-center space-x-4">
               {isLogin && (

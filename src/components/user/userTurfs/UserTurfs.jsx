@@ -1,7 +1,6 @@
 import TurfCard from "./TurfCard";
 import { useEffect, useState } from "react";
-// import { Axiosuser } from "../../../API/AxiosInstance";
-import { AdminPort, UserPort, PartnerPort } from '../../../store/port';
+import { UserPort } from '../../../store/port';
 import axios from 'axios'
 import Pagination from "./Pagination";
 
@@ -9,19 +8,8 @@ const UserTurfs = () => {
   const [turfs, setTurfs] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
 
-  // useEffect(() => {
-  //   const fetchTurfs = async () => {
-  //     try {
-  //       const response = await Axiosuser.get(`turfs`);
-  //       setTurfs(response.data.turfs);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-  //   fetchTurfs();
-  // }, []);
 
   useEffect(() => {
     axios.get(`${UserPort}allturfs`, { withCredentials: true })
@@ -38,7 +26,9 @@ const UserTurfs = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = turfs
     .filter((turf) =>
-      turf.location.toLowerCase().includes(searchQuery.toLowerCase())
+      turf.location.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      turf.courtName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      turf.district.toLowerCase().includes(searchQuery.toLowerCase()) 
     )
     .slice(indexOfFirstItem, indexOfLastItem);
 
@@ -90,6 +80,17 @@ export default UserTurfs;
 
 
 
+  // useEffect(() => {
+  //   const fetchTurfs = async () => {
+  //     try {
+  //       const response = await Axiosuser.get(`turfs`);
+  //       setTurfs(response.data.turfs);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
+  //   fetchTurfs();
+  // }, []);
 
 
 

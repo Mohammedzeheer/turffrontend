@@ -12,7 +12,7 @@ import CardReview from "./Components/CardReview";
 import UserNavbar from "../userHeader/UserNavbar";
 
 export default function UserTurfDetails() {
-  const token = localStorage.getItem("usert");
+  const token = localStorage.getItem("user");
   const Location = useLocation();
   const ID = Location.state;
   const [data, setData] = useState({});
@@ -69,6 +69,7 @@ export default function UserTurfDetails() {
                     ) || []
                   }
                   className="w-full h-auto"
+                  // style={{ width: "600px", height: "300px" }}
                 />
               </div>
               <div className="md:w-1/2 md:pl-10">
