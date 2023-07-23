@@ -36,10 +36,7 @@ const PartnerDashboard = () => {
    
   return (
     <div>
-     {/* <PartnerNavbar2 /> */}
      <PartnerNavbar />
-
-
      <TopBar/>
      <TopBar2/>
      

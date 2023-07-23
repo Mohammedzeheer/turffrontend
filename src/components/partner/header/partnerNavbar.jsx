@@ -68,7 +68,7 @@ const PartnerNavbar = () => {
                     <div className="origin-top-right absolute right-0 mt-2 w-38 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                         <a
-                          href="/turfOwner/turf-profile"
+                          href="/partner/profile"
                           className="block px-4 py-2 no-underline text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
                         >
@@ -152,7 +152,7 @@ const PartnerNavbar = () => {
             {isLogin && (
               <>
                 <a
-                  href="/turfOwner/turf-profile"
+                  href="/partner/profile"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md font-medium"
                 >
                   Profile

@@ -12,6 +12,8 @@ import TurfModal from './TurfModal';
 import { AiFillEye } from "react-icons/ai";
 import { AiOutlinePullRequest } from "react-icons/ai";
 import '../users/AdminUsers.css';
+import Pagination from '../pagination';
+
 
 function AdminTurfs() {
   const [users, setUsers] = useState([]);
@@ -30,14 +32,20 @@ function AdminTurfs() {
     setSelectedUser(null);
   };
 
-//pagination
+//pagination    ----------------start--------------------
 const [currentPage, setCurrentPage] = useState(1);
 const itemsPerPage = 4; // Change this number to adjust the number of items per page
+
+const filteredUsers = users.filter(
+  (user) => user.courtName.toLowerCase().includes(query.toLowerCase())
+);
+
+const getTotalPages = () => Math.ceil(filteredUsers.length / itemsPerPage);
 
 const getCurrentItems = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  return users.slice(indexOfFirstItem, indexOfLastItem);
+  return filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
 };
 
 const handleNextPage = () => {
@@ -47,6 +55,7 @@ const handleNextPage = () => {
 const handlePrevPage = () => {
   setCurrentPage((prevPage) => prevPage - 1);
 };
+//pagination    ----------------end--------------------
 
 
   const approveTurfs = (userId) => {
@@ -113,7 +122,7 @@ const handlePrevPage = () => {
         </thead>
         <tbody>
           {getCurrentItems()
-            .filter((user) => user.courtName.toLowerCase().includes(query))
+            // .filter((user) => user.courtName.toLowerCase().includes(query))
             .map((user, index) => (
               <tr key={index}>
                 <td>
@@ -160,19 +169,12 @@ const handlePrevPage = () => {
       )}
       </table>
 
-      <div className="flex justify-center mt-5">
-        <div className="flex gap-4">
-          <Button onClick={handlePrevPage} disabled={currentPage === 1}>
-            Previous Page
-          </Button>
-          <Button
-            onClick={handleNextPage}
-            disabled={currentPage === Math.ceil(users.length / itemsPerPage)}
-          >
-            Next Page
-          </Button>
-        </div>
-      </div>
+      <Pagination
+      currentPage={currentPage}
+      totalPages={getTotalPages}
+      handlePrevPage={handlePrevPage}
+      handleNextPage={handleNextPage}
+    />
 
     </div>
   );

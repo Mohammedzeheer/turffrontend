@@ -9,6 +9,10 @@ import BlockIcon from '@mui/icons-material/Block';
 import { CgUnblock } from "react-icons/cg";
 import { AiOutlinePullRequest } from "react-icons/ai";
 import { AdminPort, UserPort, PartnerPort } from "../../../store/port";
+import ManagerDetail from './ManagerDetail';
+import { AiFillEye } from "react-icons/ai";
+import Pagination from '../pagination';
+
 
 import '../users/AdminUsers.css';
 
@@ -18,6 +22,8 @@ function VenueManager() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [refreshFlag, setRefreshFlag] = useState(false); 
+  const [selectedManager, setSelectedManager] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
 
   useEffect(() => {
@@ -67,6 +73,45 @@ function VenueManager() {
     setRefreshFlag(!refreshFlag); 
 };
 
+
+const handleOpenModal = (manager) => {
+  setSelectedManager(manager);
+  setModalOpen(true);
+};
+
+const handleCloseModal = () => {
+  setModalOpen(false);
+};
+
+
+//pagination    ----------------start--------------------
+const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 5; // Change this number to adjust the number of items per page
+
+const filteredUsers = manager.filter(
+  (user) => user.username.toLowerCase().includes(query.toLowerCase())
+);
+
+const getTotalPages = () => Math.ceil(filteredUsers.length / itemsPerPage);
+
+const getCurrentItems = () => {
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  return filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
+};
+
+const handleNextPage = () => {
+  setCurrentPage((prevPage) => prevPage + 1);
+};
+
+const handlePrevPage = () => {
+  setCurrentPage((prevPage) => prevPage - 1);
+};
+//pagination    ----------------end--------------------
+
+
+
+
   return (
     <div>
       {/* <button onClick={() => navigate('/admin/adduser')} style={{ position: 'relative', left: 90, top: 30, }}>Add User</button> */}
@@ -105,8 +150,8 @@ function VenueManager() {
           </tr>
         </thead>
         <tbody>
-          {manager
-            .filter((user) => user.username.toLowerCase().includes(query))
+          {getCurrentItems()
+            //.filter((user) => user.username.toLowerCase().includes(query))
             .map((user, index) => (
               <tr key={index}>
                 <td>
@@ -122,7 +167,7 @@ function VenueManager() {
                 </td>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
-                <td>view</td>
+                <td><Button onClick={() => handleOpenModal(user)} variant="outlined" startIcon={<AiFillEye/>}></Button></td>
                 <td>
                   {user.isApprove==false ? (
                     <Button onClick={() => approvePartner(user._id)} variant="outlined" startIcon={<AiOutlinePullRequest />}>
@@ -147,6 +192,17 @@ function VenueManager() {
             ))}
         </tbody>
       </table>
+      <Pagination
+      currentPage={currentPage}
+      totalPages={getTotalPages}
+      handlePrevPage={handlePrevPage}
+      handleNextPage={handleNextPage}
+    />
+      <ManagerDetail
+        open={modalOpen}
+        onClose={handleCloseModal}
+        manager={selectedManager}
+      />
     </div>
   );
 }

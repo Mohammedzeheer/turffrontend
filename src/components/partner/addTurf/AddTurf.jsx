@@ -17,6 +17,8 @@ const AddTurf = () => {
     mobileNumber: '',
     state: '',
     district: '',
+    startingTime:'',
+    endingTime:'',
     description: '',
     location: '',
     venueTypes: [], // Changed to an array to support multiple selections
@@ -103,11 +105,14 @@ const AddTurf = () => {
     formDataObject.append('mobileNumber', formData.mobileNumber);
     formDataObject.append('state', formData.state);
     formDataObject.append('district', formData.district);
+    formDataObject.append('startingTime', formData.startingTime);
+    formDataObject.append('endingTime', formData.endingTime);
     formDataObject.append('description', formData.description);
     formDataObject.append('location', formData.location);
     formDataObject.append('venueTypes', JSON.stringify(formData.venueTypes));
     formDataObject.append('prices', JSON.stringify(formData.prices));
     formDataObject.append("userId", userId);
+
   
     // for (let i = 0; i < formData.photos.length; i++) {
     //   formDataObject.append(`photos[${i}]`, formData.photos[i]);
@@ -133,6 +138,8 @@ const AddTurf = () => {
         mobileNumber: '',
         state: '',
         district: '',
+        startingTime:'',
+        endingTime:'',
         description: '',
         location: '',
         venueTypes: [],
@@ -155,7 +162,8 @@ const generateMessage = (message) => toast.success(message, {
     <>
          <PartnerNavbar />
          <TopBar />
-         <form onSubmit={handleSubmit} className="bg-customGreen my-10  max-w-lg mx-auto border rounded-md p-4">
+         <div className='m-3'>
+         <form onSubmit={handleSubmit} className="bg-customGreen sm-my-5 md:my-10  max-w-lg mx-auto border rounded-md p-4">
   <div className='text-white font-bold  text-2xl pt-2'>
           New Venue
       </div>
@@ -228,6 +236,30 @@ const generateMessage = (message) => toast.success(message, {
       </div>
 
 
+      <div className="grid grid-cols-2 gap-4 mb-4 ">
+        <div>
+          <input
+            type="text"
+            id="startingTime"
+            name="startingTime"
+            placeholder='Starting Time'
+            value={formData.startingTime}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            id="endingTime"
+            name="endingTime"
+            placeholder='Ending Time'
+            value={formData.endingTime}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
+      </div>
 
       <div className="mb-4">
         {/* <label htmlFor="description" className="block mb-1 text-gray-800">
@@ -326,7 +358,9 @@ const generateMessage = (message) => toast.success(message, {
         Submit
       </button>
     </form>
+    </div>
     <ToastContainer/>
+   
     </>
   )
   }

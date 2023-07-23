@@ -33,7 +33,7 @@ import RegTurf from './components/partner/addTurf/RegTurf';
 import TurfPorfile from './components/partner/Turf/TurfProfile';
 import Bookings from './components/partner/bookings/Bookings';
 import PartnerOtp from './components/partner/signup/partnerOtp';
-
+import PartnerProfile from './components/partner/profile/PartnerProfile';
 
 
 // import Otp from './components/user/otp/Otp';
@@ -80,12 +80,14 @@ function App() {
         <Route path='/partnernavbar' element={<PartnerNavbar/>}>  </Route>
         <Route path='/addturf' element={<AddTurf/>}>  </Route>
         <Route path='/partnerturfs' element={<PartnerTurfs/>}>  </Route>
-        <Route path='/venuehome' element={<VenueHome/>}>  </Route>
+        <Route path='/partner/venuehome' element={<VenueHome/>}>  </Route>
         <Route path='/regturf' element={<RegTurf/>}>  </Route>
 
         <Route path='/turfprofile' element={<TurfPorfile/>}>  </Route>
-        <Route path='/booking' element={<Bookings/>}>  </Route>
+        <Route path='/partner/booking' element={<Bookings/>}>  </Route>
         <Route path='/partnerotp' element={<PartnerOtp/>}>  </Route>
+        <Route path='/partner/profile' element={<PartnerProfile/>}>  </Route>
+        
         
 
 

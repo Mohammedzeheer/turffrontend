@@ -1,28 +1,32 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UserNavbar from "../userHeader/UserNavbar";
+import TopBar from "../sidebar/TopBar";
+import PartnerNavbar from "../header/partnerNavbar";
 import { useSelector } from "react-redux";
-import { UserPort } from "../../../store/port";
+import { PartnerPort } from "../../../store/port";
 import { BiSolidEditAlt } from "react-icons/bi";
 
 
-const UserProfile2 = () => {
+const PartnerProfile = () => {
   const [userData, setUserData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [username, setUserName] = useState();
   const [phonenumber, setPhonenumber] = useState();
+  const [turfname, setTurfName] = useState();
+  
   const [address, setAddress] = useState();
-  const { userId } = useSelector((state) => state.user);
+  const { userId } = useSelector((state) => state.partner);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`${UserPort}userdata/${userId}`);
+        const { data } = await axios.get(`${PartnerPort}partnerprofile/${userId}`);
         console.log(data);
         setUserData(data.data);
         setUserName(data.data.username);
         setAddress(data.data.address);
+        setTurfName(data.data.turfname);
         setPhonenumber(data.data.phonenumber);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -35,7 +39,7 @@ const UserProfile2 = () => {
   const handleSaveClick = async (e) => {
     e.preventDefault();
     try {
-      const formData = { username, phonenumber, address, userId };
+      const formData = { username, phonenumber, address, userId,turfname };
       const { data } = await axios.post(`${UserPort}userprofile`, { formData });
       console.log(data);
       //   dispatch(updateUser({}));
@@ -114,7 +118,8 @@ const UserProfile2 = () => {
 
   return (
     <>
-      <UserNavbar />
+      <PartnerNavbar />
+      <TopBar/>
       <div className="sm-pt-5 md:pt-20 m-4">
         <div
           className="container mx-auto px-4 py-8 pt-30"
@@ -206,6 +211,26 @@ const UserProfile2 = () => {
                   )}
                 </div>
 
+
+
+                <div className="mb-2">
+                  <label className="font-bold text-green-700">Turf Name:</label>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      className="border rounded-md px-2 py-1 w-full"
+                      //   value={userData.phonenumber}
+                      defaultValue={userData.turfname}
+                      onChange={(e) => setTurfName(e.target.value)}
+                    />
+                  ) : (
+                    <span className="ml-2">{userData.turfname}</span>
+                  )}
+                </div>
+
+
+
+
                 <div className="mb-2">
                   <label className="font-bold text-green-700">Mobile:</label>
                   {isEditing ? (
@@ -221,12 +246,15 @@ const UserProfile2 = () => {
                   )}
                 </div>
 
-                <div className="mb-4">
+
+
+
+                {/* <div className="mb-4">
                   <label className="font-bold text-green-700">Wallet:</label>
                   <span className="m-2 px-2 py-1 bg-customGreen text-white rounded-md">
                     {userData.wallet}
                   </span>
-                </div>
+                </div> */}
 
                 {isEditing ? (
                   <div className="flex flex-col md:flex-row">
@@ -262,28 +290,5 @@ const UserProfile2 = () => {
   );
 };
 
-export default UserProfile2;
+export default PartnerProfile;
 
-//   const handleSaveClick = async (e) => {
-//         e.preventDefault()
-//         const formData = new FormData()
-//             formData.append('image', imageUrl)
-//             formData.append("userId", userId)
-
-//             const config = {
-//               header: {
-//                   "content-type": "multipart/form-data",
-//                    userId: userId
-//               },
-//               withCredentials: true
-//           }
-
-//           try {
-//             const { data } = await axios.post(`${UserPort}userprofile`, formData, config)
-//             dispatch(updateUser({ image: data.imageurl, username, userId }))
-//             console.log(data);
-//         } catch (error) {
-//             console.log(error)
-//         }
-//     setIsEditing(false);
-//   };

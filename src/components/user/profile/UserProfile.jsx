@@ -55,7 +55,7 @@ const  UserProfile =() => {
       </div>
      
      
-      <div class="containerP">
+    <div class="containerP">
 		<form onSubmit={imageUpload}>
 			<label for="arquivo">Choose a file:</label>
 			<input accept=".jpg, .jpeg, .png, .gif, .pdf" class="inpdddut" name="arquivo" id="arquivo" type="file" onChange={(e)=>setImageUrl(e.target.files[0])}/>

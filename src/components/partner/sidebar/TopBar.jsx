@@ -15,13 +15,13 @@ const TopBar = () => {
               Dashboard
             </Link>
             <Link
-              to="/venuehome"
+              to="/partner/venuehome"
               className="text-white font-medium cursor-pointer no-underline px-3 py-2 rounded-md hover:bg-customGreen"
             >
               Venues
             </Link>
             <Link
-              to="/booking"
+              to="/partner/booking"
               className="text-white font-medium cursor-pointer no-underline px-3 py-2 rounded-md hover:bg-customGreen"
             >
              Bookings

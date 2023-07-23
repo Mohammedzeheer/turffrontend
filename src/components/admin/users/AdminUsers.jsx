@@ -10,6 +10,7 @@ import { CgUnblock } from "react-icons/cg";
 import { AdminPort } from "../../../store/port";
 import "./AdminUsers.css";
 import UserDetailsModal from "./UserDetailsModal";
+import Pagination from "../pagination"; 
 
 function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -19,7 +20,7 @@ function AdminUsers() {
   const [refreshFlag, setRefreshFlag] = useState(false);
 
 
-  //for view  modaal
+  ////for view  user datail modaal   ----------------start--------------
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);//for modaal
 
@@ -31,16 +32,33 @@ function AdminUsers() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+////for view  user datail modaal   ---------------end-------------
 
 
- //pagination
-   const [currentPage, setCurrentPage] = useState(1);
+
+
+ 
+  // const getCurrentItems = () => {
+  //   const indexOfLastItem = currentPage * itemsPerPage;
+  //   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  //   return users.slice(indexOfFirstItem, indexOfLastItem);
+  // };
+
+
+ //pagination    ----------------start--------------------
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Change this number to adjust the number of items per page
+
+  const filteredUsers = users.filter(
+    (user) => user.username.toLowerCase().includes(query.toLowerCase())
+  );
+
+  const getTotalPages = () => Math.ceil(filteredUsers.length / itemsPerPage);
 
   const getCurrentItems = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    return users.slice(indexOfFirstItem, indexOfLastItem);
+    return filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
   };
 
   const handleNextPage = () => {
@@ -50,6 +68,8 @@ function AdminUsers() {
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
+ //pagination    ----------------end--------------------
+
 
   useEffect(() => {
     axios
@@ -133,13 +153,13 @@ function AdminUsers() {
         </thead>
         <tbody>
           {getCurrentItems()
-            .filter((user) => user.username.toLowerCase().includes(query))
+            // .filter((user) => user.username.toLowerCase().includes(query))
             .map((user, index) => (
               <tr key={index}>
                 <td>
                   {user.image ? (
                     <img
-                      src={`/images/${user.image}`}
+                      src={`/photos/${user.image}`}
                       alt="placeholder"
                       width={100}
                     />
@@ -183,19 +203,27 @@ function AdminUsers() {
         </tbody>
       </table>
 
-      <div className="flex justify-center mt-5">
+      {/* <div className="flex justify-center mt-5">
         <div className="flex gap-4">
+       
           <Button onClick={handlePrevPage} disabled={currentPage === 1}>
             Previous Page
           </Button>
           <Button
             onClick={handleNextPage}
-            disabled={currentPage === Math.ceil(users.length / itemsPerPage)}
+            disabled={currentPage === getTotalPages()}
           >
             Next Page
           </Button>
         </div>
-      </div>
+      </div> */}
+      
+      <Pagination
+      currentPage={currentPage}
+      totalPages={getTotalPages}
+      handlePrevPage={handlePrevPage}
+      handleNextPage={handleNextPage}
+    />
 
       <UserDetailsModal
         isOpen={isModalOpen}
