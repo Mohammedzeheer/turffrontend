@@ -1,6 +1,5 @@
 
 
-
 export const getTimeSlot = (startTime, endTime, gap) => {
     const timeSlots = [];
     const startMatch = startTime.match(/^(\d{1,2}):(\d{2})$/);

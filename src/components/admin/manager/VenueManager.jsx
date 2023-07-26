@@ -12,6 +12,7 @@ import { AdminPort, UserPort, PartnerPort } from "../../../store/port";
 import ManagerDetail from './ManagerDetail';
 import { AiFillEye } from "react-icons/ai";
 import Pagination from '../pagination';
+import {AxiosAdmin} from '../../../api/AxiosInstance'
 
 
 import '../users/AdminUsers.css';
@@ -27,7 +28,7 @@ function VenueManager() {
 
 
   useEffect(() => {
-    axios.get(`${AdminPort}partners`, { withCredentials: true })
+    AxiosAdmin.get(`partners`, { withCredentials: true })
       .then((res) => {
         console.log(res, '------------------------------------------');
         setmanager(res.data.data);
@@ -39,7 +40,7 @@ function VenueManager() {
 
 
   const approvePartner = (userId) => {
-    axios.post(`${AdminPort}approvePartner`, { userId }, { withCredentials: true })
+    AxiosAdmin.post(`approvePartner`, { userId }, { withCredentials: true })
       .then((res) => {
         console.log(res, 'fdsfsddhsfdfsdffd');
        })
@@ -52,7 +53,7 @@ function VenueManager() {
   
 
   const blockPartner = (userId) => {
-    axios.post(`${AdminPort}blockpartner`, { userId }, { withCredentials: true })
+    AxiosAdmin.post(`blockpartner`, { userId }, { withCredentials: true })
       .then((res) => {
         console.log(res);
     })
@@ -63,7 +64,7 @@ function VenueManager() {
   };
 
   const UnblockPartner =(userId)=>{
-    axios.post(`${AdminPort}unblockpartner`, { userId }, { withCredentials: true })
+    AxiosAdmin.post(`unblockpartner`, { userId }, { withCredentials: true })
     .then((res) => {
       console.log(res);
     })

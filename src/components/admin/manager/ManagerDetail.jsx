@@ -18,8 +18,11 @@ const ManagerDetail = ({ open, onClose, manager }) => {
           <div>
             <p id="modal-description">Username: {manager.username}</p>
             <p>Email: {manager.email}</p>
-            {/* Add more information about the manager here */}
-            {/* ... */}
+            <p>Turf Name: {manager.turfname}</p>
+            <p>Phone Number: {manager.phonenumber}</p>
+            <p>isApprove:   {manager.isApprove ? "Yes" : "No"}</p>
+          
+            
           </div>
         )}
         <Button onClick={onClose}>Close</Button>

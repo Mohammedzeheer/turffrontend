@@ -1,4 +1,4 @@
-import React,{useState}from 'react'
+import React,{useState,useEffect}from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './partnerLogin.css'
 import axios from 'axios'
@@ -9,7 +9,8 @@ import {ToastContainer , toast } from 'react-toastify'  // for error npm
 import 'react-toastify/dist/ReactToastify.css';
 import { updatePartner } from '../../../redux/partnerSlice';
 import { useDispatch } from 'react-redux';
-
+import { PartnerPort } from '../../../store/port';
+import {AxiosPartner} from '../../../api/AxiosInstance'
 
 function PartnerLogin() {
 
@@ -18,8 +19,15 @@ function PartnerLogin() {
     const [partner, setPartner] = useState({})
     const [showPassword, setShowPassword] = useState(false);
 
+    useEffect(()=>{
+        const partner= localStorage.getItem('partner')
+        if(partner){
+            navigate('/partner')
+        }
+    },[])
+
     const handleLogin =async(e)=>{
-        const {data}=await axios.post('http://localhost:4000/partner/partnerlogin',{...partner},{withCredentials:true})
+        const {data}=await AxiosPartner.post(`partnerlogin`,{...partner},{withCredentials:true})
         console.log(data,"----------response");
         if(data){          
             if(data.errors){
@@ -28,8 +36,8 @@ function PartnerLogin() {
               else if (password) generateError(password)
               else if (approval)generateError(approval)
             }else{
-              localStorage.setItem('partner',JSON.stringify(data))
-             dispatch(updatePartner({username:data.partner.username,userId:data.partner._id,token:data.token}))
+             localStorage.setItem('partner',JSON.stringify(data))
+             dispatch(updatePartner({partnername:data.partner.username,partnerId:data.partner._id,token:data.token}))
              navigate('/partner')
             }
           }      
@@ -52,7 +60,6 @@ function PartnerLogin() {
         <div className="col-md-6" >
             <div className="login d-flex align-items-center py-5">
 
-  
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-10 col-xl-7 mx-auto">
@@ -80,16 +87,14 @@ function PartnerLogin() {
                                                 </div>
                   
                                 <button type="submit" onClick={handleLogin} className="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Sign in</button>
-                                <div className="text-center d-flex justify-content-between mt-4"><p>Don't have an account?<a onClick={()=>{navigate('/partnersignup')}} class="font-italic text-muted"> 
+                                <div className="text-center d-flex justify-content-between mt-4"><p>Don't have an account?<a onClick={()=>{navigate('/partner/signup')}} class="font-italic text-muted"> 
                                         <u>Sign up</u></a></p></div>
                             {/* </form> */}
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </div>
 </div>
 <ToastContainer/>

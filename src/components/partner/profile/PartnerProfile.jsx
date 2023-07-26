@@ -5,6 +5,9 @@ import PartnerNavbar from "../header/partnerNavbar";
 import { useSelector } from "react-redux";
 import { PartnerPort } from "../../../store/port";
 import { BiSolidEditAlt } from "react-icons/bi";
+import { IoClose } from "react-icons/io5";
+import {AxiosPartner} from '../../../api/AxiosInstance'
+
 
 
 const PartnerProfile = () => {
@@ -14,14 +17,14 @@ const PartnerProfile = () => {
   const [username, setUserName] = useState();
   const [phonenumber, setPhonenumber] = useState();
   const [turfname, setTurfName] = useState();
-  
+
   const [address, setAddress] = useState();
-  const { userId } = useSelector((state) => state.partner);
+  const {image, partnerId } = useSelector((state) => state.partner);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`${PartnerPort}partnerprofile/${userId}`);
+        const { data } = await AxiosPartner.get(`partnerprofile/${partnerId}`);
         console.log(data);
         setUserData(data.data);
         setUserName(data.data.username);
@@ -39,8 +42,8 @@ const PartnerProfile = () => {
   const handleSaveClick = async (e) => {
     e.preventDefault();
     try {
-      const formData = { username, phonenumber, address, userId,turfname };
-      const { data } = await axios.post(`${UserPort}userprofile`, { formData });
+      const formData = { username, phonenumber, address, partnerId, turfname };
+      const { data } = await AxiosPartner.post(`updateprofile`, { formData });
       console.log(data);
       //   dispatch(updateUser({}));
       console.log(data);
@@ -56,22 +59,21 @@ const PartnerProfile = () => {
     const formData = new FormData();
 
     formData.append("image", imageUrl);
-    formData.append("userId", userId);
+    formData.append("partnerId", partnerId);
 
     const config = {
       header: {
         "content-type": "multipart/form-data",
-        userId: userId,
+        partnerId: partnerId,
       },
       withCredentials: true,
     };
     try {
-      const { data } = await axios.post(
-        `${UserPort}photoupload`,
+      const { data } = await AxiosPartner.post(`photoupload`,
         formData,
         config
       );
-      dispatch(updateUser({ image: data.imageurl, userId }));
+      dispatch(updatePartner({image: data.imageurl, partnerId }));
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -86,7 +88,6 @@ const PartnerProfile = () => {
     setIsEditing(false);
   };
 
-
   const containerStyle = {
     backgroundColor: "#f0f4f8",
     padding: "20px",
@@ -97,7 +98,6 @@ const PartnerProfile = () => {
     position: "relative", // To position the edit button relative to this container
   };
 
- 
   const editButtonStyle = {
     position: "absolute",
     top: "10px",
@@ -115,11 +115,27 @@ const PartnerProfile = () => {
     padding: 0,
   };
 
+  const cancelButtonStyle = {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    background: "#3182CE",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    padding: "5px 10px",
+    cursor: "pointer",
+    zIndex: "999",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    padding: 0,
+  };
 
   return (
     <>
       <PartnerNavbar />
-      <TopBar/>
+      <TopBar />
       <div className="sm-pt-5 md:pt-20 m-4">
         <div
           className="container mx-auto px-4 py-8 pt-30"
@@ -128,7 +144,6 @@ const PartnerProfile = () => {
           {userData ? (
             <div className="flex flex-col items-center md:flex-row md:items-start">
               <div className="w-1/2 pr-8 md:pr-16 md:mb-0 mt-6">
-
                 <div className="profilePage">
                   <div className="card-client">
                     <div className="user-picture">
@@ -189,8 +204,6 @@ const PartnerProfile = () => {
                 </h2>
               </div>
 
-
-
               <div className="pt-10 w-2/2 md:w-3/4">
                 <div className="mb-2">
                   <label className="font-bold text-green-700">Email:</label>
@@ -211,8 +224,6 @@ const PartnerProfile = () => {
                   )}
                 </div>
 
-
-
                 <div className="mb-2">
                   <label className="font-bold text-green-700">Turf Name:</label>
                   {isEditing ? (
@@ -227,9 +238,6 @@ const PartnerProfile = () => {
                     <span className="ml-2">{userData.turfname}</span>
                   )}
                 </div>
-
-
-
 
                 <div className="mb-2">
                   <label className="font-bold text-green-700">Mobile:</label>
@@ -246,9 +254,6 @@ const PartnerProfile = () => {
                   )}
                 </div>
 
-
-
-
                 {/* <div className="mb-4">
                   <label className="font-bold text-green-700">Wallet:</label>
                   <span className="m-2 px-2 py-1 bg-customGreen text-white rounded-md">
@@ -262,22 +267,26 @@ const PartnerProfile = () => {
                       className="bg-green-500 hover:bg-green-600 text-white font-bold px-2 py-1 rounded mb-2 md:mr-2 md:mb-0"
                       onClick={handleSaveClick}
                     >
-                     <span className="text-[14px]"> Save</span>
+                      <span className="text-[14px]"> Save</span>
                     </button>
-                    <button
+
+                    {/* <button
                       className="bg-red-500 hover:bg-red-600 text-white font-bold px-2 py-1 rounded mb-2"
                       onClick={handleCancelClick}
                     >
                       <span className="text-[14px]">Cancel</span>
+                    </button> */}
+                    <button
+                      onClick={handleCancelClick}
+                      style={cancelButtonStyle}
+                    >
+                      <IoClose className="text-customGreen text-[1.5rem]" />
                     </button>
                   </div>
                 ) : (
-                  <button  
-                  onClick={handleEditClick}
-                  style={editButtonStyle}
-                >
-                <BiSolidEditAlt className="text-customGreen text-[1.5rem]"/>
-                </button>
+                  <button onClick={handleEditClick} style={editButtonStyle}>
+                    <BiSolidEditAlt className="text-customGreen text-[1.5rem]" />
+                  </button>
                 )}
               </div>
             </div>
@@ -291,4 +300,3 @@ const PartnerProfile = () => {
 };
 
 export default PartnerProfile;
-

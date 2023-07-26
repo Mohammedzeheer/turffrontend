@@ -6,7 +6,7 @@ import { AdminPort, UserPort, PartnerPort } from '../../../store/port';
 import { useSelector } from 'react-redux';
 import {ToastContainer , toast } from 'react-toastify'  // for error npm 
 import 'react-toastify/dist/ReactToastify.css';
-
+import {AxiosPartner} from '../../../api/AxiosInstance'
 
 const AddTurf = () => {
   const {userId} = useSelector(state => state.partner)
@@ -17,8 +17,8 @@ const AddTurf = () => {
     mobileNumber: '',
     state: '',
     district: '',
-    startingTime:'',
-    endingTime:'',
+    openingTime:'',
+    closingTime:'',
     description: '',
     location: '',
     venueTypes: [], // Changed to an array to support multiple selections
@@ -76,12 +76,12 @@ const AddTurf = () => {
   }
 
 
-  const handlePhotoChange1 = (e) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      photos: e.target.files,
-    }));
-  };
+  // const handlePhotoChange1 = (e) => {
+  //   setFormData((prevFormData) => ({
+  //     ...prevFormData,
+  //     photos: e.target.files,
+  //   }));
+  // };
 
 
   const handlePhotoChange = (event) => {
@@ -105,8 +105,8 @@ const AddTurf = () => {
     formDataObject.append('mobileNumber', formData.mobileNumber);
     formDataObject.append('state', formData.state);
     formDataObject.append('district', formData.district);
-    formDataObject.append('startingTime', formData.startingTime);
-    formDataObject.append('endingTime', formData.endingTime);
+    formDataObject.append('openingTime', formData.openingTime);
+    formDataObject.append('closingTime', formData.closingTime);
     formDataObject.append('description', formData.description);
     formDataObject.append('location', formData.location);
     formDataObject.append('venueTypes', JSON.stringify(formData.venueTypes));
@@ -125,7 +125,7 @@ const AddTurf = () => {
     console.log(formDataObject,"------------formDataObject")
    
     try {
-      const response = await axios.post(`${PartnerPort}addturf`, formDataObject, {
+      const response = await AxiosPartner.post(`addturf`, formDataObject, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -138,8 +138,8 @@ const AddTurf = () => {
         mobileNumber: '',
         state: '',
         district: '',
-        startingTime:'',
-        endingTime:'',
+        openingTime:'',
+        closingTime:'',
         description: '',
         location: '',
         venueTypes: [],
@@ -240,10 +240,10 @@ const generateMessage = (message) => toast.success(message, {
         <div>
           <input
             type="text"
-            id="startingTime"
-            name="startingTime"
-            placeholder='Starting Time'
-            value={formData.startingTime}
+            id="openingTime"
+            name="openingTime"
+            placeholder='Opening Time'
+            value={formData.openingTime}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />
@@ -251,10 +251,10 @@ const generateMessage = (message) => toast.success(message, {
         <div>
           <input
             type="text"
-            id="endingTime"
-            name="endingTime"
-            placeholder='Ending Time'
-            value={formData.endingTime}
+            id="closingTime"
+            name="closingTime"
+            placeholder='Closing Time'
+            value={formData.closingTime}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />

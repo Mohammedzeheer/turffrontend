@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import UserNavbar from "../userHeader/UserNavbar";
 import { useSelector } from "react-redux";
-import { UserPort } from "../../../store/port";
 import { BiSolidEditAlt } from "react-icons/bi";
+import { IoClose } from "react-icons/io5";
+import {AxiosUser} from '../../../api/AxiosInstance'
 
 
 const UserProfile2 = () => {
@@ -15,28 +15,33 @@ const UserProfile2 = () => {
   const [address, setAddress] = useState();
   const { userId } = useSelector((state) => state.user);
 
+
+  const fetchData = async () => {
+    try {
+      const { data } = await AxiosUser.get(`userdata/${userId}`);
+      console.log(data);
+      setUserData(data.data);
+      setUserName(data.data.username);
+      setAddress(data.data.address);
+      setPhonenumber(data.data.phonenumber);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(`${UserPort}userdata/${userId}`);
-        console.log(data);
-        setUserData(data.data);
-        setUserName(data.data.username);
-        setAddress(data.data.address);
-        setPhonenumber(data.data.phonenumber);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
     fetchData();
   }, []);
+
+ 
+
 
   //saving address
   const handleSaveClick = async (e) => {
     e.preventDefault();
     try {
       const formData = { username, phonenumber, address, userId };
-      const { data } = await axios.post(`${UserPort}userprofile`, { formData });
+      const { data } = await AxiosUser.post(`userprofile`, { formData });
       console.log(data);
       //   dispatch(updateUser({}));
       console.log(data);
@@ -62,13 +67,9 @@ const UserProfile2 = () => {
       withCredentials: true,
     };
     try {
-      const { data } = await axios.post(
-        `${UserPort}photoupload`,
-        formData,
-        config
-      );
-      dispatch(updateUser({ image: data.imageurl, userId }));
-      console.log(data);
+      const { data } = await AxiosUser.post(`photoupload`, formData,config);
+      // dispatch(updateUser({ image: data.imageurl, userId }));
+      console.log(data,"ghsdsdjsd --- image");
     } catch (error) {
       console.log(error);
     }
@@ -137,7 +138,7 @@ const UserProfile2 = () => {
                       ) : (
                         <img
                           className="imgP"
-                          src={`/Photos/${userData.image}`}
+                          src={userData.image}
                           alt=""
                           width={250}
                         />
@@ -188,7 +189,7 @@ const UserProfile2 = () => {
 
               <div className="pt-10 w-2/2 md:w-3/4">
                 <div className="mb-2">
-                  <label className="font-bold text-green-700">Email:</label>
+                  <label className="font-bold text-green-700">Email      :</label>
                   <span className="ml-2">{userData.email}</span>
                 </div>
 
@@ -207,7 +208,7 @@ const UserProfile2 = () => {
                 </div>
 
                 <div className="mb-2">
-                  <label className="font-bold text-green-700">Mobile:</label>
+                  <label className="font-bold text-green-700">Mobile   :</label>
                   {isEditing ? (
                     <input
                       type="text"
@@ -222,7 +223,7 @@ const UserProfile2 = () => {
                 </div>
 
                 <div className="mb-4">
-                  <label className="font-bold text-green-700">Wallet:</label>
+                  <label className="font-bold text-green-700">Wallet :</label>
                   <span className="m-2 px-2 py-1 bg-customGreen text-white rounded-md">
                     {userData.wallet}
                   </span>
@@ -236,11 +237,17 @@ const UserProfile2 = () => {
                     >
                      <span className="text-[14px]"> Save</span>
                     </button>
-                    <button
+                    {/* <button
                       className="bg-red-500 hover:bg-red-600 text-white font-bold px-2 py-1 rounded mb-2"
                       onClick={handleCancelClick}
                     >
                       <span className="text-[14px]">Cancel</span>
+                    </button> */}
+                    <button
+                      onClick={handleCancelClick}
+                      style={editButtonStyle}
+                    >
+                      <IoClose className="text-customGreen text-[1.5rem]" />
                     </button>
                   </div>
                 ) : (
@@ -263,6 +270,12 @@ const UserProfile2 = () => {
 };
 
 export default UserProfile2;
+
+
+
+
+
+
 
 //   const handleSaveClick = async (e) => {
 //         e.preventDefault()

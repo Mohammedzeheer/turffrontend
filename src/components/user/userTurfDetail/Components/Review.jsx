@@ -1,26 +1,39 @@
 import React, { useState } from 'react';
-// import { Axiosuser } from '../../../../API/AxiosInstance';
-// import { AdminPort, UserPort, PartnerPort } from '../../../store/port';
-import { UserPort } from '../../../../store/port';
-
-import { toast } from 'react-hot-toast'
-
+import {AxiosUser} from '../../../../api/AxiosInstance'
+import { useSelector } from 'react-redux';
+import RatingComponent from './Rating';
+import { toast } from "react-toastify";
 
 const ReviewModal = ({ isOpen, toggle, id,refresh,setRefresh }) => {
-    const [name, setName] = useState('')
+    const { username } = useSelector((state) => state.user);
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
+
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await UserPort.post(`reviews`, { id, name, review, rating, });
-            toggle();
-            setRefresh(!refresh)
-            toast.success("Review Submitted Successfully")
+          if (!review) {
+            toast.error('Please enter a review before submitting.',{
+                position: "top-center",
+            });
+            return;
+          }
+      
+          let name = username;
+          await AxiosUser.post(`reviews`, { id, name, review, rating });
+          toggle();
+          setRefresh(!refresh);
+          toast.success('Review Submitted Successfully',{
+            position: "top-center",
+            autoClose:1000
+          });
         } catch (err) {
-            console.error(err);
+          console.error(err);
         }
-    };
+      };
+
     return (
         <>
             {isOpen ? (
@@ -40,44 +53,24 @@ const ReviewModal = ({ isOpen, toggle, id,refresh,setRefresh }) => {
                                 {/*body*/}
                                 <div className="relative p-6 flex-auto">
                                     <form onSubmit={handleSubmit}>
-                                        <div className="mb-4">
-                                            <label className="block text-gray-700 font-bold mb-2" htmlFor="review">
-                                                Name
+
+                                        <div style={{ textAlign: 'center', textTransform: 'uppercase' }}>
+                                            <label className="block text-gray-900 font-bold mb-3" htmlFor="review">
+                                                {username}
                                             </label>
-                                            <input
-                                                className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                id="name"
-                                                required
-                                                value={name}
-                                                onChange={(e) => setName(e.target.value)}
-                                            />
                                         </div>
+
+
                                         <div className="mb-4">
-                                            <label className="block text-gray-700 font-bold mb-2" htmlFor="rating">
-                                                Rating
-                                            </label>
-                                            <select
-                                                className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                id="rating"
-                                                value={rating}
-                                                required
-                                                onChange={(e) => setRating(parseInt(e.target.value))}
-                                            >
-                                                <option value="0">0</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
+                                        <RatingComponent rating={rating} setRating={setRating} />
                                         </div>
+
+                                       
                                         <div className="mb-4">
-                                            <label className="block text-gray-700 font-bold mb-2" htmlFor="review">
-                                                Review
-                                            </label>
                                             <textarea
                                                 className="block appearance-none w-full  bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                 id="review"
+                                                placeholder='Review here'
                                                 rows="5"
                                                 value={review}
                                                 onChange={(e) => setReview(e.target.value)}
@@ -92,7 +85,7 @@ const ReviewModal = ({ isOpen, toggle, id,refresh,setRefresh }) => {
                                                 Close
                                             </button>
                                             <button
-                                                className=" bg-green-600 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                className=" bg-green-600 text-white active:bg-green-600 font-bold uppercase text-sm px-3 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                 type="submit"
                                             >
                                                 Save

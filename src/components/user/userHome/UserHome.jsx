@@ -7,31 +7,34 @@ function UserHome() {
   let navigate = useNavigate()
   const [isLogin, setLogin] = useState(false);
 
-  useEffect(() => {
-    const checkLocalStorage = () => {
-      const checkToken = localStorage.getItem("user");
-      if (checkToken) {
-        setLogin(true);
-      }
-    };
-    checkLocalStorage();
-  }, []);
+  // useEffect(() => {
+  //   const checkLocalStorage = () => {
+  //     const checkToken = localStorage.getItem("user");
+  //     if (checkToken) {
+  //       setLogin(true);
+  //     }
+  //   };
+  //   checkLocalStorage();
+  // }, []);
+
+  // const handleBookSlotClick = () => {
+  //   if (isLogin) {
+  //     navigate("/userturf");
+  //   } else {
+  //     navigate("/signup");
+  //   }
+  // };
 
   const handleBookSlotClick = () => {
-    if (isLogin) {
-      navigate("/userturf");
-    } else {
-      navigate("/signup");
-    }
+      navigate("/userturf"); 
   };
-
 
   return (
 <div className="banner relative">
   <img src="/image/TURF3.jpg" alt="Turf Booking Banner" className="w-full h-auto object-cover" />
   <div className="button-container absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
     <button onClick={handleBookSlotClick} className="bg-green-500 text-white px-4 py-2 rounded-full cursor-pointer text-sm m-2 outline-none">Book Your Slot</button>
-    <button onClick={() => navigate('/partnersignup')} className="bg-gray-300 text-black px-4 py-2 rounded-full cursor-pointer m-2 text-sm outline-none">Partner with Us</button>
+    <button onClick={() => navigate('/partner/signup')} className="bg-gray-300 text-black px-4 py-2 rounded-full cursor-pointer m-2 text-sm outline-none">Partner with Us</button>
   </div>
 
   <h1 className="text-4xl font-bold">Hello, I am home</h1>

@@ -47,7 +47,7 @@ function AdminUsers() {
 
  //pagination    ----------------start--------------------
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Change this number to adjust the number of items per page
+  const itemsPerPage = 4; // Change this number to adjust the number of items per page
 
   const filteredUsers = users.filter(
     (user) => user.username.toLowerCase().includes(query.toLowerCase())

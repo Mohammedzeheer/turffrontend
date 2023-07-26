@@ -41,7 +41,7 @@ const PartnerOtp = () => {
                  generateError(data.errors)
              }
              else {
-                 navigate("/partnerlogin")
+                 navigate("/partner/login")
              }
          }
      } catch (error) {
@@ -56,7 +56,7 @@ const PartnerOtp = () => {
         const { data } = await axios.post(`${PartnerPort}resendpartnerotp`, {otp}, { withCredential: true })
          if (data) {
           if(data.otp){
-            navigate("/partnerotp")
+            navigate("/partner/otp")
            }
          }
      } catch (error) {

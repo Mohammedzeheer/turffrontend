@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState,useEffect } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,11 +15,12 @@ function PartnerSignup() {
 
     const navigate = useNavigate()
 
-    const handleSubmit1 = () => {
-        axios.post(`${PartnerPort}partnersignup`, { ...partner }, { withCredential: true }).then((res) => {
-            console.log(res)
-        })
-    }
+    useEffect(()=>{
+        const partner= localStorage.getItem('partner')
+        if(partner){
+            navigate('/partner')
+        }
+    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -35,10 +36,10 @@ function PartnerSignup() {
                     else if (email) generateError(email)
                 }
                 else if(data.otp){
-                    navigate("/partnerotp")
+                    navigate("/partner/otp")
                 }
                 else {
-                    navigate("/partnerotp")
+                    navigate("/partner/otp")
                     // navigate("/login")
                 }
             }
@@ -105,7 +106,7 @@ function PartnerSignup() {
                                                 </div>
 
                                                 <button type="submit" className="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" onClick={handleSubmit}>Sign up</button>
-                                                <div className="text-center d-flex justify-content-between mt-4"><p>have an account?<a onClick={() => { navigate('/partnerlogin') }} class="font-italic text-muted">
+                                                <div className="text-center d-flex justify-content-between mt-4"><p>have an account?<a onClick={() => { navigate('/partner/login') }} class="font-italic text-muted">
                                                     <u>Login</u></a></p></div>
                                             </form>
                                         </div>

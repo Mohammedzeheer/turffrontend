@@ -2,14 +2,17 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
-import axios from "axios";
-import { AdminPort, UserPort, PartnerPort } from "../../../store/port";
+// import axios from "axios";
+import { UserPort } from "../../../store/port";
 import "react-calendar/dist/Calendar.css";
 import Booking from "./Components/Booking";
 import ImageManage from "./Components/ImageManage";
 import ReviewModal from "./Components/Review";
 import CardReview from "./Components/CardReview";
 import UserNavbar from "../userHeader/UserNavbar";
+import {AxiosUser} from '../../../api/AxiosInstance'
+import { toast } from "react-toastify";
+
 
 export default function UserTurfDetails() {
   const token = localStorage.getItem("user");
@@ -19,13 +22,15 @@ export default function UserTurfDetails() {
   const [showCalender, setShowCalender] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  const [selectedPrice,setSelectedPrice] = useState()
+  let [selectedPrice,setSelectedPrice] = useState()
+  const [isLogin, setLogin] = useState(false);
+
+
 
   const fetchTurf = async () => {
     try {
-      console.log(ID, "iddddd");
-      const response = await axios.get(`${UserPort}viewTurf/${ID}`);
-      //   const response = await UserPort.get(`viewTurf/${ID}`);
+      console.log(ID, "id");
+      const response = await AxiosUser.get(`viewTurf/${ID}`);
       console.log(response, "response of detail page");
       setData(response.data.turf);
     } catch (error) {
@@ -33,7 +38,6 @@ export default function UserTurfDetails() {
     }
   };
 
-  const imageport = `${UserPort}images/${data.images}`;
   const { "5s": price5s, "7s": price7s } = data.prices || {};
 
   useEffect(() => {
@@ -49,10 +53,11 @@ export default function UserTurfDetails() {
       <UserNavbar />
       <section className="text-gray-600 body-font">
         {showCalender ? (
-          <Booking
+          <Booking        
             closingTime={data.closingTime}
             openingTime={data.openingTime}
             ID={data._id}
+            price ={selectedPrice}
             setShowCalender={setShowCalender}
           />
         ) : (
@@ -68,19 +73,19 @@ export default function UserTurfDetails() {
                       (image) => `${UserPort}images/${image}`
                     ) || []
                   }
-                  className="w-full h-auto"
-                  // style={{ width: "600px", height: "300px" }}
+                  // className="w-full h-auto"
+                  style={{ width: "40px", height: "300px" }}
                 />
               </div>
               <div className="md:w-1/2 md:pl-10">
                 <h1 className="text-3xl flex justify-center items-center sm:text-4xl font-medium text-customGreen mt-10  mb-4">
                   <span className="font-bold">{data?.courtName}</span>
                 </h1>
-                {/* <span className="flex justify-center items-center text-gray-600 p-1">
-                  {data?.sportsEvent}
-                </span> */}
                 <span className="flex justify-center items-center text-gray-600 p-1">
-                  {data?.phoneNumber}
+                  {data?.description}
+                </span>
+                <span className="flex justify-center items-center text-gray-600 p-1">
+                  {data?.mobileNumber}
                 </span>
                 <span className="flex justify-center items-center text-gray-600 p-1">
                   {data?.location}
@@ -161,7 +166,19 @@ export default function UserTurfDetails() {
                 <div className="flex justify-center items-center mb-4 mt-4">
                   <button
                     className="px-6 py-2 text-lg font-bold rounded-md text-white bg-indigo-500 hover:bg-indigo-600 border-none focus:outline-none"
-                    onClick={() => setShowCalender(true)}
+                    // onClick={() => setShowCalender(true)}
+                    onClick={() => {
+                      if (!selectedPrice) {
+                        // toast.error("Please select a slots before booking.");
+                        toast.error("Please select a slot before booking.", {
+                          position: "top-center",
+                          // autoClose: 2000,
+                        });
+                      } else {
+                        setShowCalender(true);
+                      }
+                    }}
+                  
                   >
                     Book Now
                   </button>
@@ -174,16 +191,8 @@ export default function UserTurfDetails() {
                     </button>
                   )}
 
-                  {/* <button
-                    className="px-6 py-2 text-lg font-bold rounded-md text-white bg-gray-500 hover:bg-gray-600 border-none focus:outline-none ml-4"
-                    onClick={toggleModal}
-                  >2ws2e
-                    Add Review
-                  </button> */}
                 </div>
-                {/* <div className="text-gray-600 text-justify">
-                  <p>{data?.description}</p>
-                </div> */}
+             
               </div>
             </div>
           </>
@@ -196,10 +205,25 @@ export default function UserTurfDetails() {
         toggle={toggleModal}
         id={ID}
       />
-      <CardReview refresh={refresh} id={ID} />
+      {/* <CardReview refresh={refresh} id={ID} /> */}
+      {!showCalender && <CardReview refresh={refresh} id={ID} />}
     </>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // import React from 'react';
 // import { useParams } from 'react-router-dom'; // Assuming you're using React Router for navigation

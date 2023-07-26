@@ -6,6 +6,7 @@ import {ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux'
 import {AddAdmin} from '../../../redux/adminSlice'
+import {AxiosAdmin} from '../../../api/AxiosInstance'
 // import {AdminPort,UserPort} from '../../../store/port'
 
 
@@ -27,8 +28,7 @@ function AdminLogin() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const {data} = await axios.post(`http://localhost:4000/admin/adminLogin`, { ...admin }, { withCredentials: true });
-            // const data = res.data;
+            const {data} = await AxiosAdmin.post(`adminLogin`, { ...admin }, { withCredentials: true });
             console.log(data,"------datat");
             if (data) {
                 if (data.errors) {

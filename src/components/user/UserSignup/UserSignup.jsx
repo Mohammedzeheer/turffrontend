@@ -6,12 +6,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { UserPort } from '../../../store/port';
+import {AxiosUser} from '../../../api/AxiosInstance'
 import './userSignup.css'
 
 
 function UserSignup() {
 
     const [showPassword, setShowPassword] = useState(false);
+
+    useEffect(()=>{
+        const user= localStorage.getItem('user')
+        if(user){
+            navigate('/')
+        }
+    },[])
 
     const [user, setUser] = useState({
         username: "",
@@ -24,7 +32,7 @@ function UserSignup() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const { data } = await axios.post(`${UserPort}signup`, { ...user }, { withCredential: true })
+            const { data } = await AxiosUser.post(`signup`, { ...user }, { withCredential: true })
             console.log(data, "---hello iam data------")
             if (data) {
                 if (data.errors) {

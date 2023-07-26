@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify'  // for error npm 
 import 'react-toastify/dist/ReactToastify.css';
 import { UserPort } from '../../../store/port';
+import {AxiosUser} from '../../../api/AxiosInstance'
 
 const UserOtp = () => {
   const [otp, setOtp] = useState("");
@@ -34,7 +35,7 @@ const UserOtp = () => {
     try {
         // Do something with the OTP, e.g., send it to the server for verification
         console.log("OTP entered:", otp);
-        const { data } = await axios.post(`${UserPort}otpcheck`, {otp}, { withCredential: true })
+        const { data } = await AxiosUser.post(`otpcheck`, {otp}, { withCredential: true })
           console.log(data, "---hello iam data of otp signup------")
          if (data) {
              if (data.errors) {
@@ -56,7 +57,7 @@ const UserOtp = () => {
     e.preventDefault();
     try {
         console.log("OTP entered:", otp);
-        const { data } = await axios.post(`${UserPort}resendotp`, {otp}, { withCredential: true })
+        const { data } = await AxiosUser.post(`resendotp`, {otp}, { withCredential: true })
          if (data) {
           if(data.otp){
             navigate("/userotp")

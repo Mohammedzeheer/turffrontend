@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-// import { userUrl } from "../../../../API/API"
-// import axios from "axios"
-// import { AdminPort, UserPort, PartnerPort } from '../../../store/port';
 import { UserPort } from '../../../../store/port';
-
-import Nav from "../../../User/Layout/Nav"
+import { AxiosUser } from '../../../../api/AxiosInstance';
 import { toast, Toaster } from 'react-hot-toast'
+
+import UserNavbar from "../../userHeader/UserNavbar";
+
+
 
 const SuccessPage = () => {
     const [details, setDetails] = useState({})
@@ -17,7 +17,7 @@ const SuccessPage = () => {
 
     const updateSuccess = async () => {
         try {
-          const response = await UserPort.post(`booking-success/${id}`);
+          const response = await AxiosUser.post(`booking-success/${id}`);
           if (response?.status === 200) {
             setDetails(response.data);
             toast.success("Payment Success")
@@ -29,7 +29,7 @@ const SuccessPage = () => {
       
     return (
       <>
-      <Nav/>
+      <UserNavbar/>
       <Toaster/>
         <div className="flex flex-col items-center justify-center h-screen bg-gray-200">
             <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-2xl">
@@ -42,7 +42,7 @@ const SuccessPage = () => {
                     <p>Booked Date: <span className="font-bold">{new Date(details.bookDate).toLocaleDateString()}</span></p>
                     <p>Booked Time: <span className="font-bold">{details.time}</span></p>
                 </div>
-                <Link to={'/'}>   <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg block mx-auto">Go Back to Home</button></Link>
+                <Link to={'/'}>   <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg block mx-auto no-underline">Go Back to Home</button></Link>
             </div>
         </div>
       </>

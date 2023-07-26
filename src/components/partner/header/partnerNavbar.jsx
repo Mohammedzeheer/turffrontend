@@ -8,7 +8,7 @@ const PartnerNavbar = () => {
   const [isLogin, setLogin] = useState(false);
   const Navigate = useNavigate();
  
-  const {username} = useSelector((state) => state.partner);
+  const {partnername} = useSelector((state) => state.partner);
 
   const Image = () => (
     <img className="w-[170px] h-20px mx-2" src="/image/AONE.png" alt="Logo" />
@@ -24,9 +24,9 @@ const PartnerNavbar = () => {
     checkLogin();
   }, []);
 
-  const logoutTurf = () => {
+  const logoutPartner = () => {
     localStorage.removeItem("partner");
-    Navigate("/partnerlogin");
+    Navigate("/partner/login");
   };
 
   return (
@@ -34,7 +34,7 @@ const PartnerNavbar = () => {
       <nav className="bg-customGreen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-white">
+            <div onClick={()=>Navigate('/partner')} className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-white">
               <Image />
             </div>
             <div className="hidden md:block flex items-center space-x-4">
@@ -47,21 +47,9 @@ const PartnerNavbar = () => {
                       className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-600 hover:text-gray-500"    
                       onClick={() => setIsOpen(!isOpen)}
                     >
-                      {isLogin && <span className="text-gray-300">{username}</span>}
+                      {isLogin && <span className="text-gray-300">{partnername}</span>}
                       <span className="text-white"><FiChevronDown/></span> 
-                      {/* <svg
-                        className="-mr-1 ml-2 h-5 w-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 3.586L3.707 9.88a1 1 0 001.414 1.415L10 6.414l4.879 4.881a1 1 0 001.414-1.415L10 3.586z"
-                          clipRule="evenodd"
-                        />
-                      </svg> */}
+                    
                     </button>
                   </div>
                   {isOpen && (
@@ -76,7 +64,7 @@ const PartnerNavbar = () => {
                         </a>
                         <button
                           type="button"
-                          onClick={logoutTurf}
+                          onClick={logoutPartner}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
                         >
@@ -91,7 +79,7 @@ const PartnerNavbar = () => {
                 <button
                   type="button"
                   className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                  onClick={() => Navigate("/partnerlogin")}
+                  onClick={() => Navigate("/partner/login")}
                 >
                   Get Started
                 </button>
@@ -153,13 +141,13 @@ const PartnerNavbar = () => {
               <>
                 <a
                   href="/partner/profile"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md font-medium"
+                  className="text-gray-300 no-underline  hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md font-medium"
                 >
                   Profile
                 </a>
                 <button
                   type="button"
-                  onClick={logoutTurf}
+                  onClick={logoutPartner}
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md font-medium"
                 >
                   Logout
@@ -170,7 +158,7 @@ const PartnerNavbar = () => {
               <button
                 type="button"
                 className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                onClick={() => Navigate("/partnerlogin")}
+                onClick={() => Navigate("/partner/login")}
               >
                 Get Started
               </button>

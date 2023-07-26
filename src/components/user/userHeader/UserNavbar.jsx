@@ -36,8 +36,8 @@ const PartnerNavbar = () => {
       <nav className="bg-customGreen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-white">
-              <Image />
+            <div onClick={()=>Navigate('/')} className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-white">
+              <Image/>
               {/* A one Turf */}
             </div>
             <div className="hidden md:block flex items-center space-x-4">
@@ -163,7 +163,7 @@ const PartnerNavbar = () => {
               <>
                 <a
                   href="/userprofile"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md font-medium"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md font-medium no-underline"
                 >
                   Profile
                 </a>
@@ -179,7 +179,8 @@ const PartnerNavbar = () => {
             {!isLogin && (
               <button
                 type="button"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                // className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-transparent hover:bg-indigo-700"              
                 onClick={() => Navigate("/login")}
               >
                 Get Started

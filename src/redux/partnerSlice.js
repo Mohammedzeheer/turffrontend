@@ -1,9 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const INITIAL_STATE={
-    username:"",
+    partnername:"",
     token:"",
-    userId:""
+    partnerId:""
 }
 
 export const PartnerSlice=createSlice({
@@ -11,10 +11,10 @@ export const PartnerSlice=createSlice({
     initialState:INITIAL_STATE,
     reducers:{
         updatePartner:(state,action)=>{
-            state.username = action.payload.username
-            state.userId = action.payload.userId
+            state.partnername = action.payload.partnername
+            state.partnerId = action.payload.partnerId
             state.token=action.payload.token
-            
+            state.image=action.payload.image           
         }
     }
 })

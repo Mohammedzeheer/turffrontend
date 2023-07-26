@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../redux/userSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import {AxiosUser} from '../../../api/AxiosInstance'
 import './UserLogin.css'
 
 function UserLogin() {
@@ -16,16 +17,16 @@ function UserLogin() {
   const [user, setUser] = useState({})
   const [showPassword, setShowPassword] = useState(false);
 
-  // useEffect(()=>{
-  //   let user=localStorage.getItem('user')
-  //   if(user){
-  //     Navigate('/')
-  //   }
-  // },[])
+  useEffect(()=>{
+    let user=localStorage.getItem('user')
+    if(user){
+      Navigate('/')
+    }
+  },[])
 
   const handleLogin = (e) => {
     e.preventDefault() // for make render 
-    axios.post('http://localhost:4000/userlogin', { ...user }, { withCredentials: true }).then((res) => {
+    AxiosUser.post(`userlogin`,  { ...user }, { withCredentials: true }).then((res) => {
       res = res.data
       if (res) {
         console.log(res);

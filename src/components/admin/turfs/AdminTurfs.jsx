@@ -13,7 +13,7 @@ import { AiFillEye } from "react-icons/ai";
 import { AiOutlinePullRequest } from "react-icons/ai";
 import '../users/AdminUsers.css';
 import Pagination from '../pagination';
-
+import {AxiosAdmin} from '../../../api/AxiosInstance'
 
 function AdminTurfs() {
   const [users, setUsers] = useState([]);
@@ -59,7 +59,7 @@ const handlePrevPage = () => {
 
 
   const approveTurfs = (userId) => {
-    axios.post(`${AdminPort}approveTurfs`, { userId }, { withCredentials: true })
+    AxiosAdmin.post(`approveTurfs`, { userId }, { withCredentials: true })
       .then((res) => {
         console.log(res, 'fdsfsddhsfdfsdffd');
        })
@@ -71,7 +71,7 @@ const handlePrevPage = () => {
 
 
   useEffect(() => {
-    axios.get(`${AdminPort}turfs`, { withCredentials: true })
+    AxiosAdmin.get(`turfs`, { withCredentials: true })
       .then((res) => {
         console.log(res, '------------------------------------------');
         setUsers(res.data.data);
