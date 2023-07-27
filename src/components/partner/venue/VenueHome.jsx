@@ -61,7 +61,8 @@ function VenueHome() {
                   <img
                     onClick={() => handleTurfClick(turf._id)}
                     className="mx-auto bg-customGreen"
-                    src={`${UserPort}images/${turf.images[0]}`}
+                    // src={`${UserPort}images/${turf.images[0]}`}
+                    src={turf.images[0]}
                     alt="/"
                     style={{ width: "400px", height: "200px" }}
                   />

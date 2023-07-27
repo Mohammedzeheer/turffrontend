@@ -1,11 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify'  // for error npm 
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { UserPort } from '../../../store/port';
 import {AxiosUser} from '../../../api/AxiosInstance'
 import './userSignup.css'
 

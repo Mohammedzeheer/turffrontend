@@ -5,7 +5,7 @@ import RatingComponent from './Rating';
 import { toast } from "react-toastify";
 
 const ReviewModal = ({ isOpen, toggle, id,refresh,setRefresh }) => {
-    const { username } = useSelector((state) => state.user);
+    const {username,userId } = useSelector((state) => state.user);
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
 
@@ -21,8 +21,7 @@ const ReviewModal = ({ isOpen, toggle, id,refresh,setRefresh }) => {
             return;
           }
       
-          let name = username;
-          await AxiosUser.post(`reviews`, { id, name, review, rating });
+          await AxiosUser.post(`reviews`, { id, review, rating, userId});
           toggle();
           setRefresh(!refresh);
           toast.success('Review Submitted Successfully',{

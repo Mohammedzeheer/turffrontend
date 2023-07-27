@@ -1,8 +1,7 @@
 import TurfCard from "./TurfCard";
 import { useEffect, useState } from "react";
-import { UserPort } from '../../../store/port';
-import axios from 'axios'
 import Pagination from "./Pagination";
+import {AxiosUser} from '../../../api/AxiosInstance'
 
 const UserTurfs = () => {
   const [turfs, setTurfs] = useState([]);
@@ -12,7 +11,7 @@ const UserTurfs = () => {
 
 
   useEffect(() => {
-    axios.get(`${UserPort}allturfs`, { withCredentials: true })
+    AxiosUser.get(`allturfs`, { withCredentials: true })
       .then((res) => {
         console.log(res, '-------------turf page response------------');
         setTurfs(res.data.data);

@@ -17,7 +17,7 @@ const TurfCard = ({ _id, courtName, images, location,rating,reviews }) => {
       <img
         alt=""
         className="object-cover w-full h-52 bg-gray-500"
-        src={`${UserPort}images/${images?.[0]}`}
+        src={images?.[0]}
         // src={images?.[0]}
       />
       <div className="flex flex-col flex-1 p-6">

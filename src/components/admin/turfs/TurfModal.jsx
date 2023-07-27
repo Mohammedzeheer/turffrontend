@@ -45,11 +45,11 @@ function TurfModal({ open, onClose, user }) {
         </div>
              <div className="mb-2">
           <span className="font-bold">Images:</span>
-         <div className="flex flex-wrap">
+         <div className="flex flex-wrap justify-center">
              {user.images.map((image, index) => (
               <img
                 key={index}
-                src={`${UserPort}images/${image}`}
+                src={image}
                 alt={`Image ${index + 1}`}
                 className="w-16 h-16 m-1 border border-gray-400 rounded"
               />

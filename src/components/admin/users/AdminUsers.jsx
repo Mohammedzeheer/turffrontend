@@ -159,7 +159,7 @@ function AdminUsers() {
                 <td>
                   {user.image ? (
                     <img
-                      src={`/photos/${user.image}`}
+                      src={user.image}
                       alt="placeholder"
                       width={100}
                     />

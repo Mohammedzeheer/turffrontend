@@ -127,7 +127,7 @@ const handlePrevPage = () => {
               <tr key={index}>
                 <td>
                   {user.images ? (
-                    <img src={`${UserPort}images/${user.images[0]}`} alt="loading" width={100} />
+                    <img src={user.images[0]} alt="loading" width={100} />
                   ) : (
                     <img
                       src="https://static-00.iconduck.com/assets.00/profile-minor-icon-256x256-6u3v5w0z.png"

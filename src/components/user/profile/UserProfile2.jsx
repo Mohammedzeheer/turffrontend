@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import UserNavbar from "../userHeader/UserNavbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import {AxiosUser} from '../../../api/AxiosInstance'
+import { updateUser } from "../../../redux/userSlice";
+import { FaBookOpen } from 'react-icons/fa'; // Import the FontAwesome icon
+import ButtonBooking from "./ButtonBooking";
 
 
 const UserProfile2 = () => {
@@ -14,7 +17,8 @@ const UserProfile2 = () => {
   const [phonenumber, setPhonenumber] = useState();
   const [address, setAddress] = useState();
   const { userId } = useSelector((state) => state.user);
-
+   const dispatch=useDispatch()
+   
 
   const fetchData = async () => {
     try {
@@ -68,8 +72,9 @@ const UserProfile2 = () => {
     };
     try {
       const { data } = await AxiosUser.post(`photoupload`, formData,config);
-      // dispatch(updateUser({ image: data.imageurl, userId }));
-      console.log(data,"ghsdsdjsd --- image");
+      console.log(data,'-----------------------------------')
+      dispatch(updateUser({image: data.imageurl}));
+      console.log(image,"ghsdsdjsd --- image");
     } catch (error) {
       console.log(error);
     }
@@ -116,6 +121,8 @@ const UserProfile2 = () => {
   return (
     <>
       <UserNavbar />
+
+      <ButtonBooking/>
       <div className="sm-pt-5 md:pt-20 m-4">
         <div
           className="container mx-auto px-4 py-8 pt-30"

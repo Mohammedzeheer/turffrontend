@@ -2,8 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
-// import axios from "axios";
-import { UserPort } from "../../../store/port";
 import "react-calendar/dist/Calendar.css";
 import Booking from "./Components/Booking";
 import ImageManage from "./Components/ImageManage";
@@ -12,6 +10,8 @@ import CardReview from "./Components/CardReview";
 import UserNavbar from "../userHeader/UserNavbar";
 import {AxiosUser} from '../../../api/AxiosInstance'
 import { toast } from "react-toastify";
+
+// import './userTurfDetail.css'
 
 
 export default function UserTurfDetails() {
@@ -63,23 +63,14 @@ export default function UserTurfDetails() {
         ) : (
           <>
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-5 py-10">
-              <div className="mb-10 md:mb-0 flex justify-center">
-                {/* <ImageManage photos={data?.images} className="w-full h-auto" /> */}
-                {/* <ImageManage photos={`${UserPort}images/${data.images}`} className="w-full h-auto" /> */}
-
-                <ImageManage
-                  photos={
-                    data?.images?.map(
-                      (image) => `${UserPort}images/${image}`
-                    ) || []
-                  }
-                  // className="w-full h-auto"
-                  style={{ width: "40px", height: "300px" }}
-                />
+              <div className="mb-10 md:mb-0 flex justify-center">     
+                <ImageManage photos={data?.images || []} />
               </div>
+
+
               <div className="md:w-1/2 md:pl-10">
-                <h1 className="text-3xl flex justify-center items-center sm:text-4xl font-medium text-customGreen mt-10  mb-4">
-                  <span className="font-bold">{data?.courtName}</span>
+                <h1 className="text-3xl flex justify-center items-center sm:text-4xl font-medium text-customGreen mt-5  mb-4">
+                  <span className="font-bold ">{data?.courtName}</span>
                 </h1>
                 <span className="flex justify-center items-center text-gray-600 p-1">
                   {data?.description}
@@ -113,35 +104,7 @@ export default function UserTurfDetails() {
                   <span className="text-gray-600"></span>
                 </div>
 
-                {/* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
-                  ₹{data?.price}
-                </h3> */}
 
-                {/* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
-                 5 v 5  ₹{price5s}
-                </h3>
-
-                <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
-                 7 v 7  ₹{price7s}
-                </h3> */}
-
-                {/* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
-                  <input
-                    type="checkbox"
-                    checked={selectedPrice === price5s}
-                    onChange={() => setSelectedPrice(price5s)}
-                  />
-                 <span className="text-base mr-3 ml-1">5 v 5</span>  ₹ {price5s}
-                </h3>
-
-                <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
-                  <input
-                    type="checkbox"
-                    checked={selectedPrice === price7s}
-                    onChange={() => setSelectedPrice(price7s)}
-                  />
-                   <span className="text-base mr-3 ml-1">7 v 7</span> ₹ {price7s}
-                </h3> */}
 
 
 <h3 className={`text-2xl font-semibold flex justify-center items-center `}>
@@ -169,7 +132,6 @@ export default function UserTurfDetails() {
                     // onClick={() => setShowCalender(true)}
                     onClick={() => {
                       if (!selectedPrice) {
-                        // toast.error("Please select a slots before booking.");
                         toast.error("Please select a slot before booking.", {
                           position: "top-center",
                           // autoClose: 2000,
@@ -215,6 +177,53 @@ export default function UserTurfDetails() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                {/* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
+                  ₹{data?.price}
+                </h3> */}
+
+                {/* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
+                 5 v 5  ₹{price5s}
+                </h3>
+
+                <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
+                 7 v 7  ₹{price7s}
+                </h3> */}
+
+                {/* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedPrice === price5s}
+                    onChange={() => setSelectedPrice(price5s)}
+                  />
+                 <span className="text-base mr-3 ml-1">5 v 5</span>  ₹ {price5s}
+                </h3>
+
+                <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedPrice === price7s}
+                    onChange={() => setSelectedPrice(price7s)}
+                  />
+                   <span className="text-base mr-3 ml-1">7 v 7</span> ₹ {price7s}
+                </h3> */}
 
 
 

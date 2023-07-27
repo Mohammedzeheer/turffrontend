@@ -1,0 +1,83 @@
+/* Styling for the container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Styling for the image container */
+  .image-container {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  /* Styling for the images */
+  .image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* Styling for the turf details */
+  .turf-details {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .turf-details h1 {
+    font-size: 2rem;
+  }
+  
+  .turf-details span {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Styling for the checkboxes */
+  .checkboxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .checkboxes input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  /* Styling for the Book Now and Add Review buttons */
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .buttons button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Styling for the responsive layout */
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+  
+    .image-container {
+      max-width: 100%;
+    }
+  
+    .buttons {
+      flex-direction: column;
+      margin-top: 10px;
+    }
+  
+    .buttons button {
+      margin-top: 10px;
+    }
+  }
+  

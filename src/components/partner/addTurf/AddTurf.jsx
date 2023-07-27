@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {AxiosPartner} from '../../../api/AxiosInstance'
 
 const AddTurf = () => {
-  const {userId} = useSelector(state => state.partner)
+  const {partnerId} = useSelector(state => state.partner)
   const [selectImages,setSelectedImages]=useState([])
   const [images,setImages]=useState([])
   const [formData, setFormData] = useState({
@@ -111,7 +111,7 @@ const AddTurf = () => {
     formDataObject.append('location', formData.location);
     formDataObject.append('venueTypes', JSON.stringify(formData.venueTypes));
     formDataObject.append('prices', JSON.stringify(formData.prices));
-    formDataObject.append("userId", userId);
+    formDataObject.append("partnerId", partnerId);
 
   
     // for (let i = 0; i < formData.photos.length; i++) {

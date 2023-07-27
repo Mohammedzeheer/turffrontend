@@ -44,15 +44,6 @@ const PartnerNavbar = () => {
               {isLogin && (
                 <div className="relative inline-block text-left">
                   <div>
-                    {/* <button
-                      type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                      onClick={() => setIsOpen(!isOpen)}
-                    >
-                      {isLogin && <span className="text-gray-300 mr-1">{username}</span>}
-                      <FiChevronDown/>
-                    </button> */}
-
                     <button
                       type="button"
                       className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-600 hover:text-gray-500"
@@ -68,14 +59,7 @@ const PartnerNavbar = () => {
                   {isOpen && (
                    <div className="origin-top-right absolute right-0 mt-2 w-30 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                        {/* <a
-                          // href="/userprofile"
-                          onClick={() => Navigate('/userprofile')}
-                          className="block px-4 py-2 no-underline font-medium text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                          role="menuitem"
-                        >
-                          Profile
-                        </a> */}
+
                         <button
                           type="button"
                           onClick={() => Navigate('/userprofile')}
@@ -107,6 +91,8 @@ const PartnerNavbar = () => {
                 </button>
               )}
             </div>
+
+            
             <div className="-mr-2 flex md:hidden">
               <button
                 type="button"
@@ -163,7 +149,7 @@ const PartnerNavbar = () => {
               <>
                 <a
                   href="/userprofile"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md font-medium no-underline"
+                  className="text-gray-300 hover:bg-gray-700 w-[90px] hover:text-white block px-3 py-2 rounded-md font-medium no-underline"
                 >
                   Profile
                 </a>

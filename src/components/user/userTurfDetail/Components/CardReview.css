@@ -1,16 +1,47 @@
-.hide-scroll-bar::-webkit-scrollbar {
-    display: none;
-}
-
-/* Optional: to hide scrollbar in all browsers */
-.hide-scroll-bar {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
-}
-
-.hide-scroll-bar::-webkit-scrollbar {
-    display: none;
-    /* Safari and Chrome */
-}
+/* In your CSS file or within style tags in the component */
+@media screen and (max-width: 600px) {
+    .max-w-md {
+      /* Adjust the width and margin as needed for your design */
+      max-width: 80%;
+      margin: 0 auto;
+    }
+  
+    .w-12 {
+      width: 30px; /* Adjust the size of the review image on mobile */
+      height: 30px;
+    }
+  
+    .h-12 {
+      height: 30px; /* You can keep the height the same */
+    }
+  
+    .text-xl {
+      font-size: 1.5rem; /* Adjust the font size for the section heading on mobile */
+    }
+  
+    .p-3 {
+      /* Adjust padding as needed for your design */
+      padding: 8px;
+    }
+  
+    .text-gray-600 {
+      font-size: 0.8rem; /* Adjust font size for username on mobile */
+    }
+  
+    .ml-4 {
+      margin-left: 8px; /* Adjust margin as needed for the rating on mobile */
+    }
+  
+    .text-gray-800 {
+      font-size: 0.9rem; /* Adjust font size for review text on mobile */
+    }
+  
+    .mt-4 {
+      margin-top: 12px; /* Adjust margin as needed for the "Show More" button on mobile */
+    }
+  
+    .text-blue-500 {
+      font-size: 0.8rem; /* Adjust font size for the "Show More" button text on mobile */
+    }
+  }
+  

@@ -67,7 +67,7 @@ function VenueDetail() {
           {selectedTurf.images.slice(0, 4).map((image, index) => (
             <div key={index} className="rounded-lg overflow-hidden shadow-md">
               <img
-                src={`${UserPort}images/${image}`}
+                src={image}
                 alt={selectedTurf.courtName}
                 className="w-full h-40 object-cover"
               />

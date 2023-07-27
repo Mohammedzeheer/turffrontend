@@ -10,6 +10,8 @@ import UserProfile2 from '../components/user/profile/UserProfile2';
 import UserTurfDetail from '../components/user/userTurfDetail/UserTurfDetails';
 import UserOtp from '../components/user/UserSignup/UserOtp';
 import SuccessPage from '../components/user/userTurfDetail/Components/Success';
+import BookingHistory from '../components/user/profile/BookingHistory';
+
 
 
 function UserRouter() {
@@ -24,6 +26,7 @@ function UserRouter() {
         <Route path="/turfs-details" element={<UserTurfDetail />} />
         <Route path="/userotp" element={<UserOtp />} />
         <Route path='/success/:id' element={<SuccessPage/>} />
+        <Route path='/userprofile/bookinghistory' element={<BookingHistory/>} />
       </Routes>
   );
 }

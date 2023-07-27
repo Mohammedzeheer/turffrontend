@@ -47,7 +47,7 @@ function UserDetailsModal({ isOpen, onClose, user }) {
             <UserImage
               src={
                 user.image
-                  ? `/Photos/${user.image}`
+                  ? user.image
                   : "https://static-00.iconduck.com/assets.00/profile-minor-icon-256x256-6u3v5w0z.png"
               }
               alt="User Profile"

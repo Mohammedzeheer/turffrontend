@@ -157,7 +157,7 @@ const PartnerProfile = () => {
                       ) : (
                         <img
                           className="imgP"
-                          src={`/Photos/${userData.image}`}
+                          src={userData.image}
                           alt=""
                           width={250}
                         />
