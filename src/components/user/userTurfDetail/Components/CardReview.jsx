@@ -7,7 +7,7 @@ import './CardReview.css'
 const CardReview = ({ id, refresh }) => {
   const [reviews, setReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
-  const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 4);
+  const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 3);
 
   const fetchReviews = async (id) => {
     try {
@@ -24,7 +24,7 @@ const CardReview = ({ id, refresh }) => {
   }, [refresh]);
 
   return (
-    <div className="flex flex-col items-center mt-8 mb-6">
+    <div className="flex flex-col items-center mt-8 mb-10">
       <h1 className="text-xl font-bold mb-4">Reviews</h1>
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg">
         {visibleReviews.length > 0 ? (
@@ -89,7 +89,7 @@ const CardReview = ({ id, refresh }) => {
           <p className="p-4 text-gray-600">No reviews available.</p>
         )}
       </div>
-      {reviews.length > 5 && (
+      {reviews.length > 3 && (
         <button
           className="mt-4 text-blue-500 underline"
           onClick={() => setShowAllReviews(!showAllReviews)}

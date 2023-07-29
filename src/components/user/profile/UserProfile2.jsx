@@ -7,7 +7,7 @@ import {AxiosUser} from '../../../api/AxiosInstance'
 import { updateUser } from "../../../redux/userSlice";
 import { FaBookOpen } from 'react-icons/fa'; // Import the FontAwesome icon
 import ButtonBooking from "./ButtonBooking";
-
+import UserFooter from "../userFooter/UserFooter";
 
 const UserProfile2 = () => {
   const [userData, setUserData] = useState(null);
@@ -123,7 +123,7 @@ const UserProfile2 = () => {
       <UserNavbar />
 
       <ButtonBooking/>
-      <div className="sm-pt-5 md:pt-20 m-4">
+      <div className="sm-pt-5 md:pt-[20px] m-10 md:mb-[80px]">
         <div
           className="container mx-auto px-4 py-8 pt-30"
           style={containerStyle}
@@ -272,6 +272,7 @@ const UserProfile2 = () => {
           )}
         </div>
       </div>
+      <UserFooter/>
     </>
   );
 };

@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { getTimeSlot } from "./TimeSlot";
 import Calendar from "react-calendar";
 import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { UserPort } from '../../../../store/port';
 import {stripeKey} from '../../../../helpers/StripeKey'
 import { AxiosUser } from '../../../../api/AxiosInstance';
 import './calander.css'
@@ -13,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 
 
-const Booking = ({ ID, openingTime, closingTime,price, setShowCalender }) => {
+const Booking = ({ ID, openingTime, closingTime,price,slot, setShowCalender }) => {
     const token = localStorage.getItem('user')
     const { userId } = useSelector((state) => state.user);
     const [date, setDate] = useState(new Date());
@@ -25,13 +23,14 @@ const Booking = ({ ID, openingTime, closingTime,price, setShowCalender }) => {
     const Time = async (time) => {
         if (!token) return Navigate("/login");
         try {
-            const response = await AxiosUser.post(`booking`,{ ID, date, time,userId,price},
+            const response = await AxiosUser.post(`booking`,{ ID, date, time,userId,price,slot},
             { headers: { authorization: token } }
             );
             console.log(response ,"iam time function of booking")
             if (response && response.status === 200) {
                 const stripe = await stripePromise;
                 const result = await AxiosUser.get(`payment/${response.data._id}`);
+                console.log(result,'payments --------- response' )
                 if (result && result.status === 200) {
                     await stripe.redirectToCheckout({ sessionId: result.data.response });
                 }
@@ -99,7 +98,7 @@ const Booking = ({ ID, openingTime, closingTime,price, setShowCalender }) => {
 
 
 <section className="text-gray-600 body-font">
-      <div className="container mx-auto flex flex-wrap px-5 py-1 sm:py-0 items-center justify-center">
+      <div className="container mx-auto flex flex-wrap px-5 py-1 mb-5 sm:py-0 items-center justify-center">
 
         <div className="w-full lg:w-1/2 px-2">
           <div className="text-center">

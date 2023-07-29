@@ -2,6 +2,8 @@ import TurfCard from "./TurfCard";
 import { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import {AxiosUser} from '../../../api/AxiosInstance'
+import UserFooter from "../userFooter/UserFooter";
+
 
 const UserTurfs = () => {
   const [turfs, setTurfs] = useState([]);
@@ -40,10 +42,12 @@ const UserTurfs = () => {
           <div className="container p-6 mx-auto space-y-8 relative">
             <div className="space-y-2 text-center">
               <h2 className="text-3xl font-bold">Let's Play Together</h2>
-              <p className="font-serif text-sm text-black ">
-                Select your playspots and book your playtime by a tap...
+              <p className="font-sans text-thin text-black ">
+                {/* Select your playspots and book your playtime by a tap... */}
+                "Tap to explore playspots and book playtime - fun at your fingertips!"
               </p>
             </div>
+
             <div className="my-4 flex items-center justify-center">
               <input
                 type="text"
@@ -53,6 +57,28 @@ const UserTurfs = () => {
                 className=" border border-gray-300 rounded-md py-2 px-3 w-full md:w-60 lg:w-80"
               />
             </div>
+
+
+            {/* <div className="my-4 flex items-center justify-center">
+  <input
+    type="text"
+    placeholder="Search by location..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="border rounded-md py-2 px-3 w-full md:w-60 lg:w-80 shadow-md focus:outline-none focus:ring focus:border-blue-300"
+    style={{
+      borderColor: "#A0AEC0",
+      borderRadius: "0.375rem",
+      fontFamily: "Arial, sans-serif",
+      fontSize: "1rem",
+      fontWeight: "normal",
+      lineHeight: "1.5",
+      color: "#2D3748",
+      backgroundColor: "#EDF2F7",
+    }}
+  />
+</div> */}
+
             <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4 ">
               {currentItems.map((turf) => (
                 <TurfCard key={turf._id} {...turf} />
@@ -67,6 +93,7 @@ const UserTurfs = () => {
           </div>
         </section>
       </div>
+      <UserFooter/>
     </>
   );
 };

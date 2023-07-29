@@ -1,6 +1,7 @@
 import React from 'react'
 import PartnerNavbar from '../header/partnerNavbar'
 import TopBar from '../sidebar/TopBar'
+import BookingHistoryPartner from './BookingHistoryPartner'
 
 
 function Bookings() {
@@ -8,7 +9,9 @@ function Bookings() {
     <>
     <PartnerNavbar />
     <TopBar/>
+    <BookingHistoryPartner/>
     <div>Bookings</div>
+
     </>
 
   )

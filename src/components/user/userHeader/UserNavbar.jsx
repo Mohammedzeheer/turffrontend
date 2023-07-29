@@ -63,7 +63,7 @@ const PartnerNavbar = () => {
                         <button
                           type="button"
                           onClick={() => Navigate('/userprofile')}
-                          className="block px-4 py-2 font-medium text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                          className="block px-4 py-2 font-medium text-sm text-customBlue hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
                         >
                           Profile
@@ -71,7 +71,7 @@ const PartnerNavbar = () => {
                         <button
                           type="button"
                           onClick={handleLogout}
-                          className="block px-4 py-2 font-medium text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                          className="block px-4 py-2 font-medium text-sm text-customBlue hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
                         >
                           Logout
@@ -149,14 +149,14 @@ const PartnerNavbar = () => {
               <>
                 <a
                   href="/userprofile"
-                  className="text-gray-300 hover:bg-gray-700 w-[90px] hover:text-white block px-3 py-2 rounded-md font-medium no-underline"
+                  className="text-gray-300 hover:bg-customBlue w-[85px] hover:text-white block px-3 py-2 rounded-md font-medium no-underline"
                 >
                   Profile
                 </a>
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md font-medium"
+                  className="text-gray-300 hover:bg-customBlue hover:text-white block px-3 py-2 rounded-md font-small"
                 >
                   Logout
                 </button>

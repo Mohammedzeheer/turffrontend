@@ -10,9 +10,11 @@ const UserHome3 = () => {
               <h1 className="text-4xl font-bold font-mono">FOOTBALL TURF</h1>
               <p><span className='font-thin'>IS JUST A TAP AWAY</span></p>
               <p className="text-lg mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam cursus auctor risus, ut
-                scelerisque erat scelerisque in. Nunc gravida sapien sit amet mattis vehicula.
-              </p>
+                 Want to play football ?
+               <br/> <span className='font-sm'>
+                   The field is where I feel at home, where I can express myself, and where the magic of football happens."
+                   </span>              
+                   </p>
             </div>
     
             {/* Right side - Image */}

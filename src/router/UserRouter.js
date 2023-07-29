@@ -11,6 +11,7 @@ import UserTurfDetail from '../components/user/userTurfDetail/UserTurfDetails';
 import UserOtp from '../components/user/UserSignup/UserOtp';
 import SuccessPage from '../components/user/userTurfDetail/Components/Success';
 import BookingHistory from '../components/user/profile/BookingHistory';
+import BookingHistory2 from '../components/user/profile/BookingHistory2';
 
 
 

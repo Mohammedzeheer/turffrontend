@@ -10,6 +10,7 @@ import VenueManager from './components/admin/manager/VenueManager';
 import AdminDashboardPage from './pages/admin/adminDashboardPage';
 import AdminUsers from './components/admin/users/AdminUsers';
 import Turfs from './components/admin/turfs/AdminTurfs';
+import AdminBookings from './components/admin/Bookings/AdminBookings';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path='managers' element={<VenueManager />}></Route>
           <Route path='users' element={<AdminUsers />}></Route>
           <Route path='turfs' element={<Turfs />}></Route>
+          <Route path='bookings' element={<AdminBookings />}></Route>
         </Route>
           
           

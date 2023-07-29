@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { AdminPort, UserPort, PartnerPort } from '../../../store/port';
 
 const TurfCard = ({ _id, courtName, images, location,rating,reviews }) => {
   const Navigate = useNavigate();
@@ -18,7 +17,6 @@ const TurfCard = ({ _id, courtName, images, location,rating,reviews }) => {
         alt=""
         className="object-cover w-full h-52 bg-gray-500"
         src={images?.[0]}
-        // src={images?.[0]}
       />
       <div className="flex flex-col flex-1 p-6">
         <h3 className="flex-1 py-2 text-lg font-semibold leading-snug">

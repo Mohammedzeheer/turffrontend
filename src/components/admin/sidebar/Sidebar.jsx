@@ -6,6 +6,7 @@ import { ImUserTie } from 'react-icons/im'
 import { FaUsers } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
 import { MdManageAccounts } from "react-icons/md";
+import { LuBookOpenCheck } from "react-icons/lu";
 // import { IoMdGitPullRequest } from "react-icons/io5";
 import {Link, useNavigate} from 'react-router-dom'
 
@@ -18,21 +19,23 @@ function Sidebar() {
 
     const handleLogout =()=>{
         localStorage.removeItem('admin')
-        navigate('/adminlogin')
+        navigate('/admin/login')
     }
 
     const Menus = [{ title: "Dashbords" , icon: <RiDashboardFill />, link: '/admin/dashboard'},
-    {
-        title: "Manager",icon:<ImUserTie/>, link:'/admin/managers',
-        submenu: true,
-        submenuItems: [
-            { title: "Manage" ,icon:<MdManageAccounts/>, link: '/admin'},
-            { title: "Request" },
-        ]
-    },
+    // {
+    //     title: "Manager",icon:<ImUserTie/>, link:'/admin/managers',
+    //     submenu: true,
+    //     submenuItems: [
+    //         { title: "Manage" ,icon:<MdManageAccounts/>, link: '/admin'},
+    //         { title: "Request" },
+    //     ]
+    // },
+    { title: "Manager" , icon: <FaUsers />, link: '/admin/managers'},
     { title: "User" , icon: <FaUsers />, link: '/admin/users'},
     { title: "Turfs" , icon: <BiFootball />, link: '/admin/turfs'},
-    { title: "Logout" , icon: <AiOutlineLogout />, link: '/adminlogin' , onClick: handleLogout},
+    { title: "Booking" , icon: <LuBookOpenCheck />, link: '/admin/bookings'},
+    // { title: "Logout" , icon: <AiOutlineLogout /> , onClick: handleLogout},
     ]
 
 

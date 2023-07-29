@@ -1,23 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../../components/admin/navbar/Navbar'
 import Sidebar from '../../components/admin/sidebar/Sidebar'
-import { Outlet} from 'react-router-dom'
+import { Outlet, useNavigate} from 'react-router-dom'
 
 function AdminLayout() {
 
-  // const Navigate = useNavigate()
+  const Navigate = useNavigate()
 
-  // useEffect(() => {
-  //   const checkLocalStorage = () => {
-  //     const checkToken = localStorage.getItem("admin");
-  //     if (checkToken) {
-  //      Navigate('/admin')
-  //     }else{
-  //       Navigate('/adminlogin')
-  //     }
-  //   };
-  //   checkLocalStorage();
-  // },[]);
+  const checkLocalStorage = () => {
+    const checkToken = localStorage.getItem("admin");
+    if (checkToken) {
+     Navigate('/admin')
+    }else{
+      Navigate('/admin/login')
+    }
+  };
+
+  useEffect(() => {
+    checkLocalStorage();
+  },[]);
 
   return (
     <div>
