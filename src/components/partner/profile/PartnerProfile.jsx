@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import TopBar from "../sidebar/TopBar";
 import PartnerNavbar from "../header/partnerNavbar";
 import { useSelector } from "react-redux";
-import { PartnerPort } from "../../../store/port";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import {AxiosPartner} from '../../../api/AxiosInstance'
-
+import Loading from '../Loading'
 
 
 const PartnerProfile = () => {
@@ -291,7 +289,7 @@ const PartnerProfile = () => {
               </div>
             </div>
           ) : (
-            <div>Loading...</div>
+            <div><Loading/>Loading...</div>
           )}
         </div>
       </div>

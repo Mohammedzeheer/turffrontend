@@ -7,23 +7,24 @@ import {stripeKey} from '../../../../helpers/StripeKey'
 import { AxiosUser } from '../../../../api/AxiosInstance';
 import './calander.css'
 import { FaBackward } from "react-icons/fa";
-import { useSelector } from 'react-redux';
-
-
+import { useDispatch, useSelector } from 'react-redux';
+import {toast } from 'react-toastify'  
+import { logoutUser } from '../../../../redux/userSlice'
 
 const Booking = ({ ID, openingTime, closingTime,price,slot, setShowCalender }) => {
     const token = localStorage.getItem('user')
-    const { userId } = useSelector((state) => state.user);
+    const { userId,email } = useSelector((state) => state.user);
     const [date, setDate] = useState(new Date());
     const [bookedTime, setBookedTime] = useState([]);
     const Navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const stripePromise = loadStripe( `${stripeKey}`);
 
     const Time = async (time) => {
         if (!token) return Navigate("/login");
         try {
-            const response = await AxiosUser.post(`booking`,{ ID, date, time,userId,price,slot},
+            const response = await AxiosUser.post(`booking`,{ ID, date, time,userId,price,slot,email},
             { headers: { authorization: token } }
             );
             console.log(response ,"iam time function of booking")
@@ -36,15 +37,33 @@ const Booking = ({ ID, openingTime, closingTime,price,slot, setShowCalender }) =
                 }
             }
         } catch (error) {
-            console.error(error);
+          if (error.response) {
+            const { status, data } = error.response;
+            // if (status === 403 && data.message === 'User is blocked') {
+            if (data.message === 'User is blocked') {
+              generateError('User is blocked');
+              localStorage.removeItem('user');
+              dispatch(logoutUser());
+            } else {
+              generateError('Internal server error');
+              localStorage.removeItem('user');
+              dispatch(logoutUser());
+            }
+          } else {
+            generateError('Something went wrong');
+          }
         }
     };
 
+    const generateError = (err) => toast.error(err, {
+      autoClose: 1000,
+      position: toast.POSITION.TOP_CENTER
+    })
 
-    const handleTimeClick1 = async (time) => {
-        await Time(time);
-        await getSlots(date, time);
-    };
+    // const handleTimeClick1 = async (time) => {
+    //     await Time(time);
+    //     await getSlots(date, time);
+    // };
 
 
     const handleTimeClick = (date,time) => {

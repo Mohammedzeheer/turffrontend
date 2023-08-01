@@ -1,3 +1,13 @@
 .colortopbar{
  background-color: #0b2239ff;
 }
+
+
+/* topbar.css */
+.active-link {
+    background-color: #ffffff; /* Set the background color for the active link */
+    color: #000000; /* Set the text color for the active link */
+    /* Add any other styles you want for the active link */
+  }
+
+  

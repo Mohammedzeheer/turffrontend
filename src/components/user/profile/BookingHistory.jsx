@@ -5,6 +5,8 @@ import UserNavbar from '../userHeader/UserNavbar';
 import { MdCancel } from "react-icons/md";
 import RingLoader from "react-spinners/RingLoader";
 import UserFooter from "../userFooter/UserFooter";
+import Loading from '../../Loading'
+
 
 const BookingHistory = () => {
   const { userId } = useSelector((state) => state.user);
@@ -79,8 +81,10 @@ const BookingHistory = () => {
           ))}
       </div>
       ) : (
-          // No bookings message
-          <p className="text-lg font-bold">No bookings found.</p>
+        <div class="flex justify-center my-40">
+        <Loading/>Loading.....
+      </div>
+          // <p className="text-lg font-bold">No bookings found.</p>
         )}
     </div>
     <UserFooter/>

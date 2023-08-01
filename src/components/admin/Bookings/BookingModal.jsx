@@ -8,7 +8,10 @@ function BookingModal({ open, onClose, booking }) {
         open ? "" : "hidden"
       }`}
     >
-      <div className="bg-black opacity-50 h-full w-full absolute" onClick={onClose}></div>
+      <div
+        className="bg-black opacity-50 h-full w-full absolute"
+        onClick={onClose}
+      ></div>
       <div className="modal-content p-4 bg-white rounded-lg shadow-lg max-w-md">
         <h2 className="text-xl font-bold mb-4">Booking Information</h2>
         <div className="grid grid-cols-2 gap-4">
@@ -18,27 +21,29 @@ function BookingModal({ open, onClose, booking }) {
             </p> */}
 
             <p className="text-sm mb-2">
-  <strong>Book Date:</strong>{" "}
-  {new Date(booking.bookDate).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })}
-</p>
+              <strong>Book Date:</strong>{" "}
+              {new Date(booking.bookDate).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+            
             <p className="text-sm mb-2">
-              <strong>Cancel Booking:</strong> {booking.cancelBooking.toString()}
+              <strong>Cancel Booking:</strong>{" "}
+              {booking.cancelBooking.toString()}
             </p>
             <p className="text-sm mb-2">
               <strong>Payment:</strong> {booking.payment}
             </p>
           </div>
           <div>
-          <p className="text-sm mb-2">
+            <p className="text-sm mb-2">
               <strong>Slot:</strong> {booking.slot}
             </p>
             <p className="text-sm mb-2">
               <strong>Price:</strong> {booking.price}
-            </p>        
+            </p>
             <p className="text-sm mb-2">
               <strong>Time:</strong> {booking.time}
             </p>
@@ -94,11 +99,6 @@ function BookingModal({ open, onClose, booking }) {
 }
 
 export default BookingModal;
-
-
-
-
-
 
 
 
@@ -178,27 +178,3 @@ export default BookingModal;
 // }
 
 // export default BookingModal;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

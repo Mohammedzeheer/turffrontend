@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
 import "react-calendar/dist/Calendar.css";
 import Booking from "./Components/Booking";
@@ -8,16 +8,13 @@ import ImageManage from "./Components/ImageManage";
 import ReviewModal from "./Components/Review";
 import CardReview from "./Components/CardReview";
 import UserNavbar from "../userHeader/UserNavbar";
-import {AxiosUser} from '../../../api/AxiosInstance'
+import { AxiosUser } from "../../../api/AxiosInstance";
 import { toast } from "react-toastify";
 import UserFooter from "../userFooter/UserFooter";
 import { BsFillJournalBookmarkFill } from "react-icons/bs";
 import { TfiWrite } from "react-icons/tfi";
 
-
-
 // import './userTurfDetail.css'
-
 
 export default function UserTurfDetails() {
   const token = localStorage.getItem("user");
@@ -27,13 +24,11 @@ export default function UserTurfDetails() {
   const [showCalender, setShowCalender] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  let [selectedPrice,setSelectedPrice] = useState()
+  let [selectedPrice, setSelectedPrice] = useState();
   const [selectedSlot, setSelectedSlot] = useState("");
-
+  const navigate = useNavigate();
 
   const [isLogin, setLogin] = useState(false);
-
-
 
   const fetchTurf = async () => {
     try {
@@ -61,21 +56,20 @@ export default function UserTurfDetails() {
       <UserNavbar />
       <section className="text-gray-600 body-font">
         {showCalender ? (
-          <Booking        
+          <Booking
             closingTime={data.closingTime}
             openingTime={data.openingTime}
             ID={data._id}
-            price ={selectedPrice}
-            slot={selectedSlot} 
+            price={selectedPrice}
+            slot={selectedSlot}
             setShowCalender={setShowCalender}
           />
         ) : (
           <>
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-5 py-10">
-              <div className="mb-10 md:mb-0 flex justify-center">     
+              <div className="mb-10 md:mb-0 flex justify-center">
                 <ImageManage photos={data?.images || []} />
               </div>
-
 
               <div className="md:w-1/2 md:pl-10">
                 <h1 className="text-3xl flex justify-center items-center sm:text-4xl font-medium text-customGreen mt-5  mb-4">
@@ -113,58 +107,73 @@ export default function UserTurfDetails() {
                   <span className="text-gray-600"></span>
                 </div>
 
+                <h3
+                  className={`text-2xl font-semibold flex justify-center items-center `}
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedPrice === price5s}
+                    onChange={() => {
+                      setSelectedPrice(price5s);
+                      setSelectedSlot("5 v 5"); // Step 2: Update selectedSlot
+                    }}
+                  />
+                  <span className="text-base mr-3 ml-1">5 v 5</span>
+                  <span
+                    className={`${
+                      selectedPrice === price5s
+                        ? "bg-customGreen text-white"
+                        : "bg-text-white"
+                    } px-2 py-2 rounded-md`}
+                  >
+                    ₹ {price5s}
+                  </span>
+                </h3>
 
+                <h3
+                  className={`text-2xl font-semibold flex justify-center items-center`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedPrice === price7s}
+                    onChange={() => {
+                      setSelectedPrice(price7s);
+                      setSelectedSlot("7 v 7"); // Step 2: Update selectedSlot
+                    }}
+                  />
+                  <span className="text-base mr-3 ml-1">7 v 7</span>
+                  <span
+                    className={`${
+                      selectedPrice === price7s
+                        ? "bg-customGreen text-white"
+                        : "bg-text-white"
+                    } px-2 py-2 rounded-md`}
+                  >
+                    ₹ {price7s}
+                  </span>
+                </h3>
 
+               <div className="flex justify-center items-center mb-4 mt-4">
 
-{/* <h3 className={`text-2xl font-semibold flex justify-center items-center `}>
-      <input
-        type="checkbox"
-        checked={selectedPrice === price5s}
-        onChange={() => setSelectedPrice(price5s)}
-      />
-      <span className="text-base mr-3 ml-1">5 v 5</span><span className={`${selectedPrice === price5s ? 'bg-customGreen text-white' : 'bg-text-white'} px-2 py-2 rounded-md`}>₹ {price5s}</span> 
-    </h3>
-
-    <h3 className={`text-2xl font-semibold flex justify-center items-center`}>
-      <input
-        type="checkbox"
-        checked={selectedPrice === price7s}
-        onChange={() => setSelectedPrice(price7s)}
-      />
-      <span className="text-base mr-3 ml-1">7 v 7</span> <span className={`${selectedPrice === price7s ? 'bg-customGreen text-white' : 'bg-text-white'} px-2 py-2 rounded-md`}>₹ {price7s}</span> 
-    </h3> */}
-
-<h3 className={`text-2xl font-semibold flex justify-center items-center `}>
-            <input
-              type="checkbox"
-              checked={selectedPrice === price5s}
-              onChange={() => {
-                setSelectedPrice(price5s);
-                setSelectedSlot("5 v 5"); // Step 2: Update selectedSlot
-              }}
-            />
-            <span className="text-base mr-3 ml-1">5 v 5</span>
-            <span className={`${selectedPrice === price5s ? 'bg-customGreen text-white' : 'bg-text-white'} px-2 py-2 rounded-md`}>₹ {price5s}</span>
-          </h3>
-
-          <h3 className={`text-2xl font-semibold flex justify-center items-center`}>
-            <input
-              type="checkbox"
-              checked={selectedPrice === price7s}
-              onChange={() => {
-                setSelectedPrice(price7s);
-                setSelectedSlot("7 v 7"); // Step 2: Update selectedSlot
-              }}
-            />
-            <span className="text-base mr-3 ml-1">7 v 7</span>
-            <span className={`${selectedPrice === price7s ? 'bg-customGreen text-white' : 'bg-text-white'} px-2 py-2 rounded-md`}>₹ {price7s}</span>
-          </h3>
-
-
-                <div className="flex justify-center items-center mb-4 mt-4">
-                  <button
+                {/*    <button
                     className="px-6 py-2 text-lg font-bold rounded-md text-white bg-indigo-500 hover:bg-indigo-600 border-none focus:outline-none"
                     // onClick={() => setShowCalender(true)}
+                    onClick={() => {
+                      if (!selectedPrice) {
+                        toast.error("Please select a slot before booking.", {
+                          position: "top-center",
+                        });
+                      } else {
+                        setShowCalender(true);
+                      }
+                    }}
+                  >
+                    <BsFillJournalBookmarkFill className="w-5 h-5 inline-block mr-1" />{" "}
+                    Book Now
+                  </button> */}
+
+                  <button
+                    className="px-6 py-2 text-lg font-bold rounded-md text-white bg-indigo-500 hover:bg-indigo-600 border-none focus:outline-none"
                     onClick={() => {
                       if (!selectedPrice) {
                         toast.error("Please select a slot before booking.", {
@@ -173,23 +182,24 @@ export default function UserTurfDetails() {
                         });
                       } else {
                         setShowCalender(true);
+                        // navigate("/booking");
                       }
                     }}
-                  
                   >
-                    <BsFillJournalBookmarkFill className="w-5 h-5 inline-block mr-1" /> Book Now
+                    <BsFillJournalBookmarkFill className="w-5 h-5 inline-block mr-1" />{" "}
+                    Book Now
                   </button>
+
                   {token && (
                     <button
                       className="px-6 py-2 text-lg font-bold rounded-md text-white bg-gray-500 hover:bg-gray-600 border-none focus:outline-none ml-4"
                       onClick={toggleModal}
                     >
-                    <TfiWrite className="w-5 h-5 inline-block mr-1" />  Add Review
+                      <TfiWrite className="w-5 h-5 inline-block mr-1" /> Add
+                      Review
                     </button>
                   )}
-
                 </div>
-             
               </div>
             </div>
           </>
@@ -204,8 +214,7 @@ export default function UserTurfDetails() {
       />
       {/* <CardReview refresh={refresh} id={ID} /> */}
       {!showCalender && <CardReview refresh={refresh} id={ID} />}
-      <UserFooter/>
-      
+      <UserFooter />
     </>
   );
 }
@@ -215,36 +224,24 @@ export default function UserTurfDetails() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                {/* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
+{
+  /* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
                   ₹{data?.price}
-                </h3> */}
+                </h3> */
+}
 
-                {/* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
+{
+  /* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
                  5 v 5  ₹{price5s}
                 </h3>
 
                 <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
                  7 v 7  ₹{price7s}
-                </h3> */}
+                </h3> */
+}
 
-                {/* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
+{
+  /* <h3 className="text-2xl font-semibold flex justify-center items-center p-2">
                   <input
                     type="checkbox"
                     checked={selectedPrice === price5s}
@@ -260,16 +257,8 @@ export default function UserTurfDetails() {
                     onChange={() => setSelectedPrice(price7s)}
                   />
                    <span className="text-base mr-3 ml-1">7 v 7</span> ₹ {price7s}
-                </h3> */}
-
-
-
-
-
-
-
-
-
+                </h3> */
+}
 
 // import React from 'react';
 // import { useParams } from 'react-router-dom'; // Assuming you're using React Router for navigation

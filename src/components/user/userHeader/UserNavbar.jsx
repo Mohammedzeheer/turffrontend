@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FiChevronDown } from "react-icons/fi";
+import { logoutUser } from '../../../redux/userSlice'; 
 
 const PartnerNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogin, setLogin] = useState(false);
   const Navigate = useNavigate();
+  const dispatch = useDispatch();
  
   const { username } = useSelector((state) => state.user);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
+    dispatch(logoutUser());
     Navigate('/login');
   };
 

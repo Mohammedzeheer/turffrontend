@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'  //naviagete page path
-import axios from 'axios';  // axios for connect with node (API)
 import { ToastContainer, toast } from 'react-toastify'  // for error npm 
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
@@ -24,25 +23,80 @@ function UserLogin() {
     }
   },[])
 
-  const handleLogin = (e) => {
-    e.preventDefault() // for make render 
-    AxiosUser.post(`userlogin`,  { ...user }, { withCredentials: true }).then((res) => {
-      res = res.data
-      if (res) {
-        console.log(res);
-        if (res.errors) {
-          const { email, password } = res.errors
-          if (email) generateError(email)
-          else if (password) generateError(password)
-        } else {
-          localStorage.setItem('user', JSON.stringify(res))
-          console.log(res.user, "username-----------");
-          dispatch(updateUser({ username: res.user.username, userId: res.user._id, image: res.user.image, token: res.token }))
-          Navigate('/')
-        }
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await AxiosUser.post('userlogin', { ...user }, { withCredentials: true });
+      const data = res.data;
+      console.log(data,'iam login data');
+
+      if (data.message) {
+        generateError(data.message);
+      } else if (data.errors) {
+        const { email, password } = data.errors;
+        if (email) generateError(email);
+        else if (password) generateError(password);
+      } else {
+        localStorage.setItem('user', JSON.stringify(data.token));
+        dispatch(
+          updateUser({
+            username: data.user.username,
+            userId: data.user._id,
+            image: data.user.image,
+            token: data.token,
+            email:data.user.email
+            
+          })
+        );
+        Navigate('/');
       }
-    })
-  }
+    } catch (error) {
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 404 && data.message === 'User not found') {
+          generateError('User not found');
+        } else if (status === 403 && data.message === 'User is blocked') {
+          generateError('User is blocked');
+        } else {
+          generateError('Internal server error');
+        }
+      } else {
+        generateError('Something went wrong');
+      }
+    }
+  };
+
+
+
+
+  // const handleLogin = (e) => {
+  //   e.preventDefault() // for make render 
+  //   AxiosUser.post(`userlogin`,  { ...user }, { withCredentials: true }).then((res) => {
+  //     res = res.data
+  //     if (res) {
+  //       console.log(res);
+  //       if(res.message){
+  //         generateError(res.message)
+  //       }
+  //       if (res.errors) {
+  //         const { email, password } = res.errors
+  //         if (email) generateError(email)
+  //         else if (password) generateError(password)
+  //       } else {
+  //         localStorage.setItem('user', JSON.stringify(res))
+  //         console.log(res.user, "username-----------");
+  //         dispatch(updateUser({ username: res.user.username, userId: res.user._id, image: res.user.image, token: res.token }))
+  //         Navigate('/')
+  //       }
+  //     }
+  //   })
+  // }
+
+
+
+
 
   const generateError = (err) => toast.error(err, {
     autoClose: 1000,

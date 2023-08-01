@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import Navbar from '../../components/admin/navbar/Navbar'
 import Sidebar from '../../components/admin/sidebar/Sidebar'
 import { Outlet, useNavigate} from 'react-router-dom'
+import AdminDashboardPage from './adminDashboardPage'
+
 
 function AdminLayout() {
 
@@ -26,6 +28,7 @@ function AdminLayout() {
       <div className='flex'>
       <Sidebar/>
       <div className="grow">
+          {/* <AdminDashboardPage/> */}
           <Outlet/>
       </div>
       </div>

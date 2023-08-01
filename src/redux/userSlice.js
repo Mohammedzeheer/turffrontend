@@ -4,7 +4,8 @@ const INITIAL_STATE={
     userId:"",
     username:"",
     image:"",
-    token:""
+    token:"",
+    email:'',
 }
 
 export const UserSlice=createSlice({
@@ -15,17 +16,21 @@ export const UserSlice=createSlice({
             state.username = action.payload.username
             state.image=action.payload.image
             state.userId=action.payload.userId
-            state.token=action.payload.token         
+            state.token=action.payload.token   
+            state.email=action.payload.email      
         },
         addProfile:(state,action)=>{
             state.username = action.payload.username
             state.image=action.payload.image
             state.userId=action.payload.userId
+        }, 
+        logoutUser: (state) => {
+            Object.assign(state, INITIAL_STATE);
         }
     }
 })
 
-export const {updateUser,addProfile} =UserSlice.actions
+export const {updateUser,addProfile,logoutUser} =UserSlice.actions
 export default UserSlice.reducer
 
 

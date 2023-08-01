@@ -3,11 +3,12 @@ import UserNavbar from "../userHeader/UserNavbar";
 import { useDispatch, useSelector } from "react-redux";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
-import {AxiosUser} from '../../../api/AxiosInstance'
+import { AxiosUser } from "../../../api/AxiosInstance";
 import { updateUser } from "../../../redux/userSlice";
-import { FaBookOpen } from 'react-icons/fa'; // Import the FontAwesome icon
+import { FaBookOpen } from "react-icons/fa"; // Import the FontAwesome icon
 import ButtonBooking from "./ButtonBooking";
 import UserFooter from "../userFooter/UserFooter";
+import Loading from "../../Loading";
 
 const UserProfile2 = () => {
   const [userData, setUserData] = useState(null);
@@ -17,8 +18,7 @@ const UserProfile2 = () => {
   const [phonenumber, setPhonenumber] = useState();
   const [address, setAddress] = useState();
   const { userId } = useSelector((state) => state.user);
-   const dispatch=useDispatch()
-   
+  const dispatch = useDispatch();
 
   const fetchData = async () => {
     try {
@@ -36,9 +36,6 @@ const UserProfile2 = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
- 
-
 
   //saving address
   const handleSaveClick = async (e) => {
@@ -71,10 +68,10 @@ const UserProfile2 = () => {
       withCredentials: true,
     };
     try {
-      const { data } = await AxiosUser.post(`photoupload`, formData,config);
-      console.log(data,'-----------------------------------')
-      dispatch(updateUser({image: data.imageurl}));
-      console.log(image,"ghsdsdjsd --- image");
+      const { data } = await AxiosUser.post(`photoupload`, formData, config);
+      console.log(data, "-----------------------------------");
+      dispatch(updateUser({ image: data.imageurl }));
+      console.log(image, "ghsdsdjsd --- image");
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +85,6 @@ const UserProfile2 = () => {
     setIsEditing(false);
   };
 
-
   const containerStyle = {
     backgroundColor: "#f0f4f8",
     padding: "20px",
@@ -99,7 +95,6 @@ const UserProfile2 = () => {
     position: "relative", // To position the edit button relative to this container
   };
 
- 
   const editButtonStyle = {
     position: "absolute",
     top: "10px",
@@ -117,12 +112,11 @@ const UserProfile2 = () => {
     padding: 0,
   };
 
-
   return (
     <>
       <UserNavbar />
 
-      <ButtonBooking/>
+      <ButtonBooking />
       <div className="sm-pt-5 md:pt-[20px] m-10 md:mb-[80px]">
         <div
           className="container mx-auto px-4 py-8 pt-30"
@@ -131,7 +125,6 @@ const UserProfile2 = () => {
           {userData ? (
             <div className="flex flex-col items-center md:flex-row md:items-start">
               <div className="w-1/2 pr-8 md:pr-16 md:mb-0 mt-6">
-
                 <div className="profilePage">
                   <div className="card-client">
                     <div className="user-picture">
@@ -144,7 +137,7 @@ const UserProfile2 = () => {
                         </svg>
                       ) : (
                         <img
-                          className="imgP"
+                          className="w-120 h-120 object-cover rounded-full"
                           src={userData.image}
                           alt=""
                           width={250}
@@ -192,11 +185,9 @@ const UserProfile2 = () => {
                 </h2>
               </div>
 
-
-
               <div className="pt-10 w-2/2 md:w-3/4">
                 <div className="mb-2">
-                  <label className="font-bold text-green-700">Email      :</label>
+                  <label className="font-bold text-green-700">Email :</label>
                   <span className="ml-2">{userData.email}</span>
                 </div>
 
@@ -215,7 +206,7 @@ const UserProfile2 = () => {
                 </div>
 
                 <div className="mb-2">
-                  <label className="font-bold text-green-700">Mobile   :</label>
+                  <label className="font-bold text-green-700">Mobile :</label>
                   {isEditing ? (
                     <input
                       type="text"
@@ -242,7 +233,7 @@ const UserProfile2 = () => {
                       className="bg-green-500 hover:bg-green-600 text-white font-bold px-2 py-1 rounded mb-2 md:mr-2 md:mb-0"
                       onClick={handleSaveClick}
                     >
-                     <span className="text-[14px]"> Save</span>
+                      <span className="text-[14px]"> Save</span>
                     </button>
                     {/* <button
                       className="bg-red-500 hover:bg-red-600 text-white font-bold px-2 py-1 rounded mb-2"
@@ -250,29 +241,26 @@ const UserProfile2 = () => {
                     >
                       <span className="text-[14px]">Cancel</span>
                     </button> */}
-                    <button
-                      onClick={handleCancelClick}
-                      style={editButtonStyle}
-                    >
+                    <button onClick={handleCancelClick} style={editButtonStyle}>
                       <IoClose className="text-customGreen text-[1.5rem]" />
                     </button>
                   </div>
                 ) : (
-                  <button  
-                  onClick={handleEditClick}
-                  style={editButtonStyle}
-                >
-                <BiSolidEditAlt className="text-customGreen text-[1.5rem]"/>
-                </button>
+                  <button onClick={handleEditClick} style={editButtonStyle}>
+                    <BiSolidEditAlt className="text-customGreen text-[1.5rem]" />
+                  </button>
                 )}
               </div>
             </div>
           ) : (
-            <div>Loading...</div>
+            <div class="flex justify-center my-40">
+              <Loading />
+              Loading.....
+            </div>
           )}
         </div>
       </div>
-      <UserFooter/>
+      <UserFooter />
     </>
   );
 };

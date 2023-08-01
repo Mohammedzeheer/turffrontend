@@ -113,7 +113,7 @@ function UserSignup() {
 
 
                                                 <button type="submit" className="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" onClick={handleSubmit}>Sign up</button>
-                                                <div className="text-center d-flex justify-content-between mt-4"><p>have an account?<a onClick={() => navigate('/login')} class="font-italic text-muted">
+                                                <div className="text-center d-flex justify-content-between mt-4"><p>have an account?<a onClick={() => navigate('/login')} className="font-italic text-muted">
                                                     <u>Login</u></a></p></div>
                                             </form>
                                         </div>
