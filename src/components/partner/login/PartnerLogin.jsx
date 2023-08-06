@@ -1,16 +1,14 @@
-import React,{useState,useEffect}from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './partnerLogin.css'
-import axios from 'axios'
+import React,{useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import {ToastContainer , toast } from 'react-toastify'  // for error npm 
-import 'react-toastify/dist/ReactToastify.css';
 import { updatePartner } from '../../../redux/partnerSlice';
 import { useDispatch } from 'react-redux';
-import { PartnerPort } from '../../../store/port';
 import {AxiosPartner} from '../../../api/AxiosInstance'
+import {ToastContainer , toast } from 'react-toastify'  // for error npm 
+import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './partnerLogin.css'
 
 function PartnerLogin() {
 
@@ -20,15 +18,14 @@ function PartnerLogin() {
     const [showPassword, setShowPassword] = useState(false);
 
     useEffect(()=>{
-        const partner= localStorage.getItem('partner')
-        if(partner){
+        const token= localStorage.getItem('partner')
+        if(token){
             navigate('/partner')
         }
     },[])
 
     const handleLogin =async(e)=>{
         const {data}=await AxiosPartner.post(`partnerlogin`,{...partner},{withCredentials:true})
-        console.log(data,"----------response");
         if(data){          
             if(data.errors){
               const{email,password,approval}= data.errors
@@ -36,7 +33,7 @@ function PartnerLogin() {
               else if (password) generateError(password)
               else if (approval)generateError(approval)
             }else{
-             localStorage.setItem('partner',JSON.stringify(data))
+             localStorage.setItem('partner',JSON.stringify(data.token))
              dispatch(updatePartner({partnername:data.partner.username,partnerId:data.partner._id,token:data.token}))
              navigate('/partner')
             }
@@ -97,7 +94,7 @@ function PartnerLogin() {
         </div>
     </div>
 </div>
-<ToastContainer/>
+{/* <ToastContainer/> */}
     </section>
   )
 }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { UserPort } from "../../../store/port";
 import { AxiosPartner } from "../../../api/AxiosInstance";
 import TopBar from "../sidebar/TopBar";
 import PartnerNavbar from "../header/partnerNavbar";

@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { UserPort } from '../../../../store/port';
 import { AxiosUser } from '../../../../api/AxiosInstance';
-import { toast, Toaster } from 'react-hot-toast'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 import UserNavbar from "../../userHeader/UserNavbar";
-
-
 
 const SuccessPage = () => {
     const [details, setDetails] = useState({})
@@ -38,7 +36,6 @@ const SuccessPage = () => {
                 </svg>
                 <h1 className="text-3xl font-bold text-gray-800 mb-4 text-center">Your booking is confirmed!</h1>
                 <div className="bg-gray-200 p-4 mx-5 text-center shadow-2xl  text-lg justify-center rounded-lg mb-6">
-                    {/* <p>Booking Turf: <span className="font-bold">{details.turf.courtName}</span></p> */}
                     <p>Booked Date: <span className="font-bold">{new Date(details.bookDate).toLocaleDateString()}</span></p>
                     <p>Booked Time: <span className="font-bold">{details.time}</span></p>
                 </div>

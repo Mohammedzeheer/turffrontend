@@ -1,0 +1,9 @@
+/* Add this CSS in your main styles or stylesheet */
+/* Adjust margins and make modal smaller for mobile views */
+@media (max-width: 767px) {
+    .modal-content {
+      margin: 2rem; /* Reduce the margins for smaller screens */
+      max-width: 90vw; /* Make the modal slightly smaller */
+    }
+  }
+  

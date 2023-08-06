@@ -6,7 +6,7 @@ import AdminDashboard from '../../components/admin/dashboard/AdminDashboard'
 function adminDashboardPage() {
   return (
     <div>
-      <AdminNavbar/>
+      {/* <AdminNavbar/> */}
       <AdminDashboard/>
     </div>
   )

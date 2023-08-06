@@ -12,6 +12,9 @@ import SuccessPage from '../components/user/userTurfDetail/Components/Success';
 import BookingHistory from '../components/user/profile/BookingHistory';
 import UserProtectedRoute from './protectedRouter/UserProtectRouter';
 import Booking from '../components/user/userTurfDetail/Components/Booking';
+import BookingDetail from '../components/user/userTurfDetail/Components/BookingDetail';
+import UserOtp1 from '../components/user/UserSignup/UserOtp1';
+
 
 
 
@@ -24,13 +27,16 @@ function UserRouter() {
         <Route path="/login" element={<UserLogin />} />
         <Route path="/" element={<UserHomePage />} />
         <Route path="/userturf" element={<UserTurfPage />} />
-        <Route path="/userprofile" element={<UserProfile2 />} />
+        <Route path="/profile" element={<UserProfile2 />} />
         {/* <Route path="/turfs-details" element={<UserProtectedRoute><UserTurfDetail /></UserProtectedRoute>} /> */}
         <Route path="/turfs-details" element={<UserTurfDetail />} />
+        <Route path="/booking-detail" element={<BookingDetail />} />
         {/* <Route path="/booking" element={<UserProtectedRoute><Booking /></UserProtectedRoute>} />        */}
         <Route path="/userotp" element={<UserOtp />} />
         <Route path='/success/:id' element={<SuccessPage/>} />
-        <Route path='/userprofile/bookinghistory' element={<BookingHistory/>} />
+        
+        <Route path='/booking/history' element={<BookingHistory/>} />
+        <Route path="/otptest" element={<UserOtp1 />} />
       </Routes>
   );
 }

@@ -9,6 +9,9 @@ import { MdManageAccounts } from "react-icons/md";
 import { LuBookOpenCheck } from "react-icons/lu";
 // import { IoMdGitPullRequest } from "react-icons/io5";
 import {Link, useNavigate} from 'react-router-dom'
+import { GrDocumentPerformance } from "react-icons/gr";
+import { IoDocumentTextOutline } from "react-icons/io5";
+
 
 
 function Sidebar() {
@@ -31,10 +34,11 @@ function Sidebar() {
     //         { title: "Request" },
     //     ]
     // },
-    { title: "Manager" , icon: <FaUsers />, link: '/admin/managers'},
+    { title: "Manager" , icon: <ImUserTie />, link: '/admin/managers'},
     { title: "User" , icon: <FaUsers />, link: '/admin/users'},
     { title: "Turfs" , icon: <BiFootball />, link: '/admin/turfs'},
     { title: "Booking" , icon: <LuBookOpenCheck />, link: '/admin/bookings'},
+    { title: "SalesReport" , icon: <IoDocumentTextOutline/>, link: '/admin/SalesReport'},
     // { title: "Logout" , icon: <AiOutlineLogout /> , onClick: handleLogout},
     ]
 
@@ -51,12 +55,7 @@ function Sidebar() {
                     <h1 className={`text-white origin-left font-medium text-2xl ${!open && "scale-0"}`}>AoneTurf</h1>
                 </div>
 
-                {/* search */}
-                {/* <div className={`flex items-center rounded-md bg-ligt-white mt-3 ${!open ? "px-2.5":"px-4"} py-2`}>
-                        <BsSearch className={`text-white text-lg block float-left cursor-pointer ${open && "mr-2"}`}/>
-                        <input type={"search"} placeholder='Search' className={`text-base bg-transparent 
-                        w-full text-white focus:outline-none ${!open && "hidden"}`}/>
-              </div> */}
+
 
                 <ul className='pt-2 pl-0'>
                     {Menus.map((menu, index) => {
@@ -66,7 +65,7 @@ function Sidebar() {
                                     className={`text-white text-sm flex items-center gap-x-2 cursor-pointer p-2 hover:bg-light-white rounded-md ${menu.spacing ? "mt-9" : "mt-2"
                                         }`}
                                 >
-                                    <span className="text-2xl" >
+                                    <span className="text-2xl text-white" >
                                     {menu.icon}
                                     </span>
                                     <Link className={`ml-2 text-white no-underline text-base font-medium flex-1 duration-200 ${!open && "hidden"}`} to={menu.link}>

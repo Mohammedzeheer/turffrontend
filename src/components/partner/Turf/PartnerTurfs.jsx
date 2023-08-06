@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react';
-import PartnerNavbar2 from '../header/PartnerNavbar2';
+
 
 
 const PartnerTurfs = () => {
   return (
     <>
-    <PartnerNavbar2 />
     <div className="max-w-xs rounded overflow-hidden shadow-lg bg-white">
       <img className="w-40 h-40 object-cover" src='\image\turf7.png' alt="Turf" />
       <div className="px-6 py-4">

@@ -62,38 +62,3 @@ const UserHome2 = () => {
 
 export default UserHome2;
 
-// import React from "react";
-
-// const MainComponent = () => {
-//   return (
-//     <div className="container mx-auto px-4 py-8">
-//       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-//         {/* First div */}
-//         <div className="bg-white p-4 rounded-lg shadow-md">
-//           <img className="w-full mb-4 rounded-md" src="https://via.placeholder.com/300" alt="Image 1" />
-//           <p className="text-gray-700">
-//             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac elit a elit finibus laoreet ac ut tellus.
-//           </p>
-//         </div>
-
-//         {/* Second div */}
-//         <div className="bg-white p-4 rounded-lg shadow-md">
-//           <img className="w-full mb-4 rounded-md" src="https://via.placeholder.com/300" alt="Image 2" />
-//           <p className="text-gray-700">
-//             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac elit a elit finibus laoreet ac ut tellus.
-//           </p>
-//         </div>
-
-//         {/* Third div */}
-//         <div className="bg-white p-4 rounded-lg shadow-md">
-//           <img className="w-full mb-4 rounded-md" src="https://via.placeholder.com/300" alt="Image 3" />
-//           <p className="text-gray-700">
-//             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac elit a elit finibus laoreet ac ut tellus.
-//           </p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MainComponent;

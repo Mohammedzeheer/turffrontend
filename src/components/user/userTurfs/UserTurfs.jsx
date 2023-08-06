@@ -1,37 +1,40 @@
 import TurfCard from "./TurfCard";
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import Pagination from "./Pagination";
-import {AxiosUser} from '../../../api/AxiosInstance'
+import { AxiosUser } from "../../../api/AxiosInstance";
 import UserFooter from "../userFooter/UserFooter";
-
+import LoadingFootball from "../../LoadingFootball";
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserTurfs = () => {
   const [turfs, setTurfs] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
-
-
-
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     AxiosUser.get(`allturfs`, { withCredentials: true })
       .then((res) => {
-        console.log(res, '-------------turf page response------------');
+        console.log(res, "-------------turf page response------------");
         setTurfs(res.data.data);
+        setIsLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(error);
+        setIsLoading(false);
       });
   }, []);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = turfs
-    .filter((turf) =>
-      turf.location.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      turf.courtName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      turf.district.toLowerCase().includes(searchQuery.toLowerCase()) 
+    .filter(
+      (turf) =>
+        turf.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        turf.courtName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        turf.district.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .slice(indexOfFirstItem, indexOfLastItem);
 
@@ -40,13 +43,18 @@ const UserTurfs = () => {
   return (
     <>
       <div className="min-h-screen bg-gray-100 pt-[20px]">
+      {isLoading ? (
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> // Display a loading message while data is being fetched
+      ) : (
+        <React.Fragment>
         <section className="py-16 sm:py-16 bg-gray-100 text-black">
           <div className="container p-6 mx-auto space-y-8 relative">
             <div className="space-y-2 text-center">
               <h2 className="text-3xl font-bold">Let's Play Together</h2>
               <p className="font-sans text-thin text-black ">
                 {/* Select your playspots and book your playtime by a tap... */}
-                "Tap to explore playspots and book playtime - fun at your fingertips!"
+                "Tap to explore playspots and book playtime - fun at your
+                fingertips!"
               </p>
             </div>
 
@@ -60,8 +68,51 @@ const UserTurfs = () => {
               />
             </div>
 
+           
 
-            {/* <div className="my-4 flex items-center justify-center">
+            <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4 ">
+
+            {isLoading ? (
+              <div className="grid justify-center items-center h-52">
+                <span className="animate-spin rounded-full border-t-2 border-b-2 border-indigo-500 h-12 w-12"></span>
+              </div>
+            ) : (
+              // Render turf cards once isLoading is false
+              currentItems.map((turf) => <TurfCard key={turf._id} {...turf} />)
+            )}
+
+              {/* {currentItems.map((turf) => (
+                <TurfCard key={turf._id} {...turf} />
+              ))} */}
+            </div>
+
+            
+            <Pagination
+              itemsPerPage={itemsPerPage}
+              totalItems={turfs.length}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
+          </div>
+        </section>
+        </React.Fragment>
+      )}
+      </div>
+      <UserFooter />
+    </>
+  );
+};
+
+export default UserTurfs;
+
+
+
+
+
+
+
+{
+  /* <div className="my-4 flex items-center justify-center">
   <input
     type="text"
     placeholder="Search by location..."
@@ -79,53 +130,20 @@ const UserTurfs = () => {
       backgroundColor: "#EDF2F7",
     }}
   />
-</div> */}
+</div> */
+}
 
-            <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4 ">
-              {currentItems.map((turf) => (
-                <TurfCard key={turf._id} {...turf} />
-              ))}
-            </div>
-            <Pagination
-              itemsPerPage={itemsPerPage}
-              totalItems={turfs.length}
-              paginate={paginate}
-              currentPage={currentPage}
-            />
-          </div>
-        </section>
-      </div>
-      <UserFooter/>
-    </>
-  );
-};
-
-export default UserTurfs;
-
-
-
-
-
-
-
-  // useEffect(() => {
-  //   const fetchTurfs = async () => {
-  //     try {
-  //       const response = await Axiosuser.get(`turfs`);
-  //       setTurfs(response.data.turfs);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-  //   fetchTurfs();
-  // }, []);
-
-
-
-
-
-
-
+// useEffect(() => {
+//   const fetchTurfs = async () => {
+//     try {
+//       const response = await Axiosuser.get(`turfs`);
+//       setTurfs(response.data.turfs);
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   };
+//   fetchTurfs();
+// }, []);
 
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios'; // Import Axios library

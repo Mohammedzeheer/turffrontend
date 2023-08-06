@@ -3,19 +3,24 @@ import { AxiosUser } from '../../../../api/AxiosInstance';
 import Rating from '@mui/material/Rating';
 import { FaUserAlt } from "react-icons/fa";// Replace with the correct import for the Rating component
 import './CardReview.css'
+import LoadingFootball from '../../../LoadingFootball';
+
 
 const CardReview = ({ id, refresh }) => {
   const [reviews, setReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
   const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 3);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchReviews = async (id) => {
     try {
       const response = await AxiosUser.get(`getReviews/${id}`);
       console.log(response.data.reviews, "get response of review -----------------------");
       setReviews(response.data.reviews);
+      setIsLoading(false); 
     } catch (error) {
       console.error(error);
+      setIsLoading(false); 
     }
   };
 
@@ -24,7 +29,11 @@ const CardReview = ({ id, refresh }) => {
   }, [refresh]);
 
   return (
-    <div className="flex flex-col items-center mt-8 mb-10">
+    <div className="flex flex-col items-center mt-8 mb-5">
+       {isLoading ? (
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> // Display a loading message while data is being fetched
+      ) : (
+        <React.Fragment>
       <h1 className="text-xl font-bold mb-4">Reviews</h1>
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg">
         {visibleReviews.length > 0 ? (
@@ -96,6 +105,8 @@ const CardReview = ({ id, refresh }) => {
         >
           {showAllReviews ? "Show Less" : "Show More"}
         </button>
+      )}
+      </React.Fragment>
       )}
     </div>
   );

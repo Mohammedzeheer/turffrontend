@@ -6,7 +6,7 @@ import { IoClose } from "react-icons/io5";
 import {AxiosUser} from '../../../api/AxiosInstance'
 import './userProfile.css'
 
-const UserProfile2 = () => {
+const UserProfile = () => {
   const [userData, setUserData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
@@ -264,5 +264,5 @@ const UserProfile2 = () => {
   );
 };
 
-export default UserProfile2;
+export default UserProfile;
 

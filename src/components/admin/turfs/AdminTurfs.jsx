@@ -14,6 +14,7 @@ import { AiOutlinePullRequest } from "react-icons/ai";
 import '../users/AdminUsers.css';
 import Pagination from '../pagination';
 import {AxiosAdmin} from '../../../api/AxiosInstance'
+import LoadingFootball from "../../LoadingFootball";
 
 function AdminTurfs() {
   const [users, setUsers] = useState([]);
@@ -22,6 +23,7 @@ function AdminTurfs() {
   // const dispatch = useDispatch();
   const [refreshFlag, setRefreshFlag] = useState(false); 
   const [selectedUser, setSelectedUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Function to handle opening and closing the modal
   const handleModalOpen = (user) => {
@@ -75,9 +77,12 @@ const handlePrevPage = () => {
       .then((res) => {
         console.log(res, '------------------------------------------');
         setUsers(res.data.data);
+        setIsLoading(false); 
       })
       .catch((error) => {
         console.log(error);
+        setIsLoading(false); 
+
       });
   },[]);
 
@@ -85,6 +90,10 @@ const handlePrevPage = () => {
 
   return (
     <div>
+       {isLoading ? (
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> // Display a loading message while data is being fetched
+      ) : (
+        <React.Fragment>
      <div className="input-container">
         <input
           placeholder="Search something..."
@@ -175,7 +184,8 @@ const handlePrevPage = () => {
       handlePrevPage={handlePrevPage}
       handleNextPage={handleNextPage}
     />
-
+</React.Fragment>
+      )}
     </div>
   );
 }

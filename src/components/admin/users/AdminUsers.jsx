@@ -11,6 +11,7 @@ import { AdminPort } from "../../../store/port";
 import "./AdminUsers.css";
 import UserDetailsModal from "./UserDetailsModal";
 import Pagination from "../pagination"; 
+import LoadingFootball from "../../LoadingFootball";
 
 function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -18,7 +19,7 @@ function AdminUsers() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [refreshFlag, setRefreshFlag] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true);
 
   ////for view  user datail modaal   ----------------start--------------
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,7 +48,7 @@ function AdminUsers() {
 
  //pagination    ----------------start--------------------
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Change this number to adjust the number of items per page
+  const itemsPerPage = 7; // Change this number to adjust the number of items per page
 
   const filteredUsers = users.filter(
     (user) => user.username.toLowerCase().includes(query.toLowerCase())
@@ -77,9 +78,11 @@ function AdminUsers() {
       .then((res) => {
         console.log(res, "------------------------------------------");
         setUsers(res.data.data);
+        setIsLoading(false); 
       })
       .catch((error) => {
         console.log(error);
+        setIsLoading(false); 
       });
   },[refreshFlag]);
 
@@ -109,7 +112,10 @@ function AdminUsers() {
 
   return (
     <div>
-      {/* <button onClick={() => navigate('/admin/adduser')} style={{ position: 'relative', left: 90, top: 30, }}>Add User</button> */}
+       {isLoading ? (
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
+      ) : (
+        <React.Fragment>
       <div className="input-container">
         <input
           placeholder="Search something..."
@@ -161,7 +167,7 @@ function AdminUsers() {
                     <img
                       src={user.image}
                       alt="placeholder"
-                      width={100}
+                      width={30}
                     />
                   ) : (
                     <img
@@ -231,7 +237,8 @@ function AdminUsers() {
         user={selectedUser}
       />
 
-
+     </React.Fragment>
+      )}
     </div>
   );
 }

@@ -5,31 +5,40 @@ import { BiSolidEditAlt } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { AxiosUser } from "../../../api/AxiosInstance";
 import { updateUser } from "../../../redux/userSlice";
-import { FaBookOpen } from "react-icons/fa"; // Import the FontAwesome icon
 import ButtonBooking from "./ButtonBooking";
 import UserFooter from "../userFooter/UserFooter";
-import Loading from "../../Loading";
+import LoadingFootball from "../../LoadingFootball";
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserProfile2 = () => {
+  
+  const usertoken=localStorage.getItem('user')
+
   const [userData, setUserData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [username, setUserName] = useState();
   const [phonenumber, setPhonenumber] = useState();
-  const [address, setAddress] = useState();
+  const [address, setAddress] = useState(); 
+  const [isLoading, setIsLoading] = useState(true);
   const { userId } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const headers = { authorization: usertoken }
+
   const fetchData = async () => {
-    try {
-      const { data } = await AxiosUser.get(`userdata/${userId}`);
-      console.log(data);
+    try {    
+      const { data } = await AxiosUser.get(`userdata`,{headers});
       setUserData(data.data);
       setUserName(data.data.username);
       setAddress(data.data.address);
       setPhonenumber(data.data.phonenumber);
+      setIsLoading(false); 
+     
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      toast.error(error);
+      setIsLoading(false); 
     }
   };
 
@@ -41,13 +50,10 @@ const UserProfile2 = () => {
   const handleSaveClick = async (e) => {
     e.preventDefault();
     try {
-      const formData = { username, phonenumber, address, userId };
-      const { data } = await AxiosUser.post(`userprofile`, { formData });
-      console.log(data);
-      //   dispatch(updateUser({}));
-      console.log(data);
+      const formData = { username, phonenumber, address};
+      const { data } = await AxiosUser.post(`userprofile`, { formData },{headers});
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     }
     setIsEditing(false);
   };
@@ -68,12 +74,12 @@ const UserProfile2 = () => {
       withCredentials: true,
     };
     try {
-      const { data } = await AxiosUser.post(`photoupload`, formData, config);
+      const { data } = await AxiosUser.post(`photoupload`,formData,config);
       console.log(data, "-----------------------------------");
       dispatch(updateUser({ image: data.imageurl }));
       console.log(image, "ghsdsdjsd --- image");
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     }
   };
 
@@ -90,9 +96,9 @@ const UserProfile2 = () => {
     padding: "20px",
     borderRadius: "8px",
     fontWeight: "bold",
-    maxWidth: "600px", // Set the maximum width of the container
-    margin: "0 auto", // Center the container horizontally
-    position: "relative", // To position the edit button relative to this container
+    maxWidth: "600px", 
+    margin: "0 auto", 
+    position: "relative", 
   };
 
   const editButtonStyle = {
@@ -115,9 +121,13 @@ const UserProfile2 = () => {
   return (
     <>
       <UserNavbar />
-
-      <ButtonBooking />
+      <ButtonBooking/>
       <div className="sm-pt-5 md:pt-[20px] m-10 md:mb-[80px]">
+      {isLoading ? (
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
+      ) : (
+        <React.Fragment>
+
         <div
           className="container mx-auto px-4 py-8 pt-30"
           style={containerStyle}
@@ -253,12 +263,13 @@ const UserProfile2 = () => {
               </div>
             </div>
           ) : (
-            <div class="flex justify-center my-40">
-              <Loading />
-              Loading.....
+            <div className="flex justify-center my-40">
+              Data Not Found ....
             </div>
           )}
         </div>
+        </React.Fragment>
+      )}
       </div>
       <UserFooter />
     </>

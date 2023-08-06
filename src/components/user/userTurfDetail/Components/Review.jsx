@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import RatingComponent from './Rating';
 import { toast } from "react-toastify";
 
-const ReviewModal = ({ isOpen, toggle, id,refresh,setRefresh }) => {
+const ReviewModal = ({ isOpen, toggle, turfId,refresh,setRefresh }) => {
     const {username,userId } = useSelector((state) => state.user);
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
-
+   console.log(turfId,'----------------------------turf id in review modal');
 
 
     const handleSubmit = async (e) => {
@@ -21,7 +21,7 @@ const ReviewModal = ({ isOpen, toggle, id,refresh,setRefresh }) => {
             return;
           }
       
-          await AxiosUser.post(`reviews`, { id, review, rating, userId});
+          await AxiosUser.post(`reviews`, { turfId, review, rating, userId});
           toggle();
           setRefresh(!refresh);
           toast.success('Review Submitted Successfully',{
@@ -41,15 +41,15 @@ const ReviewModal = ({ isOpen, toggle, id,refresh,setRefresh }) => {
                         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                     >
                         <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                            {/*content*/}
+                          
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                                {/*header*/}
+                               
                                 <div className="flex items-start justify-between p-3 border-b border-solid border-slate-200 rounded-t">
                                     <h3 className="text-3xl font-semibold">
                                         Review & Ratings
                                     </h3>
                                 </div>
-                                {/*body*/}
+                            
                                 <div className="relative p-6 flex-auto">
                                     <form onSubmit={handleSubmit}>
 

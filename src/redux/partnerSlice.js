@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit'
 const INITIAL_STATE={
     partnername:"",
     token:"",
-    partnerId:""
+    partnerId:"",
 }
 
 export const PartnerSlice=createSlice({
@@ -15,9 +15,12 @@ export const PartnerSlice=createSlice({
             state.partnerId = action.payload.partnerId
             state.token=action.payload.token
             state.image=action.payload.image           
+        },
+        logoutPartner: (state) => {
+            Object.assign(state, INITIAL_STATE);
         }
     }
 })
 
-export const {updatePartner} =PartnerSlice.actions
+export const {updatePartner,logoutPartner} =PartnerSlice.actions
 export default PartnerSlice.reducer

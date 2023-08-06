@@ -10,8 +10,6 @@ function Bookings() {
     <PartnerNavbar />
     <TopBar/>
     <BookingHistoryPartner/>
-    <div>Bookings</div>
-
     </>
 
   )

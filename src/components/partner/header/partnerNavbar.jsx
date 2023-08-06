@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FiChevronDown } from "react-icons/fi";
+import { logoutPartner } from "../../../redux/partnerSlice";
+
 
 const PartnerNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogin, setLogin] = useState(false);
   const Navigate = useNavigate();
- 
+  const dispatch = useDispatch();
   const {partnername} = useSelector((state) => state.partner);
 
   const Image = () => (
@@ -24,13 +26,16 @@ const PartnerNavbar = () => {
     checkLogin();
   }, []);
 
-  const logoutPartner = () => {
-    localStorage.removeItem("partner");
+
+  const handleLogout = () => {
+    localStorage.removeItem('partner')
+    dispatch(logoutPartner())
     Navigate("/partner/login");
   };
 
   return (
     <>
+     
       <nav className="bg-customGreen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -64,7 +69,7 @@ const PartnerNavbar = () => {
                         </a>
                         <button
                           type="button"
-                          onClick={logoutPartner}
+                          onClick={handleLogout}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
                         >
@@ -78,7 +83,7 @@ const PartnerNavbar = () => {
               {!isLogin && (
                 <button
                   type="button"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium text-white rounded-md  hover:bg-gray-400 hover:text-black"
                   onClick={() => Navigate("/partner/login")}
                 >
                   Get Started
@@ -147,7 +152,7 @@ const PartnerNavbar = () => {
                 </a>
                 <button
                   type="button"
-                  onClick={logoutPartner}
+                  onClick={handleLogout}
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md font-medium"
                 >
                   Logout

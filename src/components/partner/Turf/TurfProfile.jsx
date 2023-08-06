@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from 'axios'
-// import { turfOwnerUrl } from '../../../API/API'
-// import { AxiosTurfOwner } from "../../../API/AxiosInstance";
 import { UserPort, PartnerPort } from "../../../store/port";
 import Carousel from "./Carousel";
 import { toast } from "react-hot-toast";
+import { AxiosPartner } from "../../../api/AxiosInstance";
 
 
 
@@ -18,7 +17,7 @@ const TurfPorfile = () => {
         const fetchData = async () => {
             try {
                 const headers = { authorization: token }
-                const response = await axios.get(`${PartnerPort}profile`, { headers });
+                const response = await AxiosPartner.get(`profile`, { headers });
                 setData(response?.data?.data);
                 console.log(response.data, "data");
             } catch (error) {

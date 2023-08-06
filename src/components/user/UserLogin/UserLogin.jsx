@@ -30,7 +30,6 @@ function UserLogin() {
     try {
       const res = await AxiosUser.post('userlogin', { ...user }, { withCredentials: true });
       const data = res.data;
-      console.log(data,'iam login data');
 
       if (data.message) {
         generateError(data.message);
@@ -67,35 +66,6 @@ function UserLogin() {
       }
     }
   };
-
-
-
-
-  // const handleLogin = (e) => {
-  //   e.preventDefault() // for make render 
-  //   AxiosUser.post(`userlogin`,  { ...user }, { withCredentials: true }).then((res) => {
-  //     res = res.data
-  //     if (res) {
-  //       console.log(res);
-  //       if(res.message){
-  //         generateError(res.message)
-  //       }
-  //       if (res.errors) {
-  //         const { email, password } = res.errors
-  //         if (email) generateError(email)
-  //         else if (password) generateError(password)
-  //       } else {
-  //         localStorage.setItem('user', JSON.stringify(res))
-  //         console.log(res.user, "username-----------");
-  //         dispatch(updateUser({ username: res.user.username, userId: res.user._id, image: res.user.image, token: res.token }))
-  //         Navigate('/')
-  //       }
-  //     }
-  //   })
-  // }
-
-
-
 
 
   const generateError = (err) => toast.error(err, {
@@ -175,6 +145,50 @@ export default UserLogin
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // const handleLogin = (e) => {
+  //   e.preventDefault() // for make render 
+  //   AxiosUser.post(`userlogin`,  { ...user }, { withCredentials: true }).then((res) => {
+  //     res = res.data
+  //     if (res) {
+  //       console.log(res);
+  //       if(res.message){
+  //         generateError(res.message)
+  //       }
+  //       if (res.errors) {
+  //         const { email, password } = res.errors
+  //         if (email) generateError(email)
+  //         else if (password) generateError(password)
+  //       } else {
+  //         localStorage.setItem('user', JSON.stringify(res))
+  //         console.log(res.user, "username-----------");
+  //         dispatch(updateUser({ username: res.user.username, userId: res.user._id, image: res.user.image, token: res.token }))
+  //         Navigate('/')
+  //       }
+  //     }
+  //   })
+  // }
 
 
 

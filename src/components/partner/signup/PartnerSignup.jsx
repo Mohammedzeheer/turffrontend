@@ -1,11 +1,10 @@
 import React, { Fragment, useState,useEffect } from 'react';
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import {ToastContainer , toast } from 'react-toastify'  // for error npm 
-import { PartnerPort } from "../../../store/port";
 import 'react-toastify/dist/ReactToastify.css';
+import { AxiosPartner } from '../../../api/AxiosInstance';
 
 
 function PartnerSignup() {
@@ -16,8 +15,8 @@ function PartnerSignup() {
     const navigate = useNavigate()
 
     useEffect(()=>{
-        const partner= localStorage.getItem('partner')
-        if(partner){
+        const token= localStorage.getItem('partner')
+        if(token){
             navigate('/partner')
         }
     },[])
@@ -25,7 +24,7 @@ function PartnerSignup() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const {data} = await axios.post(`${PartnerPort}partnersignup`, { ...partner }, { withCredential: true })
+            const {data} = await AxiosPartner.post(`partnersignup`, { ...partner }, { withCredential: true })
             console.log(data,"---------")
             if (data) {     
                 if (data.errors) {

@@ -1,24 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { AxiosUser } from '../../../api/AxiosInstance';
-import { useSelector } from 'react-redux';
-import UserNavbar from '../userHeader/UserNavbar';
+import React, { useEffect, useState } from "react";
+import { AxiosUser } from "../../../api/AxiosInstance";
+import { useSelector } from "react-redux";
+import UserNavbar from "../userHeader/UserNavbar";
 import { MdCancel } from "react-icons/md";
-import RingLoader from "react-spinners/RingLoader";
 import UserFooter from "../userFooter/UserFooter";
-import Loading from '../../Loading'
+import { TfiWrite } from "react-icons/tfi";
+import ReviewModal from "../userTurfDetail/Components/Review";
+import CancelBookingModal from "./CancelBookingModal"; 
+import LoadingFootball from "../../LoadingFootball";
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const BookingHistory = () => {
   const { userId } = useSelector((state) => state.user);
+  const usertoken=localStorage.getItem('user')
   const [bookingData, setBookingData] = useState();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [cancelModalIsOpen, setCancelModalIsOpen] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const [selectedTurfId, setSelectedTurfId] = useState(null);
+  const [selectedBookingId, setSelectedBookingId] = useState(null);
+  const [isLoading,setIsLoading]=useState(true)
+
+
+  const headers = { authorization: usertoken }
 
   const fetchData = async () => {
     try {
-      const response = await AxiosUser.get(`bookings_user/${userId}`);
-      console.log(response, '-------------------------response user booking history');
+      const response = await AxiosUser.get(`bookings_user`,{headers});
       setBookingData(response.data);
+      setIsLoading(false)
     } catch (error) {
-      console.log(error);
+      toast.error(error);
+      setIsLoading(false)
     }
   };
 
@@ -26,85 +41,203 @@ const BookingHistory = () => {
     fetchData();
   }, []);
 
-  const handleCancelBooking = async (bookingId) => {
-    try {
-      console.log(`Cancel booking with ID: ${bookingId}`);
-    } catch (error) {
-      console.log(error);
-    }
+  const toggleModal = (turfId) => {
+    setModalIsOpen(!modalIsOpen);
+    setSelectedTurfId(turfId); // Set the selected turf ID when opening the review modal
+  };
+
+
+  const toggleCancelModal = (BookingId) => {
+    setCancelModalIsOpen(!cancelModalIsOpen);
+    setSelectedBookingId(BookingId); // Set the selected turf ID when opening the cancel booking modal
+  };
+
+ 
+
+  // const handleCancelBooking = async (bookingId) => {
+  //   try {
+  //     const response = await AxiosUser.post(`cancelbooking/${bookingId}`);
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const isFutureBooking = (bookingDate) => {
+    const currentDate = new Date();
+    return new Date(bookingDate) > currentDate;
+  };
+
+  const isFutureBooking1 = (bookingDate) => {
+    const currentDate = new Date();
+    const futureDate = new Date(currentDate.getTime() + 3 * 60 * 60 * 1000); // Adding 3 hours (in milliseconds) to the current date
+    return new Date(bookingDate) > futureDate;
+  };
+
+  const isBookingTimePassed = (bookingDate) => {
+    const currentDate = new Date();
+    return new Date(bookingDate) < currentDate;
   };
 
   return (
     <>
-    <UserNavbar />
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Booking History</h1>
-      {bookingData && bookingData.length > 0 ? ( 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {bookingData &&
-          bookingData.map((booking) => (
-            <div key={booking._id} className="border rounded-lg p-4">
-              <img
-                src={booking.turf.images[0]}
-                alt={booking.turf.courtName}
-                className="w-20 h-20 object-cover rounded-full mb-2 mx-auto"
-                />
-              <p className="text-gray-500 mb-2">Booking ID: {booking._id}</p>
-              <p className="font-bold mb-2">{booking.turf.courtName}</p>
-              <p className="text-sm mb-2">{booking.turf.location}</p>
-              <p className="text-sm mb-2">
-                Date:{' '}
-                {new Date(booking.bookDate).toLocaleDateString('en-US', {
-                  weekday: 'short',
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric',
-                })}
-              </p>
-              <p className="text-sm mb-2">Time: {booking.time}</p>
-              <p className="text-sm mb-2">Slot: {booking.slot}</p>
-              <p className="text-sm mb-2">Price: {booking.price}</p>
-              <p
-                className={`text-${
-                  booking.payment === 'Success' ? 'green' : 'red'
-                }-500 font-bold mb-2`}
-                >
-                Payment: {booking.payment}
-              </p>
-              <button
-                onClick={() => handleCancelBooking(booking._id)}
-                className="text-sm text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-500 hover:text-white"
-                >
-                Cancel Booking <MdCancel className="w-3 h-3 inline-block mr-1" />
-              </button>
-            </div>
-          ))}
-      </div>
+      <UserNavbar />
+      <div className="p-4">
+      {isLoading ? (
+        <div className="mt-[140px] mb-[140px] content-center"><LoadingFootball/></div> 
       ) : (
-        <div class="flex justify-center my-40">
-        <Loading/>Loading.....
-      </div>
+        <React.Fragment>
+        <h1 className="text-2xl font-bold mb-4">Booking History</h1>
+        {bookingData && bookingData.length > 0 ? (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {bookingData &&
+              bookingData.map((booking) => (
+                <div key={booking._id} className="border rounded-lg p-4">
+                  <div className="flex justify-center space-x-4">
+                    {booking.turf.images[0] && (
+                      <img
+                        src={booking.turf.images[0]}
+                        alt={booking.turf.courtName}
+                        className="w-20 h-20 object-cover mb-2"
+                      />
+                    )}
+                    {booking.turf.images[1] && (
+                      <img
+                        src={booking.turf.images[1]}
+                        alt={booking.turf.courtName}
+                        className="w-20 h-20 object-cover mb-2"
+                      />
+                    )}
+                    {booking.turf.images[2] && (
+                      <img
+                        src={booking.turf.images[2]}
+                        alt={booking.turf.courtName}
+                        className="w-20 h-20 object-cover mb-2"
+                      />
+                    )}
+                   
+                  </div>
+                  <p className="text-gray-500 mb-2">
+                    Booking ID: {booking._id}
+                  </p>
+                 
+                  <p className="font-bold mb-2">{booking.turf.courtName}</p>
+                  <p className="text-sm mb-2">{booking.turf.location}</p>
+                  <p className="text-sm mb-2">
+                    Date:{" "}
+                    {new Date(booking.bookDate).toLocaleDateString("en-US", {weekday: "short", month: "short",day: "numeric",year: "numeric",
+                    })}
+                  </p>
+                  <p className="text-sm mb-2">Time: {booking.time}</p>
+                  <p className="text-sm mb-2">Slot: {booking.slot}</p>
+                  <p className="text-sm mb-2">Price: {booking.price}</p>
+                  <p
+                    className={`text-${
+                      booking.payment === "Success" ? "green" : "red"
+                    }-500 font-bold mb-2`}
+                  >
+                    Payment: {booking.payment}
+                  </p>
+
+                  {/* <button
+                    onClick={() => handleCancelBooking(booking._id)}
+                    className="text-sm text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-500 hover:text-white"
+                  >
+                    Cancel Booking{" "}
+                    <MdCancel className="w-4 h-4 inline-block mr-1" />
+                  </button> */}
+
+                  {/* {isFutureBooking(booking.bookDate)&&(!booking.cancelBooking)? ( // Check if the booking is in the future
+                    <button
+                      onClick={() => handleCancelBooking(booking._id)}
+                      className="text-sm text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-500 hover:text-white"
+                    >
+                      Cancel Booking{" "}
+                      <MdCancel className="w-4 h-4 inline-block mr-1" />
+                    </button>
+                  ) : (
+                    ""
+                  )} */}
+
+{isFutureBooking(booking.bookDate) && !booking.cancelBooking ? (
+        <button
+          onClick={() => toggleCancelModal(booking._id)}
+          className="text-sm text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-500 hover:text-white"
+        >
+          Cancel Booking <MdCancel className="w-4 h-4 inline-block mr-1" />
+        </button>
+      ) : (
+        ""
+      )}
+
+                  {/* <button
+                    onClick={() => toggleModal(booking.turf._id)} // Pass the turf ID to the toggleModal function
+                    className="m-1 text-sm text-grey-500 border border-gray-500 px-3 py-1 rounded-md hover:bg-gray-500 hover:text-white"
+                  >
+                    <TfiWrite className="w-4 h-4 inline-block mr-1" /> Add
+                    Review
+                  </button> */}
+
+                  {/*  {booking.cancelBooking ? (
+                    <p className="text-red-500 font-bold mb-2">Status: booking canceled</p>
+                  ) : (
+                    <button
+                      onClick={() => toggleModal(booking.turf._id)}
+                      className="m-1 text-sm text-grey-500 border border-gray-500 px-3 py-1 rounded-md hover:bg-gray-500 hover:text-white"
+                    >
+                      <TfiWrite className="w-4 h-4 inline-block mr-1" /> Add
+                      Review
+                    </button>
+                  )} */}
+
+                  {booking.cancelBooking ? (
+                    <p className="text-red-500 font-bold mb-2">
+                      Status: booking canceled
+                    </p>
+                  ) : isBookingTimePassed(booking.bookDate) ? (
+                    <button
+                      onClick={() => toggleModal(booking.turf._id)}
+                      className="m-1 text-sm text-grey-500 border border-gray-500 px-3 py-1 rounded-md hover:bg-gray-500 hover:text-white"
+                    >
+                      <TfiWrite className="w-4 h-4 inline-block mr-1" /> Add
+                      Review
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              ))}
+          </div>
+        ) : (
+          <div className="flex justify-center my-40">
+            Data Not Found .......
+          </div>
           // <p className="text-lg font-bold">No bookings found.</p>
         )}
-    </div>
-    <UserFooter/>
-          </>
+         </React.Fragment>
+      )}
+      </div>
+      <ReviewModal
+        isOpen={modalIsOpen}
+        refresh={refresh}
+        setRefresh={setRefresh}
+        toggle={toggleModal}
+        turfId={selectedTurfId} // Pass the selected turf ID to the ReviewModal
+      />
+
+      <CancelBookingModal
+        isOpen={cancelModalIsOpen}
+        bookingId={selectedBookingId}
+        toggle={() => toggleCancelModal(null)}
+        // onCancelBooking={handleCancelBooking}
+      />
+
+      <UserFooter />
+    </>
   );
 };
 
-
 export default BookingHistory;
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -180,21 +313,6 @@ export default BookingHistory;
 //   );
 // };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // // src/components/BookingHistory.js
 // import React, { useEffect, useState } from 'react';
 // import { AxiosUser } from '../../../api/AxiosInstance';
@@ -219,8 +337,6 @@ export default BookingHistory;
 // useEffect(() => {
 //     fetchData();
 //   }, []);
-
-
 
 //   return (
 //     <>

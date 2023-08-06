@@ -23,10 +23,10 @@
   table, th, td {
     border: 1px solid white;
     border-collapse: collapse;
-    padding: 15px;
+    padding: 10px;
     text-align: center;
     text-transform: capitalize;
-    font-size: 20px;
+    font-size: 17px;
   }
   
   table th {
@@ -74,7 +74,7 @@
 }
   .input-container {
     position: absolute;
-    right:  1px;
+    right:  100px;
     display: flex;
     align-items: center;
   }

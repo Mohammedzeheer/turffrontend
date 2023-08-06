@@ -1,41 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { changeUser } from '../../../redux/adminSlice';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
 import BlockIcon from '@mui/icons-material/Block';
 import { CgUnblock } from "react-icons/cg";
 import { AiOutlinePullRequest } from "react-icons/ai";
-import { AdminPort, UserPort, PartnerPort } from "../../../store/port";
 import ManagerDetail from './ManagerDetail';
 import { AiFillEye } from "react-icons/ai";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 import Pagination from '../pagination';
 import {AxiosAdmin} from '../../../api/AxiosInstance'
-
-
+import LoadingFootball from "../../LoadingFootball";
+import {ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 import '../users/AdminUsers.css';
 
 function VenueManager() {
   const [manager, setmanager] = useState([]);
   const [query, setQuery] = useState('');
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [refreshFlag, setRefreshFlag] = useState(false); 
   const [selectedManager, setSelectedManager] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  
+  const FetchData = async()=>{
+    try{
+      const res=await AxiosAdmin.get(`partners`, { withCredentials: true })
+      setmanager(res.data.data);
+      setIsLoading(false); 
+    }
+    catch(error){
+      toast.error(error);
+      setIsLoading(false); 
+    };
+  }
 
 
   useEffect(() => {
-    AxiosAdmin.get(`partners`, { withCredentials: true })
-      .then((res) => {
-        console.log(res, '------------------------------------------');
-        setmanager(res.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    FetchData();
   }, [refreshFlag]);
 
 
@@ -45,7 +46,7 @@ function VenueManager() {
         console.log(res, 'fdsfsddhsfdfsdffd');
        })
       .catch((error) => {
-        console.log(error);
+        toast.error(error);
       });
       setRefreshFlag(!refreshFlag); 
   };
@@ -58,7 +59,7 @@ function VenueManager() {
         console.log(res);
     })
       .catch((error) => {
-        console.log(error);
+        toast.error(error);
       });
       setRefreshFlag(!refreshFlag); 
   };
@@ -69,7 +70,7 @@ function VenueManager() {
       console.log(res);
     })
     .catch((error) => {
-      console.log(error);
+      toast.error(error);
     });
     setRefreshFlag(!refreshFlag); 
 };
@@ -87,7 +88,7 @@ const handleCloseModal = () => {
 
 //pagination    ----------------start--------------------
 const [currentPage, setCurrentPage] = useState(1);
-const itemsPerPage = 5; // Change this number to adjust the number of items per page
+const itemsPerPage = 5; 
 
 const filteredUsers = manager.filter(
   (user) => user.username.toLowerCase().includes(query.toLowerCase())
@@ -115,8 +116,11 @@ const handlePrevPage = () => {
 
   return (
     <div>
-      {/* <button onClick={() => navigate('/admin/adduser')} style={{ position: 'relative', left: 90, top: 30, }}>Add User</button> */}
-      <div className="input-container">
+       {isLoading ? (
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div>
+      ) : (
+        <React.Fragment>
+     <div className="input-container">
         <input
           placeholder="Search something..."
           className="input-s"
@@ -152,7 +156,6 @@ const handlePrevPage = () => {
         </thead>
         <tbody>
           {getCurrentItems()
-            //.filter((user) => user.username.toLowerCase().includes(query))
             .map((user, index) => (
               <tr key={index}>
                 <td>
@@ -175,7 +178,11 @@ const handlePrevPage = () => {
                       Approve
                     </Button>
                   ) : (
-                    <h5>approved</h5>
+                    <div className="inline-flex items-center">
+                    <h6 className="mr-1 mt-2"><BsFillCheckCircleFill/></h6>
+                    <p className="m-0">approved</p>
+                  </div>
+
                   )}             
                 </td>
                 <td>
@@ -204,6 +211,8 @@ const handlePrevPage = () => {
         onClose={handleCloseModal}
         manager={selectedManager}
       />
+      </React.Fragment>
+      )}
     </div>
   );
 }

@@ -12,6 +12,7 @@ import AdminUsers from './components/admin/users/AdminUsers';
 import Turfs from './components/admin/turfs/AdminTurfs';
 import AdminBookings from './components/admin/Bookings/AdminBookings';
 import AdminProtectRoute from './router/protectedRouter/AdminProtectRouter';
+import SalesReport from './components/admin/SalesReport/SalesReport';
 
 
 function App() {
@@ -23,11 +24,12 @@ function App() {
         {/* admin */}
         <Route path="/admin/login" element={<Login />}> </Route>
         <Route path='/admin' element={<AdminLayout />}>
-          <Route path='dashboard' element={<AdminProtectRoute><AdminDashboardPage /></AdminProtectRoute>}></Route>
+          <Route path='dashboard' element={<AdminDashboardPage />}></Route>
           <Route path='managers' element={<VenueManager />}></Route>
-          <Route path='users' element={<AdminProtectRoute><AdminUsers /></AdminProtectRoute>}></Route>
+          <Route path='users' element={<AdminUsers />}></Route>
           <Route path='turfs' element={<Turfs />}></Route>
           <Route path='bookings' element={<AdminBookings />}></Route>
+          <Route path='SalesReport' element={<SalesReport />}></Route>    
         </Route>
           
           

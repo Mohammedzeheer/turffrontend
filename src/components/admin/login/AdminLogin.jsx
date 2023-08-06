@@ -37,14 +37,14 @@ function AdminLogin() {
                     else if(password) generateError(password);
                 } else {
                     if (data.token) {
-                        localStorage.setItem('admin', JSON.stringify(data));
+                        localStorage.setItem('admin', JSON.stringify(data.token));
                         dispatch(AddAdmin({AdminToken:data.token}))
                         navigate('/admin');
                     }
                 }
             }
         } catch (error) {
-            console.error(error);
+            toast.error(error);
         }
     };
     

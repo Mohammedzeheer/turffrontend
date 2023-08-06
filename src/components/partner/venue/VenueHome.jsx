@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TopBar from "../sidebar/TopBar";
 import PartnerNavbar from "../header/partnerNavbar";
-import { UserPort } from "../../../store/port";
 import { useSelector } from "react-redux";
 import { AxiosPartner } from "../../../api/AxiosInstance";
 import Loading from '../Loading'
@@ -76,8 +75,8 @@ function VenueHome() {
                 </div>
               ))
             ) : (
-              <div className="flex items-center justify-center">
-                  <Loading/> Loading...
+              <div className="flex items-center justify-content-center">
+                  <Loading className='mr-2'/> Loading...
               </div>
             )}
           </div>
