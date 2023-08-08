@@ -12,8 +12,13 @@ import "./AdminUsers.css";
 import UserDetailsModal from "./UserDetailsModal";
 import Pagination from "../pagination"; 
 import LoadingFootball from "../../LoadingFootball";
+import { AxiosAdmin } from "../../../api/AxiosInstance";
+import {toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function AdminUsers() {
+  const adminToken= localStorage.getItem('admin')
+  const headers={authorization:adminToken}
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
@@ -33,12 +38,10 @@ function AdminUsers() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+
 ////for view  user datail modaal   ---------------end-------------
 
-
-
-
- 
   // const getCurrentItems = () => {
   //   const indexOfLastItem = currentPage * itemsPerPage;
   //   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -72,43 +75,54 @@ function AdminUsers() {
  //pagination    ----------------end--------------------
 
 
+   const Fetchdata = async () => {
+     try {
+       const response = await AxiosAdmin.get("users", { headers });
+       setUsers(response.data.data);
+       setIsLoading(false);
+     } catch (error) {
+       toast.error(error);
+       setIsLoading(false);
+     }
+   };
+
+
   useEffect(() => {
-    axios
-      .get(`${AdminPort}users`, { withCredentials: true })
-      .then((res) => {
-        console.log(res, "------------------------------------------");
-        setUsers(res.data.data);
-        setIsLoading(false); 
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false); 
-      });
+    Fetchdata();
   },[refreshFlag]);
 
-  const blockUser = (userId) => {
-    axios
-      .post(`${AdminPort}blockuser`, { userId }, { withCredentials: true })
-      .then((res) => {
-        console.log(res, "fdsfsddhsfdfsdffd");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setRefreshFlag(!refreshFlag);
-  };
+ 
 
-  const UnblockUser = (userId) => {
-    axios
-      .post(`${AdminPort}unblockuser`, { userId }, { withCredentials: true })
-      .then((res) => {
-        console.log(res, "fdsfsddhsfdfsdffd");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setRefreshFlag(!refreshFlag);
+  const blockUser = async (userId) => {
+    try {
+      const response = await AxiosAdmin.post(`blockuser`, { userId }, {headers});   
+      console.log(response.data);
+      if (response.data.message) {
+        toast.success(response.data.message);
+      }
+      setRefreshFlag(!refreshFlag);
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occurred while blocking the user.");
+    }
   };
+  
+  
+
+  const UnblockUser = async(userId) => {
+    try {
+      const response = await AxiosAdmin.post(`unblockuser`, { userId }, {headers }); 
+      console.log(response.data);
+      if (response.data.message) {
+        toast.success(response.data.message);
+      }
+      setRefreshFlag(!refreshFlag);
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occurred while unblocking the user.");
+    }
+  };
+  
 
   return (
     <div>

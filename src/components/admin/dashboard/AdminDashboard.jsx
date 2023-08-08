@@ -8,20 +8,6 @@ function AdminDashboard() {
   const [data,setData]=useState([])
   const [dailyRevenue,setDailyRevenue]=useState({})
 
-  // const totalRevenue = "100,000";
-  // const blockedUser = "50";
-  // const bookingCount = "100";
-  // const userCount = "50";
-
-  // const dailyRevenueData = {
-  //   '2023-08-01': 1900,
-  //   '2023-08-02': 3800,
-  //   '2023-08-03': 3800,
-  //   '2023-08-04': 800,
-  //   '2023-08-05': 3800,
-  //   '2023-08-06': 3800,
-  //   '2023-08-07': 800
-  // };
 
   const headers = { authorization: token }
   const fetchData=async()=>{

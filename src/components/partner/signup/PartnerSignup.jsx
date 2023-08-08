@@ -43,7 +43,7 @@ function PartnerSignup() {
                 }
             }
         } catch (error) {
-            console.log(error)
+            toast.error(error)
         }
     }
 
@@ -87,7 +87,7 @@ function PartnerSignup() {
                                                 <div className="form-group mb-3">
                                                     <input type="text" name="username" placeholder="User Name" onChange={(e) => setPartner({ ...partner, [e.target.name]: e.target.value })} className="form-control rounded-pill border-2 shadow-sm px-4" />
                                                 </div>                                         
-
+{/* 
                                                 <div className="form-group mb-3">
                                                     <div className="input-group">
                                                         <input type={showPassword ? "text" : "password"}
@@ -102,11 +102,39 @@ function PartnerSignup() {
                                                             </span>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> */}
+
+                        <div className="form-group mb-3">
+                          <div className="position-relative">
+                            <input
+                              type={showPassword ? "text" : "password"}
+                              placeholder="Password"
+                              name="password"
+                              value={partner.password}
+                              onChange={(e) =>
+                                setPartner({
+                                  ...partner,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                              autoFocus=""
+                              className="form-control rounded-pill border-2 shadow-sm px-4 pr-5"
+                            />
+                            <span
+                              className="position-absolute top-50 translate-middle-y cursor-pointer"
+                              style={{ right: "10px" }}
+                              onClick={() => setShowPassword(!showPassword)}
+                            >
+                              <FontAwesomeIcon
+                                icon={showPassword ? faEyeSlash : faEye}
+                              />
+                            </span>
+                          </div>
+                        </div>
 
                                                 <button type="submit" className="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" onClick={handleSubmit}>Sign up</button>
-                                                <div className="text-center d-flex justify-content-between mt-4"><p>have an account?<a onClick={() => { navigate('/partner/login') }} class="font-italic text-muted">
-                                                    <u>Login</u></a></p></div>
+                                                <div className="text-center d-flex justify-content-between mt-4"><p>have an account?<a onClick={() => { navigate('/partner/login') }} className="font-italic text-muted no-underline ml-1 cursor-pointer">
+                                                    Login</a></p></div>
                                             </form>
                                         </div>
                                     </div>

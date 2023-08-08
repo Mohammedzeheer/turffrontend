@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { AxiosUser } from "../../../api/AxiosInstance";
-import { updateUser } from "../../../redux/userSlice";
 import ButtonBooking from "./ButtonBooking";
 import UserFooter from "../userFooter/UserFooter";
 import LoadingFootball from "../../LoadingFootball";
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import './userProfile.css'
 
 const UserProfile2 = () => {
   
@@ -23,7 +23,6 @@ const UserProfile2 = () => {
   const [address, setAddress] = useState(); 
   const [isLoading, setIsLoading] = useState(true);
   const { userId } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
 
   const headers = { authorization: usertoken }
 
@@ -75,9 +74,7 @@ const UserProfile2 = () => {
     };
     try {
       const { data } = await AxiosUser.post(`photoupload`,formData,config);
-      console.log(data, "-----------------------------------");
-      dispatch(updateUser({ image: data.imageurl }));
-      console.log(image, "ghsdsdjsd --- image");
+      console.log(data, "ghsdsdjsd --- image");
     } catch (error) {
       toast.error(error);
     }

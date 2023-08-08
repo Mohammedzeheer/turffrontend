@@ -61,17 +61,39 @@
     cursor: 'pointer'
   } */
 
-  
+/*   
 .login,
 .image {
   min-height: 100vh;
   mix-blend-mode: multiply;
-}
+} */
 
 
-.bg-image {
-    /* background-image: url('/home/zeheer/Desktop/turf/frontend/public/image/turf6.png'); */
+/* .bg-image {
     background-size: cover;
     background-position: center center;  
     mix-blend-mode: multiply;
-  }   
+  }    */
+
+
+/* Add media query for mobile view */
+@media (max-width: 767px) {
+  .col-md-6.d-md-flex.bg-light {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .col-md-6.d-md-flex.bg-light img {
+    max-width: 55vw;
+    max-height: 55vh;
+  }
+
+  .col-md-6.bg-light {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+

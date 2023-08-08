@@ -14,6 +14,8 @@ import UserProtectedRoute from './protectedRouter/UserProtectRouter';
 import Booking from '../components/user/userTurfDetail/Components/Booking';
 import BookingDetail from '../components/user/userTurfDetail/Components/BookingDetail';
 import UserOtp1 from '../components/user/UserSignup/UserOtp1';
+import ChatComponent from '../components/user/chat/ChatComponent';
+import UserChat from '../components/user/chat/UserChat';
 
 
 
@@ -36,7 +38,12 @@ function UserRouter() {
         <Route path='/success/:id' element={<SuccessPage/>} />
         
         <Route path='/booking/history' element={<BookingHistory/>} />
+
         <Route path="/otptest" element={<UserOtp1 />} />
+        <Route path="/chat" element={<ChatComponent />} />
+        <Route path="/chat1" element={<UserChat />} />
+        
+        
       </Routes>
   );
 }

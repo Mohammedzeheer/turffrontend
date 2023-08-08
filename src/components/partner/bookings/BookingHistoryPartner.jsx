@@ -1,32 +1,50 @@
 // src/components/BookingHistory.js
 import React, { useEffect, useState } from 'react';
 import { AxiosPartner } from '../../../api/AxiosInstance';
-import { useSelector } from 'react-redux';
 import BookingDetailsModal from './BookingDetailsModal'; 
-import Loading from '../Loading'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import LoadingFootball from '../../LoadingFootball';
 
 
 const BookingHistoryPartner = () => {
 
-const {partnerId}=useSelector((state)=>state.partner)
+const partnerToken = localStorage.getItem('partner')
+const headers = { authorization: partnerToken }
+
 const [bookingData,setBookingData]=useState()
 const [selectedBooking, setSelectedBooking] = useState(null);
 const [isModalOpen, setModalOpen] = useState(false);
+const [isLoading, setIsLoading] = useState(true);
 
 const handleCardClick = (booking) => {
   setSelectedBooking(booking);
   setModalOpen(true);
 };
 
-const fetchData = async()=>{
+const fetchData1 = async()=>{
    try {
-    const response=await AxiosPartner.get(`bookingsData/${partnerId}`)
+    const response=await AxiosPartner.get(`bookingsData`,{headers})
     console.log(response,'-------------------------response partner booking history')
     setBookingData(response.data)
+    setIsLoading(false);
    } catch (error) {
-    console.log(error)
+    toast.error(error)
+    setIsLoading(false); 
    }
 }
+
+const fetchData = async () => {
+  try {
+    const response = await AxiosPartner.get('bookingsData', { headers });
+    setBookingData(response.data);
+    setIsLoading(false);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    toast.error('An error occurred while fetching booking data.');
+    setIsLoading(false);
+  }
+};
 
 useEffect(() => {
     fetchData();
@@ -35,7 +53,12 @@ useEffect(() => {
 
   return (
     <div className="p-4">
+      {isLoading ? (
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
+      ) : (
+        <React.Fragment>
       <h1 className="text-2xl font-bold mb-4">Booking History</h1>
+     
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {bookingData ? (
           bookingData.map((booking) => (
@@ -74,15 +97,20 @@ useEffect(() => {
             ))
             ) : (
               <div className="flex items-center justify-content-center m-10">
-                <Loading className="mr-2" /> Loading...
+               Data Not found. !
               </div>
             )}
+   
+        
       </div>
       <BookingDetailsModal
         booking={selectedBooking}
         onClose={() => setSelectedBooking(null)}
         isOpen={isModalOpen}
       />
+
+        </React.Fragment>
+      )}
     </div>
   );
 };

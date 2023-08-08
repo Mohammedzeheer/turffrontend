@@ -6,7 +6,8 @@ import TopBar from "../sidebar/TopBar";
 import TopBar2 from "../sidebar/TopBar2";
 import PartnerNavbar from "../header/partnerNavbar";
 import { AxiosPartner } from "../../../api/AxiosInstance";
-
+import { toast } from 'react-toastify'  // for error npm 
+import 'react-toastify/dist/ReactToastify.css';
 
 const PartnerDashboard = () => {
     const token = localStorage.getItem('partner');
@@ -28,7 +29,7 @@ const PartnerDashboard = () => {
           console.log(response.data.dayWiseBookings)
         }
       } catch (error) {
-        console.log(error);
+        toast.error(error);
       }
     };
 

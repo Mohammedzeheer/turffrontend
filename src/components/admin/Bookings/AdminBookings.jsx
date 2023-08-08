@@ -9,28 +9,37 @@ import Pagination from "../pagination";
 import { AxiosAdmin } from "../../../api/AxiosInstance";
 import BookingModal from "./BookingModal";
 import LoadingFootball from "../../LoadingFootball";
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function AdminBookings() {
+
+  const admintoken= localStorage.getItem('admin')
+  const headers = {authorization:admintoken}
+  console.log(admintoken)
   const [bookings, setBookings] = useState([]);
   const [query, setQuery] = useState("");
   const [refreshFlag, setRefreshFlag] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+
   const FetchData = async () => {
     try {
-      const response = await AxiosAdmin.get(`bookingList`, {
-        withCredentials: true,
-      });
+      const response = await AxiosAdmin.get(`bookingList`, { headers });
       setBookings(response.data.response);
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (error) {
-      console.log(error);
-      setIsLoading(false)
+      if (error.response && error.response.status === 404) {
+        toast.error(error.response.data.message) 
+      } else {
+        console.log("An error occurred:", error);
+      }
+      setIsLoading(false);
     }
   };
-
+  
   useEffect(() => {
     FetchData();
   }, []);
@@ -46,7 +55,7 @@ function AdminBookings() {
 
   //pagination    ----------------start--------------------
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 7; // Change this number to adjust the number of items per page
+  const itemsPerPage = 7; 
 
   const filteredUsers = bookings.filter((booking) =>
     booking.bookDate.toLowerCase().includes(query.toLowerCase())
@@ -72,7 +81,7 @@ function AdminBookings() {
   return (
     <div>
        {isLoading ? (
-        <div className="mt-[140px]  content-center"><LoadingFootball/></div> // Display a loading message while data is being fetched
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
       ) : (
         <React.Fragment>
       <div className="input-container">

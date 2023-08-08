@@ -2,14 +2,18 @@ import React, { useEffect, useState, useRef } from "react";
 import "../users/AdminUsers.css";
 import Pagination from "../pagination";
 import { AxiosAdmin } from "../../../api/AxiosInstance";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
+// import { Document, Packer, Paragraph } from "docx";
 import html2pdf from "html2pdf.js";
-import { Document, Packer, Paragraph } from "docx";
 import { BsFiletypePdf } from "react-icons/bs";
 import LoadingFootball from "../../LoadingFootball";
+import {toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function SalesReport() {
+  const adminToken= localStorage.getItem('admin')
+  const headers={authorization:adminToken}
   const [bookings, setBookings] = useState([]);
   const [query, setQuery] = useState("");
   const tableRef = useRef(); // Reference to the table element
@@ -17,14 +21,12 @@ function SalesReport() {
 
   const FetchData = async () => {
     try {
-      const response = await AxiosAdmin.get(`salesReport`, {
-        withCredentials: true,
-      });
+      const response = await AxiosAdmin.get(`salesReport`,{headers});
       console.log(response);
       setBookings(response.data.response);
       setIsLoading(false); 
     } catch (error) {
-      console.log(error);
+      toast.error(error);
       setIsLoading(false);
     }
   };
@@ -57,6 +59,7 @@ function SalesReport() {
   };
   //pagination    ----------------end--------------------
 
+  //formating the date
   function formatDate(dateString) {
     const createdAtDate = new Date(dateString);
     const day = createdAtDate.getDate().toString().padStart(2, "0");
@@ -83,7 +86,7 @@ function SalesReport() {
   return (
     <div>
       {isLoading ? (
-        <div className="mt-[140px]  content-center"><LoadingFootball/></div> // Display a loading message while data is being fetched
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
       ) : (
         <React.Fragment>
           <div className="input-container mr-10 ">

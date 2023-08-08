@@ -9,11 +9,14 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import Pagination from '../pagination';
 import {AxiosAdmin} from '../../../api/AxiosInstance'
 import LoadingFootball from "../../LoadingFootball";
-import {ToastContainer, toast } from 'react-toastify'
+import {toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import '../users/AdminUsers.css';
 
 function VenueManager() {
+  const adminToken=localStorage.getItem('admin')
+  const headers={authorization:adminToken}
+
   const [manager, setmanager] = useState([]);
   const [query, setQuery] = useState('');
   const [refreshFlag, setRefreshFlag] = useState(false); 
@@ -22,17 +25,21 @@ function VenueManager() {
   const [isLoading, setIsLoading] = useState(true);
 
   
-  const FetchData = async()=>{
-    try{
-      const res=await AxiosAdmin.get(`partners`, { withCredentials: true })
-      setmanager(res.data.data);
-      setIsLoading(false); 
+  const FetchData = async () => {
+  try {
+    const res = await AxiosAdmin.get(`partners`, { headers });
+    setmanager(res.data.data);
+    setIsLoading(false); 
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      const errorMessage = error.response.data.message;
+      toast.error(errorMessage);
+    } else {
+      toast.error('An error occurred while fetching data');
     }
-    catch(error){
-      toast.error(error);
-      setIsLoading(false); 
-    };
+    setIsLoading(false); 
   }
+};
 
 
   useEffect(() => {
@@ -40,39 +47,50 @@ function VenueManager() {
   }, [refreshFlag]);
 
 
-  const approvePartner = (userId) => {
-    AxiosAdmin.post(`approvePartner`, { userId }, { withCredentials: true })
-      .then((res) => {
-        console.log(res, 'fdsfsddhsfdfsdffd');
-       })
-      .catch((error) => {
-        toast.error(error);
-      });
-      setRefreshFlag(!refreshFlag); 
+
+  const approvePartner = async (userId) => {
+    try {
+      const response = await AxiosAdmin.post('approvePartner', { userId },{headers});
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
 
-  
-
-  const blockPartner = (userId) => {
-    AxiosAdmin.post(`blockpartner`, { userId }, { withCredentials: true })
-      .then((res) => {
-        console.log(res);
-    })
-      .catch((error) => {
-        toast.error(error);
-      });
-      setRefreshFlag(!refreshFlag); 
+  const handleApprovePartner = async (userId) => {
+    try {
+      const responseData = await approvePartner(userId);
+      toast.success('Manager Approved');
+      setRefreshFlag(!refreshFlag);
+    } catch (error) {
+      toast.error('An error occurred. Please try again later.');
+    }
   };
 
-  const UnblockPartner =(userId)=>{
-    AxiosAdmin.post(`unblockpartner`, { userId }, { withCredentials: true })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((error) => {
-      toast.error(error);
-    });
-    setRefreshFlag(!refreshFlag); 
+
+  const blockPartner = async (userId) => {
+    try {
+      const response = await AxiosAdmin.post('blockpartner', { userId }, { headers });
+      console.log(response);
+      toast.success('User blocked successfully'); 
+      setRefreshFlag(!refreshFlag);
+    } catch (error) {
+      console.error(error);
+      toast.error('An error occurred. Please try again later.');
+    }
+  };
+
+
+const UnblockPartner = async (userId) => {
+  try {
+    const response = await AxiosAdmin.post('unblockpartner', { userId }, { headers });
+    console.log(response);
+    toast.success('User unblocked successfully');
+    setRefreshFlag(!refreshFlag);
+  } catch (error) {
+    console.error(error);
+    toast.error('An error occurred. Please try again later.');
+  }
 };
 
 
@@ -174,7 +192,7 @@ const handlePrevPage = () => {
                 <td><Button onClick={() => handleOpenModal(user)} variant="outlined" startIcon={<AiFillEye/>}></Button></td>
                 <td>
                   {user.isApprove==false ? (
-                    <Button onClick={() => approvePartner(user._id)} variant="outlined" startIcon={<AiOutlinePullRequest />}>
+                    <Button onClick={() => handleApprovePartner(user._id)} variant="outlined" startIcon={<AiOutlinePullRequest />}>
                       Approve
                     </Button>
                   ) : (

@@ -46,11 +46,7 @@ const BookingDetail = () => {
         { headers: { authorization: token } }
       );
       console.log(response,'----------------response')
-      if (response.data.errors) {
-        const {wallet} = response.data.errors;
-           generateError(wallet);
-           setLoading(false);
-      }
+     
       if (response && response.status === 200) {
         if (selectedPaymentMethod === "stripe") {
          const stripe = await stripePromise;
@@ -58,9 +54,15 @@ const BookingDetail = () => {
          if (result && result.status === 200) {        
             await stripe.redirectToCheckout({ sessionId: result.data.response });
           } 
-         }
+         }  
           else if (selectedPaymentMethod === "wallet") {
-             Navigate(`/success/${response.data._id}`)
+            if (response.data.errors) {
+              const {wallet} = response.data.errors;
+                 generateError(wallet);
+                 setLoading(false);
+            }else{
+                Navigate(`/success/${response.data._id}`)
+            }         
           }
         }
     } catch (error) {

@@ -8,7 +8,6 @@ import PartnerNavbar from '../components/partner/header/partnerNavbar'
 import AddTurf from '../components/partner/addTurf/AddTurf';
 import PartnerTurfs from '../components/partner/Turf/PartnerTurfs';
 import VenueHome from '../components/partner/venue/VenueHome';
-import RegTurf from '../components/partner/addTurf/RegTurf';
 import TurfPorfile from '../components/partner/Turf/TurfProfile';
 import Bookings from '../components/partner/bookings/Bookings';
 import PartnerOtp from '../components/partner/signup/partnerOtp';
@@ -27,8 +26,7 @@ function PartnerRouter() {
         <Route path='/partnerturfs' element={<PartnerTurfs/>}>  </Route>
 
         <Route  path='/venuehome' element={<VenueHome/>}>  </Route>
-
-        <Route path='/regturf' element={<RegTurf/>}>  </Route>
+        
         <Route path='/turfprofile' element={<TurfPorfile/>}>  </Route>
         <Route path='/booking' element={<Bookings/>}>  </Route>
         <Route path='/otp' element={<PartnerOtp/>}>  </Route>

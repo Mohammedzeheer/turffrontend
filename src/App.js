@@ -13,6 +13,10 @@ import Turfs from './components/admin/turfs/AdminTurfs';
 import AdminBookings from './components/admin/Bookings/AdminBookings';
 import AdminProtectRoute from './router/protectedRouter/AdminProtectRouter';
 import SalesReport from './components/admin/SalesReport/SalesReport';
+import AdminChat from './components/admin/chat/AdminChat';
+import AdminDashboard from './components/admin/chat/AdminDashboard';
+
+
 
 
 function App() {
@@ -22,7 +26,11 @@ function App() {
       <Routes>
 
         {/* admin */}
+
         <Route path="/admin/login" element={<Login />}> </Route>
+        <Route path="/admin/chat" element={<AdminChat />}> </Route>
+        {/* <Route path="/admin/chat" element={<AdminDashboard />}> </Route> */}
+        
         <Route path='/admin' element={<AdminLayout />}>
           <Route path='dashboard' element={<AdminDashboardPage />}></Route>
           <Route path='managers' element={<VenueManager />}></Route>

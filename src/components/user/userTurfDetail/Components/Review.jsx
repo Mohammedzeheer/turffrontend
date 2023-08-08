@@ -5,10 +5,14 @@ import RatingComponent from './Rating';
 import { toast } from "react-toastify";
 
 const ReviewModal = ({ isOpen, toggle, turfId,refresh,setRefresh }) => {
-    const {username,userId } = useSelector((state) => state.user);
+
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
    console.log(turfId,'----------------------------turf id in review modal');
+
+   const {username } = useSelector((state) => state.user);
+   const usertoken=localStorage.getItem('user')
+   const headers = { authorization: usertoken }
 
 
     const handleSubmit = async (e) => {
@@ -21,7 +25,7 @@ const ReviewModal = ({ isOpen, toggle, turfId,refresh,setRefresh }) => {
             return;
           }
       
-          await AxiosUser.post(`reviews`, { turfId, review, rating, userId});
+          await AxiosUser.post(`reviews`, { turfId, review, rating},{headers});
           toggle();
           setRefresh(!refresh);
           toast.success('Review Submitted Successfully',{

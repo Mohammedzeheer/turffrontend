@@ -72,3 +72,11 @@
     background-position: center center;  
     mix-blend-mode: multiply;
   }  
+
+  .invalid-feedback {
+    display: block; /* or 'inline' or 'inline-block' based on your layout */
+    color: red;
+    font-size: 14px;
+    margin-top: 5px; /* Add some space between the input field and the error message */
+  }
+  

@@ -73,6 +73,14 @@ const PartnerNavbar = () => {
                         </button>
                         <button
                           type="button"
+                          onClick={() => Navigate('/chat1')}
+                          className="block px-4 py-2 font-medium text-sm text-customBlue hover:bg-gray-100 hover:text-gray-900"
+                          role="menuitem"
+                        >
+                          Contact
+                        </button>
+                        <button
+                          type="button"
                           onClick={handleLogout}
                           className="block px-4 py-2 font-medium text-sm text-customBlue hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
@@ -156,13 +164,26 @@ const PartnerNavbar = () => {
                 >
                   Profile
                 </a>
-                <button
+                <a
+                  href="/chat1"
+                  className="text-gray-300 hover:bg-customBlue w-[85px] hover:text-white block px-3 py-2 rounded-md font-medium no-underline"
+                >
+                  Contact
+                </a>
+                <a
+                  onClick={handleLogout}
+                  className="text-gray-300 hover:bg-customBlue w-[85px] hover:text-white block px-3 py-2 rounded-md font-medium no-underline"
+                >
+                  Logout
+                </a>
+
+                {/* <button
                   type="button"
                   onClick={handleLogout}
                   className="text-gray-300 hover:bg-customBlue hover:text-white block px-3 py-2 rounded-md font-small"
                 >
                   Logout
-                </button>
+                </button> */}
               </>
             )}
             {!isLogin && (

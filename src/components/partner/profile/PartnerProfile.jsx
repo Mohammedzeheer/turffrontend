@@ -1,38 +1,45 @@
 import React, { useState, useEffect } from "react";
 import TopBar from "../sidebar/TopBar";
 import PartnerNavbar from "../header/partnerNavbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import {AxiosPartner} from '../../../api/AxiosInstance'
 import Loading from '../Loading'
-
+import {toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const PartnerProfile = () => {
+  const partnerToken= localStorage.getItem('partner')
+  const headers={authorization:partnerToken}
+
   const [userData, setUserData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [username, setUserName] = useState();
   const [phonenumber, setPhonenumber] = useState();
   const [turfname, setTurfName] = useState();
-
   const [address, setAddress] = useState();
-  const {image, partnerId } = useSelector((state) => state.partner);
+  const {partnerId } = useSelector((state) => state.partner);
+  const dispatch=useDispatch()
+
+  const fetchData = async () => {
+    try {
+      const { data } = await AxiosPartner.get(`partnerprofile/`,{headers});
+      console.log(data);
+      setUserData(data.data);
+      setUserName(data.data.username);
+      setAddress(data.data.address);
+      setTurfName(data.data.turfname);
+      setPhonenumber(data.data.phonenumber);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      toast.error('Error fetching user data')
+    }
+  };
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await AxiosPartner.get(`partnerprofile/${partnerId}`);
-        console.log(data);
-        setUserData(data.data);
-        setUserName(data.data.username);
-        setAddress(data.data.address);
-        setTurfName(data.data.turfname);
-        setPhonenumber(data.data.phonenumber);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
     fetchData();
   }, []);
 
@@ -40,11 +47,10 @@ const PartnerProfile = () => {
   const handleSaveClick = async (e) => {
     e.preventDefault();
     try {
-      const formData = { username, phonenumber, address, partnerId, turfname };
-      const { data } = await AxiosPartner.post(`updateprofile`, { formData });
+      const formData = { username, phonenumber, address, turfname };
+      const { data } = await AxiosPartner.post(`updateprofile`, { formData },{headers});
       console.log(data);
-      //   dispatch(updateUser({}));
-      console.log(data);
+      setUserData(data);
     } catch (error) {
       console.log(error);
     }
@@ -54,29 +60,29 @@ const PartnerProfile = () => {
   //Uploading Image
   const imageUpload = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-
-    formData.append("image", imageUrl);
-    formData.append("partnerId", partnerId);
-
-    const config = {
-      header: {
-        "content-type": "multipart/form-data",
-        partnerId: partnerId,
-      },
-      withCredentials: true,
-    };
+  
     try {
-      const { data } = await AxiosPartner.post(`photoupload`,
-        formData,
-        config
-      );
-      dispatch(updatePartner({image: data.imageurl, partnerId }));
-      console.log(data);
+      const formData = new FormData();
+      formData.append("image", imageUrl);
+  
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+          authorization: partnerToken,
+        },
+      };
+  
+      const response = await AxiosPartner.post(`photoupload`, formData, config);
+      const responseData = response.data;
+  
+      console.log(responseData);
+      toast.success('Image uploaded successfully');
     } catch (error) {
-      console.log(error);
+      console.error("Error uploading image:", error);
+      toast.error('Error uploading image');
     }
   };
+  
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -91,9 +97,9 @@ const PartnerProfile = () => {
     padding: "20px",
     borderRadius: "8px",
     fontWeight: "bold",
-    maxWidth: "600px", // Set the maximum width of the container
-    margin: "0 auto", // Center the container horizontally
-    position: "relative", // To position the edit button relative to this container
+    maxWidth: "600px", 
+    margin: "0 auto", 
+    position: "relative", 
   };
 
   const editButtonStyle = {
@@ -113,22 +119,7 @@ const PartnerProfile = () => {
     padding: 0,
   };
 
-  const cancelButtonStyle = {
-    position: "absolute",
-    top: "10px",
-    right: "10px",
-    background: "#3182CE",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    padding: "5px 10px",
-    cursor: "pointer",
-    zIndex: "999",
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    padding: 0,
-  };
+
 
   return (
     <>
@@ -274,10 +265,7 @@ const PartnerProfile = () => {
                     >
                       <span className="text-[14px]">Cancel</span>
                     </button> */}
-                    <button
-                      onClick={handleCancelClick}
-                      style={cancelButtonStyle}
-                    >
+                    <button onClick={handleCancelClick} style={editButtonStyle}>
                       <IoClose className="text-customGreen text-[1.5rem]" />
                     </button>
                   </div>

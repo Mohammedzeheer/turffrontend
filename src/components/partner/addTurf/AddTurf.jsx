@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import axios from 'axios'
 import PartnerNavbar from "../header/partnerNavbar";
 import TopBar from '../sidebar/TopBar';
-import { AdminPort, UserPort, PartnerPort } from '../../../store/port';
 import { useSelector } from 'react-redux';
 import {ToastContainer , toast } from 'react-toastify'  // for error npm 
 import 'react-toastify/dist/ReactToastify.css';
 import {AxiosPartner} from '../../../api/AxiosInstance'
 
 const AddTurf = () => {
-  const {partnerId} = useSelector(state => state.partner)
+  const partnerToken= localStorage.getItem('partner')
+  // const headers={authorization:partnerToken}
   const [selectImages,setSelectedImages]=useState([])
   const [images,setImages]=useState([])
   const [formData, setFormData] = useState({
@@ -21,17 +20,14 @@ const AddTurf = () => {
     closingTime:'',
     description: '',
     location: '',
-    venueTypes: [], // Changed to an array to support multiple selections
-    prices: {}, // Object to store prices for each selected venue type
-    // photos: [],
+    venueTypes: [], 
+    prices: {}, 
   });
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-
-    // Handle multi-select (venueTypes) differently
+    
     if (type === 'checkbox') {
-      // If it's a checkbox input, handle the selection of multiple options
       const isChecked = e.target.checked;
       setFormData((prevFormData) => {
         if (isChecked) {
@@ -53,7 +49,6 @@ const AddTurf = () => {
         }
       });
     } else {
-      // For other inputs, handle as usual
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: value,
@@ -64,7 +59,7 @@ const AddTurf = () => {
 
   const handlePriceChange = (e) => {
     const { name, value } = e.target;
-    const venueType = name.replace('price_', ''); // Extract the venueType from the name
+    const venueType = name.replace('price_', ''); 
   
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -75,13 +70,6 @@ const AddTurf = () => {
     }));
   }
 
-
-  // const handlePhotoChange1 = (e) => {
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     photos: e.target.files,
-  //   }));
-  // };
 
 
   const handlePhotoChange = (event) => {
@@ -95,7 +83,6 @@ const AddTurf = () => {
     setImages(selectedFiles);
   };
 
-   console.log(images,"images console ...-----");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,23 +98,17 @@ const AddTurf = () => {
     formDataObject.append('location', formData.location);
     formDataObject.append('venueTypes', JSON.stringify(formData.venueTypes));
     formDataObject.append('prices', JSON.stringify(formData.prices));
-    formDataObject.append("partnerId", partnerId);
 
   
-    // for (let i = 0; i < formData.photos.length; i++) {
-    //   formDataObject.append(`photos[${i}]`, formData.photos[i]);
-    // }
-    
     for(const image of images){
       formDataObject.append('photos',image)
     }
-
-    console.log(formDataObject,"------------formDataObject")
    
     try {
       const response = await AxiosPartner.post(`addturf`, formDataObject, {
         headers: {
           'Content-Type': 'multipart/form-data',
+           authorization:partnerToken
         },
       });
       console.log('Form submitted successfully:', response.data);
@@ -148,7 +129,7 @@ const AddTurf = () => {
       setSelectedImages([]);
       setImages([]);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      toast.error('Error submitting form:', error);
     }
   };
   
@@ -172,9 +153,6 @@ const generateMessage = (message) => toast.success(message, {
       </div>
       <div className="grid grid-cols-2 gap-4 mb-4 ">
         <div>
-          {/* <label htmlFor="venueName" className="block mb-1 text-gray-800">
-            Venue Name
-          </label> */}
           <input
             type="text"
             id="courtName"
@@ -186,9 +164,7 @@ const generateMessage = (message) => toast.success(message, {
           />
         </div>
         <div>
-          {/* <label htmlFor="mobileNumber" className="block mb-1 text-gray-800">
-            Mobile Number
-          </label> */}
+
           <input
             type="text"
             id="mobileNumber"
@@ -205,9 +181,7 @@ const generateMessage = (message) => toast.success(message, {
 
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
-          {/* <label htmlFor="state" className="block mb-1 text-gray-800">
-            State
-          </label> */}
+
           <input
             type="text"
             id="state"
@@ -262,9 +236,7 @@ const generateMessage = (message) => toast.success(message, {
       </div>
 
       <div className="mb-4">
-        {/* <label htmlFor="description" className="block mb-1 text-gray-800">
-          Description
-        </label> */}
+
         <textarea
           id="description"
           name="description"
@@ -277,9 +249,7 @@ const generateMessage = (message) => toast.success(message, {
 
 
       <div className="mb-4">
-        {/* <label htmlFor="location" className="block mb-1 text-gray-800">
-          Location
-        </label> */}
+
         <input
           type="text"
           id="location"

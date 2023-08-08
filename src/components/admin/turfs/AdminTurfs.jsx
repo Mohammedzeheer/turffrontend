@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-// import { changeUser } from '../../../redux/adminSlice';
 import Button from '@mui/material/Button';
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import BlockIcon from '@mui/icons-material/Block';
-// import { CgUnblock } from "react-icons/cg";
-import { AdminPort, UserPort } from "../../../store/port";
 import TurfModal from './TurfModal';
 import { AiFillEye } from "react-icons/ai";
 import { AiOutlinePullRequest } from "react-icons/ai";
-import '../users/AdminUsers.css';
 import Pagination from '../pagination';
 import {AxiosAdmin} from '../../../api/AxiosInstance'
 import LoadingFootball from "../../LoadingFootball";
+import {toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import '../users/AdminUsers.css';
+// import { useNavigate } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
+// import { changeUser } from '../../../redux/adminSlice';
+// import DeleteIcon from '@mui/icons-material/Delete';
+// import BlockIcon from '@mui/icons-material/Block';
+// import { CgUnblock } from "react-icons/cg";
+
+
+
 
 function AdminTurfs() {
+  const adminToken=localStorage.getItem('admin')
+  const headers={authorization:adminToken}
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState('');
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
   const [refreshFlag, setRefreshFlag] = useState(false); 
   const [selectedUser, setSelectedUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Function to handle opening and closing the modal
+
   const handleModalOpen = (user) => {
     setSelectedUser(user);
   };
@@ -34,9 +37,10 @@ function AdminTurfs() {
     setSelectedUser(null);
   };
 
+
 //pagination    ----------------start--------------------
 const [currentPage, setCurrentPage] = useState(1);
-const itemsPerPage = 4; // Change this number to adjust the number of items per page
+const itemsPerPage = 5; 
 
 const filteredUsers = users.filter(
   (user) => user.courtName.toLowerCase().includes(query.toLowerCase())
@@ -60,30 +64,32 @@ const handlePrevPage = () => {
 //pagination    ----------------end--------------------
 
 
-  const approveTurfs = (userId) => {
-    AxiosAdmin.post(`approveTurfs`, { userId }, { withCredentials: true })
-      .then((res) => {
-        console.log(res, 'fdsfsddhsfdfsdffd');
-       })
-      .catch((error) => {
-        console.log(error);
-      });
-      setRefreshFlag(!refreshFlag); 
+
+  const approveTurfs = async (userId) => {
+    try {
+      const response = await AxiosAdmin.post('approveTurfs', { userId }, { headers });
+      console.log(response.data); 
+      setRefreshFlag(!refreshFlag);
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
 
-  useEffect(() => {
-    AxiosAdmin.get(`turfs`, { withCredentials: true })
-      .then((res) => {
-        console.log(res, '------------------------------------------');
-        setUsers(res.data.data);
-        setIsLoading(false); 
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false); 
+  const fetchData = async ()=>{
+    try {
+      const response = await AxiosAdmin.get(`turfs`, { headers })
+      setUsers(response.data.data);
+      setIsLoading(false); 
+    } catch (error) {
+      toast.error(error);
+      setIsLoading(false); 
+    }
+  
+  }
 
-      });
+  useEffect(() => {
+    fetchData()
   },[]);
 
 
@@ -91,7 +97,7 @@ const handlePrevPage = () => {
   return (
     <div>
        {isLoading ? (
-        <div className="mt-[140px]  content-center"><LoadingFootball/></div> // Display a loading message while data is being fetched
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
       ) : (
         <React.Fragment>
      <div className="input-container">
