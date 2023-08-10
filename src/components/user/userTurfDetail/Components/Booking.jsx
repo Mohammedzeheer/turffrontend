@@ -8,16 +8,10 @@ import { FaBackward } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const Booking = ({
-  ID,
-  openingTime,
-  closingTime,
-  price,
-  slot,
-  setShowCalender,
-}) => {
+const Booking = ({ID,openingTime,closingTime,price, slot, setShowCalender,}) => {
   const token = localStorage.getItem("user");
-  const { userId, email } = useSelector((state) => state.user);
+  const headers={authorization:token}
+  const {email } = useSelector((state) => state.user);
   const [date, setDate] = useState(new Date());
   const [bookedTime, setBookedTime] = useState([]);
   const Navigate = useNavigate();
@@ -25,31 +19,22 @@ const Booking = ({
   const handleTimeClick = async (date, time) => {
     try {
       if (!token) return Navigate("/login");
-      navigateToBookingDetail(ID, date, time, userId, price, slot, email);
+      navigateToBookingDetail(ID, date, time, price, slot, email);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const navigateToBookingDetail = (
-    ID,
-    date,
-    time,
-    userId,
-    price,
-    slot,
-    email
-  ) => {
-    Navigate("/booking-detail", {
-      state: { ID, date, time, userId, price, slot, email },
-    });
+  const navigateToBookingDetail = (ID, date,time,price,slot,email) => {
+    Navigate("/booking-detail", { state: { ID, date, time, price, slot, email },});
   };
+
 
   const slots = getTimeSlot(openingTime, closingTime, 60);
 
   const getSlots = async (date) => {
     try {
-      const response = await AxiosUser.get(`bookingslots/${date}/${ID}`);
+      const response = await AxiosUser.get(`bookingslots/${date}/${ID}`,{headers});
       console.log(response, "responce booking slots");
       if (response.status === 200) {
         const bookedTimes = response?.data.map((x) => x.time);
@@ -83,23 +68,6 @@ const Booking = ({
         <div className="container mx-auto flex flex-wrap px-5 py-1 mb-5 sm:py-0 items-center justify-center">
           {/* Calendar */}
 
-          {/* <div className="w-full lg:w-1/2 px-2">
-            <div className="text-center">
-              <h2 className="font-sans font-bold p-5">Select Date</h2>
-              <div
-                className="react-calendar ml-5"
-                style={{ display: "flex", justifyContent: "center" }}
-              >
-                <Calendar
-                  maxDate={maxDate}
-                  tileDisabled={isDateDisabled}
-                  minDate={new Date()}
-                  onChange={setDate}
-                />
-              </div>
-            </div>
-          </div> */}
-
           <div className="w-full lg:w-1/2 px-2 flex justify-center items-center">
             <div className="text-center">
               <h2 className="font-sans font-bold p-5">Select Date</h2>
@@ -109,7 +77,7 @@ const Booking = ({
               >
                 <Calendar
                   maxDate={maxDate}
-                  tileDisabled={isDateDisabled}
+                  // tileDisabled={isDateDisabled}
                   minDate={new Date()}
                   onChange={setDate}
                 />
@@ -167,7 +135,7 @@ const Booking = ({
             style={{
               marginLeft: "auto",
               marginRight: "auto",
-              display: "flex", // Use flex display to align items in the same row
+              display: "flex", 
               alignItems: "center",
             }}
             className="p-[10px] py-2 font-semibold rounded-full bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 mt-5"
@@ -181,6 +149,7 @@ const Booking = ({
 };
 
 export default Booking;
+
 
 
 

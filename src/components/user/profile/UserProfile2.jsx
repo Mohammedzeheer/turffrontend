@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import UserNavbar from "../userHeader/UserNavbar";
-import { useDispatch, useSelector } from "react-redux";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { AxiosUser } from "../../../api/AxiosInstance";
@@ -14,7 +13,8 @@ import './userProfile.css'
 const UserProfile2 = () => {
   
   const usertoken=localStorage.getItem('user')
-
+  const headers = { authorization: usertoken }
+  
   const [userData, setUserData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
@@ -22,9 +22,7 @@ const UserProfile2 = () => {
   const [phonenumber, setPhonenumber] = useState();
   const [address, setAddress] = useState(); 
   const [isLoading, setIsLoading] = useState(true);
-  const { userId } = useSelector((state) => state.user);
 
-  const headers = { authorization: usertoken }
 
   const fetchData = async () => {
     try {    
@@ -45,38 +43,48 @@ const UserProfile2 = () => {
     fetchData();
   }, []);
 
-  //saving address
+
   const handleSaveClick = async (e) => {
     e.preventDefault();
     try {
-      const formData = { username, phonenumber, address};
-      const { data } = await AxiosUser.post(`userprofile`, { formData },{headers});
+      const formData = { username, phonenumber, address }; 
+      const response = await AxiosUser.post('userprofile', formData, { headers });
+  
+      if (response.status === 200) {
+        toast.success('Profile added successfully');
+      } else {
+        toast.error('An error occurred while updating the profile');
+      }
     } catch (error) {
-      toast.error(error);
+      toast.error('An error occurred while updating the profile');
     }
     setIsEditing(false);
   };
-
+  
+  
   //Uploading Image
   const imageUpload = async (e) => {
     e.preventDefault();
+    try {    
     const formData = new FormData();
-
-    formData.append("image", imageUrl);
-    formData.append("userId", userId);
-
+    formData.append("image", imageUrl); 
     const config = {
-      header: {
+      headers: {
         "content-type": "multipart/form-data",
-        userId: userId,
+         authorization: usertoken
       },
-      withCredentials: true,
     };
-    try {
-      const { data } = await AxiosUser.post(`photoupload`,formData,config);
-      console.log(data, "ghsdsdjsd --- image");
+ 
+      const response = await AxiosUser.post(`photoupload`,formData,config);
+      const responseData = response.data;
+      console.log(responseData);
+      toast.success('Image uploaded successfully');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
-      toast.error(error);
+      console.error("Error uploading image:", error);
+      toast.error('Error uploading image');
     }
   };
 
@@ -124,12 +132,12 @@ const UserProfile2 = () => {
         <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
       ) : (
         <React.Fragment>
-
+  {userData ? (
         <div
           className="container mx-auto px-4 py-8 pt-30"
           style={containerStyle}
         >
-          {userData ? (
+        
             <div className="flex flex-col items-center md:flex-row md:items-start">
               <div className="w-1/2 pr-8 md:pr-16 md:mb-0 mt-6">
                 <div className="profilePage">
@@ -258,13 +266,14 @@ const UserProfile2 = () => {
                   </button>
                 )}
               </div>
-            </div>
-          ) : (
-            <div className="flex justify-center my-40">
-              Data Not Found ....
-            </div>
-          )}
+            </div>   
         </div>
+         ) : (
+          <div className="flex justify-center my-[200px] sm:my-40">
+            Data Not Found .......
+          </div>
+
+        )}
         </React.Fragment>
       )}
       </div>

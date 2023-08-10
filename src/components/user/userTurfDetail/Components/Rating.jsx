@@ -6,12 +6,13 @@ import Typography from '@mui/material/Typography';
 export default function RatingComponent({rating, setRating}) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Typography variant="body1" sx={{ fontWeight: 'bold', marginRight: '8px' }}>
+      <Typography className='text-gray-300' variant="body1" sx={{ fontWeight: 'bold', marginRight: '8px' }}>
         Rating
       </Typography>
       <Rating
+        className='mt-2'
         name="rating"
-        value={rating} // Make sure this is correct and not being overwritten
+        value={rating} 
         onChange={(event, newValue) => {
           setRating(newValue);
         }}

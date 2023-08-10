@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import Button from "@mui/material/Button";
 import { AiFillEye } from "react-icons/ai";
-import { AiOutlinePullRequest } from "react-icons/ai";
+// import Button from "@mui/material/Button";
+// import { AiOutlinePullRequest } from "react-icons/ai";
 import "../users/AdminUsers.css";
 import Pagination from "../pagination";
 import { AxiosAdmin } from "../../../api/AxiosInstance";
@@ -17,10 +15,10 @@ function AdminBookings() {
 
   const admintoken= localStorage.getItem('admin')
   const headers = {authorization:admintoken}
-  console.log(admintoken)
+
   const [bookings, setBookings] = useState([]);
   const [query, setQuery] = useState("");
-  const [refreshFlag, setRefreshFlag] = useState(false);
+  // const [refreshFlag, setRefreshFlag] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -129,20 +127,8 @@ function AdminBookings() {
         </thead>
         <tbody>
           {getCurrentItems()
-            // .filter((user) => user.courtName.toLowerCase().includes(query))
             .map((booking, index) => (
               <tr key={index}>
-                {/* <td>
-                  {booking.turf.images ? (
-                    <img src={booking.turf.images[0]} alt="loading" width={100} />
-                  ) : (
-                    <img
-                      src="https://static-00.iconduck.com/assets.00/profile-minor-icon-256x256-6u3v5w0z.png"
-                      alt="placeholder"
-                      width={30}
-                    />
-                  )}
-                </td> */}
                 <td>{booking.turf.courtName}</td>
                 <td>{booking.turf.district}</td>
                 <td>{booking.turf.location}</td>
@@ -189,177 +175,11 @@ function AdminBookings() {
 
 export default AdminBookings;
 
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import Button from "@mui/material/Button";
-// import { AiFillEye } from "react-icons/ai";
-// import { AiOutlinePullRequest } from "react-icons/ai";
-// import "../users/AdminUsers.css";
-// import Pagination from "../pagination";
-// import { AxiosAdmin } from "../../../api/AxiosInstance";
-// import BookingModal from "./BookingModal";
-// import TextField from "@mui/material/TextField";
-// import AdapterDateFns from "@mui/lab/AdapterDateFns";
-// import LocalizationProvider from "@mui/lab/LocalizationProvider";
-// import DatePicker from "@mui/lab/DatePicker";
-// import TimePicker from "@mui/lab/TimePicker";
 
-// function AdminBookings() {
-//   const [bookings, setBookings] = useState([]);
-//   const [selectedDate, setSelectedDate] = useState(null);
-//   const [selectedTime, setSelectedTime] = useState(null);
-//   const [selectedBooking, setSelectedBooking] = useState(null);
 
-//   const FetchData = async () => {
-//     try {
-//       const response = await AxiosAdmin.get(`bookingList`, {
-//         withCredentials: true,
-//       });
-//       console.log(
-//         response,
-//         "--------------------booking list in admin -------------"
-//       );
-//       setBookings(response.data.response);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
 
-//   useEffect(() => {
-//     FetchData();
-//   }, []);
 
-//   // Function to handle opening and closing the modal
-//   const handleModalOpen = (booking) => {
-//     setSelectedBooking(booking);
-//   };
 
-//   const handleModalClose = () => {
-//     setSelectedBooking(null);
-//   };
 
-//   // Filtering logic based on booking date and time
-//   const filteredBookings = bookings.filter((booking) => {
-//     if (!selectedDate || !selectedTime) return true; // If no date or time is selected, show all bookings
-//     const bookingDateTime = new Date(booking.bookDate);
-//     bookingDateTime.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0, 0);
-//     const selectedDateTime = new Date(selectedDate);
-//     selectedDateTime.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0, 0);
-//     return bookingDateTime.getTime() === selectedDateTime.getTime();
-//   });
 
-//   //pagination    ----------------start--------------------
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const itemsPerPage = 3; // Change this number to adjust the number of items per page
 
-//   const getTotalPages = () => Math.ceil(filteredBookings.length / itemsPerPage);
-
-//   const getCurrentItems = () => {
-//     const indexOfLastItem = currentPage * itemsPerPage;
-//     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-//     return filteredBookings.slice(indexOfFirstItem, indexOfLastItem);
-//   };
-
-//   const handleNextPage = () => {
-//     setCurrentPage((prevPage) => prevPage + 1);
-//   };
-
-//   const handlePrevPage = () => {
-//     setCurrentPage((prevPage) => prevPage - 1);
-//   };
-//   //pagination    ----------------end--------------------
-
-//   return (
-//     <div>
-//       {/* Date picker */}
-//       <LocalizationProvider dateAdapter={AdapterDateFns}>
-//         <DatePicker
-//           label="Select Booking Date"
-//           value={selectedDate}
-//           onChange={(newValue) => setSelectedDate(newValue)}
-//           renderInput={(params) => <TextField {...params} />}
-//         />
-//         <TimePicker
-//           label="Select Booking Time"
-//           value={selectedTime}
-//           onChange={(newValue) => setSelectedTime(newValue)}
-//           renderInput={(params) => <TextField {...params} />}
-//         />
-//       </LocalizationProvider>
-
-//       <h2 className="userHead">Bookings</h2>
-//       <table>
-//         <thead>
-//           <tr>
-//             {/* <th>Image</th> */}
-//             <th>Name</th>
-//             <th>District</th>
-//             <th>Location</th>
-//             <th>Booking Date</th>
-//             <th>User</th>
-//             <th>Detail</th>
-//             {/* <th>Status</th> */}
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {getCurrentItems().map((booking, index) => (
-//             <tr key={index}>
-//               {/* <td>
-//                 {booking.images ? (
-//                   <img src={booking.images[0]} alt="loading" width={100} />
-//                 ) : (
-//                   <img
-//                     src="https://static-00.iconduck.com/assets.00/profile-minor-icon-256x256-6u3v5w0z.png"
-//                     alt="placeholder"
-//                     width={30}
-//                   />
-//                 )}
-//               </td> */}
-//               <td>{booking.turf.courtName}</td>
-//               <td>{booking.turf.district}</td>
-//               <td>{booking.turf.location}</td>
-//               <td>
-//                 {new Date(booking.bookDate).toLocaleDateString("en-US", {
-//                   year: "numeric",
-//                   month: "long",
-//                   day: "numeric",
-//                 })}
-//               </td>
-
-//               <td>{booking.user.username}</td>
-
-//               <td>
-//                 <button
-//                   onClick={() => handleModalOpen(booking)}
-//                   // variant="outlined"
-//                   className="bg-customeBlue hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded"
-//                 >
-//                   <AiFillEye />
-//                 </button>
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-
-//       {selectedBooking && (
-//         <BookingModal
-//           open={Boolean(selectedBooking)}
-//           onClose={handleModalClose}
-//           booking={selectedBooking}
-//         />
-//       )}
-
-//       <Pagination
-//         currentPage={currentPage}
-//         totalPages={getTotalPages}
-//         handlePrevPage={handlePrevPage}
-//         handleNextPage={handleNextPage}
-//       />
-//     </div>
-//   );
-// }
-
-// export default AdminBookings;

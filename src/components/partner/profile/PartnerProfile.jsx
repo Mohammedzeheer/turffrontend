@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TopBar from "../sidebar/TopBar";
 import PartnerNavbar from "../header/partnerNavbar";
-import { useDispatch, useSelector } from "react-redux";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import {AxiosPartner} from '../../../api/AxiosInstance'
@@ -20,42 +19,50 @@ const PartnerProfile = () => {
   const [phonenumber, setPhonenumber] = useState();
   const [turfname, setTurfName] = useState();
   const [address, setAddress] = useState();
-  const {partnerId } = useSelector((state) => state.partner);
-  const dispatch=useDispatch()
 
   const fetchData = async () => {
     try {
-      const { data } = await AxiosPartner.get(`partnerprofile/`,{headers});
-      console.log(data);
-      setUserData(data.data);
-      setUserName(data.data.username);
-      setAddress(data.data.address);
-      setTurfName(data.data.turfname);
-      setPhonenumber(data.data.phonenumber);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      toast.error('Error fetching user data')
-    }
-  };
+        const response = await AxiosPartner.get('partnerprofile/', { headers });
+        const { data } = response;
 
+        setUserData(data.data);
+        setUserName(data.data.username);
+        setAddress(data.data.address);
+        setTurfName(data.data.turfname);
+        setPhonenumber(data.data.phonenumber);
+
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        toast.error('Error fetching user data');
+    }
+};
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  //saving address
+
+
   const handleSaveClick = async (e) => {
     e.preventDefault();
     try {
       const formData = { username, phonenumber, address, turfname };
-      const { data } = await AxiosPartner.post(`updateprofile`, { formData },{headers});
-      console.log(data);
-      setUserData(data);
+      const response = await AxiosPartner.post(`updateprofile`, {formData}, { headers });
+      const responseData = response.data;
+
+      if (responseData.status) {
+        setUserData(responseData.data);
+        toast.success('Updated Succesfully')
+        setIsEditing(false);
+      } else {
+        toast.error('Failed to update profile');
+      }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred');
     }
-    setIsEditing(false);
-  };
+  }
+
+
 
   //Uploading Image
   const imageUpload = async (e) => {
@@ -68,15 +75,15 @@ const PartnerProfile = () => {
       const config = {
         headers: {
           "content-type": "multipart/form-data",
-          authorization: partnerToken,
+           authorization: partnerToken,
         },
       };
   
       const response = await AxiosPartner.post(`photoupload`, formData, config);
       const responseData = response.data;
-  
       console.log(responseData);
       toast.success('Image uploaded successfully');
+      
     } catch (error) {
       console.error("Error uploading image:", error);
       toast.error('Error uploading image');
@@ -125,7 +132,7 @@ const PartnerProfile = () => {
     <>
       <PartnerNavbar />
       <TopBar />
-      <div className="sm-pt-5 md:pt-20 m-4">
+      <div className="m-4 sm:pt-10">
         <div
           className="container mx-auto px-4 py-8 pt-30"
           style={containerStyle}

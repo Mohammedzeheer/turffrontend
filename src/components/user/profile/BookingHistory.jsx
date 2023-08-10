@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { AxiosUser } from "../../../api/AxiosInstance";
-import { useSelector } from "react-redux";
 import UserNavbar from "../userHeader/UserNavbar";
 import { MdCancel } from "react-icons/md";
 import UserFooter from "../userFooter/UserFooter";
@@ -13,7 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const BookingHistory = () => {
-  const { userId } = useSelector((state) => state.user);
   const usertoken=localStorage.getItem('user')
   const [bookingData, setBookingData] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -68,11 +66,11 @@ const BookingHistory = () => {
     return new Date(bookingDate) > currentDate;
   };
 
-  const isFutureBooking1 = (bookingDate) => {
-    const currentDate = new Date();
-    const futureDate = new Date(currentDate.getTime() + 3 * 60 * 60 * 1000); // Adding 3 hours (in milliseconds) to the current date
-    return new Date(bookingDate) > futureDate;
-  };
+  // const isFutureBooking1 = (bookingDate) => {
+  //   const currentDate = new Date();
+  //   const futureDate = new Date(currentDate.getTime() + 3 * 60 * 60 * 1000); 
+  //   return new Date(bookingDate) > futureDate;
+  // };
 
   const isBookingTimePassed = (bookingDate) => {
     const currentDate = new Date();
@@ -147,17 +145,7 @@ const BookingHistory = () => {
                     <MdCancel className="w-4 h-4 inline-block mr-1" />
                   </button> */}
 
-                  {/* {isFutureBooking(booking.bookDate)&&(!booking.cancelBooking)? ( // Check if the booking is in the future
-                    <button
-                      onClick={() => handleCancelBooking(booking._id)}
-                      className="text-sm text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-500 hover:text-white"
-                    >
-                      Cancel Booking{" "}
-                      <MdCancel className="w-4 h-4 inline-block mr-1" />
-                    </button>
-                  ) : (
-                    ""
-                  )} */}
+            
 
 {isFutureBooking(booking.bookDate) && !booking.cancelBooking ? (
         <button
@@ -209,10 +197,9 @@ const BookingHistory = () => {
               ))}
           </div>
         ) : (
-          <div className="flex justify-center my-40">
-            Data Not Found .......
+          <div className="flex justify-center my-[200px] sm:my-50">
+            No Booking Found .......
           </div>
-          // <p className="text-lg font-bold">No bookings found.</p>
         )}
          </React.Fragment>
       )}

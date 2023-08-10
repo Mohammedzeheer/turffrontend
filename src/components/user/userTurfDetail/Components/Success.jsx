@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { AxiosUser } from '../../../../api/AxiosInstance';
+import UserNavbar from "../../userHeader/UserNavbar";
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-
-import UserNavbar from "../../userHeader/UserNavbar";
 
 const SuccessPage = () => {
     const [details, setDetails] = useState({})
     const { id } = useParams()
-    useEffect(() => {
-        updateSuccess()
-    }, [])
 
+  
     const updateSuccess = async () => {
         try {
           const response = await AxiosUser.post(`booking-success/${id}`);
@@ -24,7 +21,11 @@ const SuccessPage = () => {
           console.log(error);
         }
       }
-      
+
+      useEffect(() => {
+        updateSuccess()
+    }, [])   
+
     return (
       <>
       <UserNavbar/>

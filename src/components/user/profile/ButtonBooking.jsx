@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaBookOpen } from 'react-icons/fa'; // Import the FontAwesome icon
+import { FaBookOpen } from 'react-icons/fa'; 
 import { useNavigate } from 'react-router-dom';
 
 const ButtonBooking = () => {

@@ -10,11 +10,9 @@ import UserTurfDetail from '../components/user/userTurfDetail/UserTurfDetails';
 import UserOtp from '../components/user/UserSignup/UserOtp';
 import SuccessPage from '../components/user/userTurfDetail/Components/Success';
 import BookingHistory from '../components/user/profile/BookingHistory';
-import UserProtectedRoute from './protectedRouter/UserProtectRouter';
-import Booking from '../components/user/userTurfDetail/Components/Booking';
+// import UserProtectedRoute from './protectedRouter/UserProtectRouter';
+// import Booking from '../components/user/userTurfDetail/Components/Booking';
 import BookingDetail from '../components/user/userTurfDetail/Components/BookingDetail';
-import UserOtp1 from '../components/user/UserSignup/UserOtp1';
-import ChatComponent from '../components/user/chat/ChatComponent';
 import UserChat from '../components/user/chat/UserChat';
 
 
@@ -28,7 +26,7 @@ function UserRouter() {
         <Route path="/signup" element={<UserSignup />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/" element={<UserHomePage />} />
-        <Route path="/userturf" element={<UserTurfPage />} />
+        <Route path="/turfs" element={<UserTurfPage />} />
         <Route path="/profile" element={<UserProfile2 />} />
         {/* <Route path="/turfs-details" element={<UserProtectedRoute><UserTurfDetail /></UserProtectedRoute>} /> */}
         <Route path="/turfs-details" element={<UserTurfDetail />} />
@@ -39,9 +37,7 @@ function UserRouter() {
         
         <Route path='/booking/history' element={<BookingHistory/>} />
 
-        <Route path="/otptest" element={<UserOtp1 />} />
-        <Route path="/chat" element={<ChatComponent />} />
-        <Route path="/chat1" element={<UserChat />} />
+        <Route path="/message" element={<UserChat />} />
         
         
       </Routes>

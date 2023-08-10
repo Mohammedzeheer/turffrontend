@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { AxiosUser } from "../../../api/AxiosInstance";
-import { useSelector } from "react-redux";
 
 
 const CancelBookingModal = ({ isOpen, toggle,bookingId }) => {
@@ -9,12 +8,12 @@ const CancelBookingModal = ({ isOpen, toggle,bookingId }) => {
   const handleReasonChange = (event) => {
     setReason(event.target.value);
   };
- 
-  const {userId} = useSelector((state)=>state.user)
+  const userToken=localStorage.getItem('user')
+  const headers={authorization:userToken}
 
   const handleCancelBooking = async () => {
     try {
-      const response = await AxiosUser.post(`cancelbooking/${bookingId}`, {reason: reason,userId});
+      const response = await AxiosUser.post(`cancelbooking/${bookingId}`,{reason: reason},{headers});
       console.log(response);
       // onCancelBooking(reason);
     } catch (error) {

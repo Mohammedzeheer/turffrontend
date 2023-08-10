@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { AxiosAdmin, AxiosUser } from '../../../api/AxiosInstance';
-import { useSelector } from 'react-redux';
+import { AxiosAdmin } from '../../../api/AxiosInstance';
 
 const PartnerChat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    // Fetch messages from the server
     fetchMessages();
   }, []);
 

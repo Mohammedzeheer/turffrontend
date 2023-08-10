@@ -14,17 +14,22 @@ const UserTurfs = () => {
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const [isLoading, setIsLoading] = useState(true);
 
+
+  const Fetchdata = async ()=>{
+    try {
+      const response= await AxiosUser.get(`allturfs`)
+        setTurfs(response.data.data);
+        setIsLoading(false);
+      }
+     catch (error) {
+          toast.error(error);
+        setIsLoading(false);
+    }
+  } 
+
+
   useEffect(() => {
-    AxiosUser.get(`allturfs`, { withCredentials: true })
-      .then((res) => {
-        console.log(res, "-------------turf page response------------");
-        setTurfs(res.data.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        toast.error(error);
-        setIsLoading(false);
-      });
+    Fetchdata()
   }, []);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -44,7 +49,7 @@ const UserTurfs = () => {
     <>
       <div className="min-h-screen bg-gray-100 pt-[20px]">
       {isLoading ? (
-        <div className="mt-[140px]  content-center"><LoadingFootball/></div> // Display a loading message while data is being fetched
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
       ) : (
         <React.Fragment>
         <section className="py-16 sm:py-16 bg-gray-100 text-black">
@@ -77,7 +82,6 @@ const UserTurfs = () => {
                 <span className="animate-spin rounded-full border-t-2 border-b-2 border-indigo-500 h-12 w-12"></span>
               </div>
             ) : (
-              // Render turf cards once isLoading is false
               currentItems.map((turf) => <TurfCard key={turf._id} {...turf} />)
             )}
 

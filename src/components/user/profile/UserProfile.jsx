@@ -68,7 +68,6 @@ const UserProfile = () => {
     };
     try {
       const { data } = await AxiosUser.post(`photoupload`, formData,config);
-      // dispatch(updateUser({ image: data.imageurl, userId }));
       console.log(data,"ghsdsdjsd --- image");
     } catch (error) {
       console.log(error);
@@ -89,9 +88,9 @@ const UserProfile = () => {
     padding: "20px",
     borderRadius: "8px",
     fontWeight: "bold",
-    maxWidth: "600px", // Set the maximum width of the container
-    margin: "0 auto", // Center the container horizontally
-    position: "relative", // To position the edit button relative to this container
+    maxWidth: "600px", 
+    margin: "0 auto", 
+    position: "relative", 
   };
 
  

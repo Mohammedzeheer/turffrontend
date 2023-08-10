@@ -32,7 +32,7 @@ export default function UserTurfDetails() {
   const navigate = useNavigate();
 
   const [isLogin, setLogin] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchTurf = async () => {
     try {

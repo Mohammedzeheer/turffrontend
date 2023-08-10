@@ -138,7 +138,7 @@ const BookingDetail = () => {
           type="button"
           onClick={handlePayment}
           disabled={loading}
-          className="w-full lg:w-[200px] h-10 p-0 font-semibold bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 mt-5 rounded-lg"
+          className="w-full lg:w-[200px] h-10 p-0 font-semibold bg-customGreen text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 mt-5 rounded-lg"
         >
           {loading ? "Processing..." : "Pay Now"}
         </button>

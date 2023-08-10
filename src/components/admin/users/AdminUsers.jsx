@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { changeUser } from "../../../redux/adminSlice";
 import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import BlockIcon from "@mui/icons-material/Block";
 import { CgUnblock } from "react-icons/cg";
-import { AdminPort } from "../../../store/port";
-import "./AdminUsers.css";
 import UserDetailsModal from "./UserDetailsModal";
 import Pagination from "../pagination"; 
 import LoadingFootball from "../../LoadingFootball";
 import { AxiosAdmin } from "../../../api/AxiosInstance";
 import {toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import "./AdminUsers.css";
 
 function AdminUsers() {
   const adminToken= localStorage.getItem('admin')
   const headers={authorization:adminToken}
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState("");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [refreshFlag, setRefreshFlag] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 

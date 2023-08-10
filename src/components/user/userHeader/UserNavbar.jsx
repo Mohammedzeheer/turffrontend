@@ -73,7 +73,7 @@ const PartnerNavbar = () => {
                         </button>
                         <button
                           type="button"
-                          onClick={() => Navigate('/chat1')}
+                          onClick={() => Navigate('/message')}
                           className="block px-4 py-2 font-medium text-sm text-customBlue hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
                         >
@@ -165,7 +165,7 @@ const PartnerNavbar = () => {
                   Profile
                 </a>
                 <a
-                  href="/chat1"
+                  href="/message"
                   className="text-gray-300 hover:bg-customBlue w-[85px] hover:text-white block px-3 py-2 rounded-md font-medium no-underline"
                 >
                   Contact

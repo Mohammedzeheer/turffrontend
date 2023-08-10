@@ -48,8 +48,8 @@ const ReviewModal = ({ isOpen, toggle, turfId,refresh,setRefresh }) => {
                           
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                
-                                <div className="flex items-start justify-between p-3 border-b border-solid border-slate-200 rounded-t">
-                                    <h3 className="text-3xl font-semibold">
+                                <div className="flex justify-content-center p-2 border-b border-solid border-slate-200 rounded-t">
+                                    <h3 className="text-2xl text-gray-500 font-semibold">
                                         Review & Ratings
                                     </h3>
                                 </div>
@@ -58,13 +58,13 @@ const ReviewModal = ({ isOpen, toggle, turfId,refresh,setRefresh }) => {
                                     <form onSubmit={handleSubmit}>
 
                                         <div style={{ textAlign: 'center', textTransform: 'uppercase' }}>
-                                            <label className="block text-gray-900 font-bold mb-3" htmlFor="review">
+                                            <label className="block text-gray-900 font-bold mb-2" htmlFor="review">
                                                 {username}
                                             </label>
                                         </div>
 
 
-                                        <div className="mb-4">
+                                        <div className="mb-2">
                                         <RatingComponent rating={rating} setRating={setRating} />
                                         </div>
 
@@ -80,26 +80,28 @@ const ReviewModal = ({ isOpen, toggle, turfId,refresh,setRefresh }) => {
                                             ></textarea>
                                         </div>
                                         <div className="flex items-center justify-end">
-                                            <button
-                                                className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+
+                                        <button
+                                                className="text-red-500 background-transparent font-bold uppercase  text-sm outline-none mr-1 mb-1" 
                                                 type="button"
                                                 onClick={toggle}
                                             >
                                                 Close
                                             </button>
                                             <button
-                                                className=" bg-green-600 text-white active:bg-green-600 font-bold uppercase text-sm px-3 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                               className="text-green-500 background-transparent font-bold uppercase  text-sm outline-none mr-1 mb-1"   
                                                 type="submit"
                                             >
                                                 Save
                                             </button>
+
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                    {/* <div className="opacity-25 fixed inset-0 z-40 bg-black"></div> */}
                 </>
             ) : null}
 

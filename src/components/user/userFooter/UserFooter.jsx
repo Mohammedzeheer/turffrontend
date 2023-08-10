@@ -1,37 +1,29 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const UserFooter = () => {
 
-const navigate=useNavigate()
   return (
     <footer className="bg-customBlue text-white py-2">
       <div className="container mx-auto px-4 flex flex-wrap items-center justify-between">
         <div className="w-full lg:w-1/4  flex justify-center sm:flex-start">
           <img src="/image/AONE.png" alt="Logo" className="h-[60px] w-[170px]" />
         </div>
-        {/* <div className="w-full lg:w-3/4 mt-0 lg:mt-0 flex justify-end"> */}
         <div className="w-full lg:w-3/4 mt-4 lg:mt-0 sm:flex justify-end">
           <ul className="flex items-center space-x-6">
-          <p className="text-sm text-gray-500">Copyright © {new Date().getFullYear()}.Designed by Mohammed. All rights reserved.</p>
-  
-            {/* <li>
-              <a onClick={() => navigate('/chat1')}className="text-white hover:text-gray-300 no-underline">Contact</a>
-            </li> */}
-            {/* <li>
-              <a href="#booking" className="text-white hover:text-gray-300 no-underline">Booking</a>
-            </li> */}
+          {/* <p className="text-xs sm:text-sm text-gray-500">© {new Date().getFullYear()}.Designed by Mohammed. All rights reserved.</p> */}
+          <p className="text-xs sm:text-sm text-gray-500">
+  © {new Date().getFullYear()} Designed by <a className='no-underline  text-gray-400' href="https://mohammedzeheer.github.io/personal/">Mohammed</a>. All rights reserved.
+</p>
           </ul>
         </div>
       </div>
-      {/* <div className="container mx-auto px-4 mt-0 text-center">
-       <p className="text-sm text-gray-500">Copyright © {new Date().getFullYear()}.Designed by Mohammed. All rights reserved.</p>
-      </div> */}
     </footer>
   );
 };
 
 export default UserFooter;
+
+
 
 
 

@@ -5,7 +5,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { updatePartner } from '../../../redux/partnerSlice';
 import { useDispatch } from 'react-redux';
 import {AxiosPartner} from '../../../api/AxiosInstance'
-import {toast } from 'react-toastify' 
+import {toast} from 'react-toastify' 
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './partnerLogin.css'
@@ -16,29 +16,34 @@ function PartnerLogin() {
     const navigate=useNavigate()
     const [partner, setPartner] = useState({})
     const [showPassword, setShowPassword] = useState(false);
+     const token= localStorage.getItem('partner')
 
+    const checkPartner = ()=>{  
+      if(token){
+          navigate('/partner')
+      }
+    }
+    
     useEffect(()=>{
-        const token= localStorage.getItem('partner')
-        if(token){
-            navigate('/partner')
-        }
+        checkPartner();
     },[])
 
-    const handleLoginOLD =async(e)=>{
-        const {data}=await AxiosPartner.post(`partnerlogin`,{...partner},{withCredentials:true})
-        if(data){          
-            if(data.errors){
-              const{email,password,approval}= data.errors
-              if (email) generateError(email)
-              else if (password) generateError(password)
-              else if (approval)generateError(approval)
-            }else{
-             localStorage.setItem('partner',JSON.stringify(data.token))
-             dispatch(updatePartner({partnername:data.partner.username,partnerId:data.partner._id,token:data.token}))
-             navigate('/partner')
-            }
-          }      
-      }
+    // const handleLoginOLD =async(e)=>{
+    //     const {data}=await AxiosPartner.post(`partnerlogin`,{...partner},{withCredentials:true})
+    //     if(data){          
+    //         if(data.errors){
+    //           const{email,password,approval}= data.errors
+    //           if (email) generateError(email)
+    //           else if (password) generateError(password)
+    //           else if (approval)generateError(approval)
+    //         }else{
+    //          localStorage.setItem('partner',JSON.stringify(data.token))
+    //          dispatch(updatePartner({partnername:data.partner.username,partnerId:data.partner._id,token:data.token}))
+    //          navigate('/partner')
+    //         }
+    //       }      
+    //   }
+
 
 
       const handleLogin = async (e) => {
@@ -48,20 +53,26 @@ function PartnerLogin() {
           const response = await AxiosPartner.post('partnerlogin', partnerData, {
             withCredentials: true,
           }); 
+          console.log(response,'--------------------responce partner login');
           if (response.data) {
-            const { errors, token, partner: partnerInfo } = response.data;
-      
+            const { errors, token, partner: partnerInfo, message } = response.data;
+            
             if (errors) {
               handleLoginErrors(errors);
             } else {
               handleSuccessfulLogin(token, partnerInfo);
+            }    
+            if (message) {
+              toast.error(message);
             }
           }
         } catch (error) {
           console.error('An error occurred during login:', error);
-          toast.error(error)
+          toast.error(error);
         }
       };
+      
+
       
       const handleLoginErrors = (errorData) => {
         const { email, password, approval } = errorData;
@@ -227,3 +238,29 @@ export default PartnerLogin
                         </div>
                       </div>
                     </div> */}
+
+
+
+
+
+                    // const handleLogin1 = async (e) => {
+                    //   try {
+                    //     e.preventDefault();
+                    //     const partnerData = { ...partner };     
+                    //     const response = await AxiosPartner.post('partnerlogin', partnerData, {
+                    //       withCredentials: true,
+                    //     }); 
+                    //     if (response.data) {
+                    //       const { errors, token, partner: partnerInfo } = response.data;
+                    
+                    //       if (errors) {
+                    //         handleLoginErrors(errors);
+                    //       } else {
+                    //         handleSuccessfulLogin(token, partnerInfo);
+                    //       }
+                    //     }
+                    //   } catch (error) {
+                    //     console.error('An error occurred during login:', error);
+                    //     toast.error(error)
+                    //   }
+                    // };
