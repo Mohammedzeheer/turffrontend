@@ -28,79 +28,34 @@ function PartnerLogin() {
         checkPartner();
     },[])
 
-    // const handleLoginOLD =async(e)=>{
-    //     const {data}=await AxiosPartner.post(`partnerlogin`,{...partner},{withCredentials:true})
-    //     if(data){          
-    //         if(data.errors){
-    //           const{email,password,approval}= data.errors
-    //           if (email) generateError(email)
-    //           else if (password) generateError(password)
-    //           else if (approval)generateError(approval)
-    //         }else{
-    //          localStorage.setItem('partner',JSON.stringify(data.token))
-    //          dispatch(updatePartner({partnername:data.partner.username,partnerId:data.partner._id,token:data.token}))
-    //          navigate('/partner')
-    //         }
-    //       }      
-    //   }
 
-
-
-      const handleLogin = async (e) => {
-        try {
-          e.preventDefault();
-          const partnerData = { ...partner };     
-          const response = await AxiosPartner.post('partnerlogin', partnerData, {
-            withCredentials: true,
-          }); 
-          console.log(response,'--------------------responce partner login');
-          if (response.data) {
-            const { errors, token, partner: partnerInfo, message } = response.data;
-            
-            if (errors) {
-              handleLoginErrors(errors);
-            } else {
-              handleSuccessfulLogin(token, partnerInfo);
-            }    
-            if (message) {
-              toast.error(message);
-            }
-          }
-        } catch (error) {
-          console.error('An error occurred during login:', error);
-          toast.error(error);
-        }
-      };
-      
-
-      
-      const handleLoginErrors = (errorData) => {
-        const { email, password, approval } = errorData;
-        if (email) {
-          generateError(email);
-        } else if (password) {
-          generateError(password);
-        } else if (approval) {
-          generateError(approval);
-        }
-      };
-      
-      const handleSuccessfulLogin = (token, partnerInfo) => {
-        localStorage.setItem('partner', JSON.stringify(token));
-        dispatch(
-          updatePartner({
-            partnername: partnerInfo.username,
-            partnerId: partnerInfo._id,
-          })
-        );
-        navigate('/partner');
-      };
-      
+    const handleLogin =async(e)=>{
+      try{
+          const response=await AxiosPartner.post(`partnerlogin`,{...partner},{withCredentials:true})
+           const partnerData = response.data.partner;
+           localStorage.setItem('partner',JSON.stringify(response.data.token))
+           dispatch(updatePartner({partnername:partnerData.username,partnerId:partnerData._id,token:partnerData.token}))
+           navigate('/partner')
+      }
+      catch(error){
+       const errorMessage = error?.response?.data?.message;
+      if (errorMessage) {
+        generateError(errorMessage);
+      }else{
+        generateError(error.message);
+      }
+      }    
+    }
 
 
       const generateError = (err) => toast.error(err, {
         autoClose: 2000, 
-        position: toast.POSITION.TOP_CENTER
+        position: toast.POSITION.TOP_CENTER,
+        className:'rounded',
+    style: {
+      fontSize: '12px',   
+      maxWidth: '200px',
+    }
     })
   return (
 

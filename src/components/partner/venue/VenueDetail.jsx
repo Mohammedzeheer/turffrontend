@@ -31,7 +31,6 @@ function VenueDetail() {
 
 
   const handleEditClick = () => {
-    // Replace the path with the appropriate route for editing the venue details
     navigate(`/edit-venue/${turfId}`);
   };
 
@@ -40,9 +39,7 @@ function VenueDetail() {
   };
 
   if (loading) {
-   
     return <div> <span className="mr-1"><Loading/></span> Loading...</div>;
-  
   }
 
   if (!selectedTurf) {
@@ -85,12 +82,12 @@ function VenueDetail() {
         </div>
 
         <div className="flex justify-center mt-4">
-          <button
+          {/* <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
             onClick={handleEditClick}
           >
             Edit
-          </button>
+          </button> */}
           <button
             className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
             onClick={handleGoBack}
