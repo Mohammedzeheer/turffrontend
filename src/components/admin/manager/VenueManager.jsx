@@ -9,7 +9,7 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import Pagination from '../pagination';
 import {AxiosAdmin} from '../../../api/AxiosInstance'
 import LoadingFootball from "../../LoadingFootball";
-import {toast } from 'react-toastify'
+import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import '../users/AdminUsers.css';
 

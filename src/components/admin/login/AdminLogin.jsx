@@ -1,74 +1,110 @@
 import React, { useEffect, useState } from 'react'
-import './Login.css'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import {ToastContainer, toast } from 'react-toastify'
+import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux'
 import {AddAdmin} from '../../../redux/adminSlice'
 import {AxiosAdmin} from '../../../api/AxiosInstance'
-// import {AdminPort,UserPort} from '../../../store/port'
-
+import './Login.css'
 
 function AdminLogin() {
     const navigate= useNavigate()
-
-    const dispatch =useDispatch()
-    useEffect(()=>{
-        const admin= localStorage.getItem('admin')
-        if(admin){
-            navigate('/admin')
-        }
-    },[])
-    
-  
-
+    const dispatch =useDispatch()    
     const [admin,setAdmin]= useState({})
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            const {data} = await AxiosAdmin.post(`adminLogin`, { ...admin }, { withCredentials: true });
-            console.log(data,"------datat");
-            if (data) {
-                if (data.errors) {
-                    const { username, password } = data.errors;
-                    if (username) generateError(username);
-                    else if(password) generateError(password);
-                } else {
-                    if (data.token) {
-                        localStorage.setItem('admin',(data.token));
-                        dispatch(AddAdmin({AdminToken:data.token}))
-                        navigate('/admin');
-                    }
-                }
-            }
-        } catch (error) {
-            toast.error(error);
-        }
+    const fetchAdmin = () => {
+      const admin = localStorage.getItem("admin");
+      if (admin) {
+        navigate("/admin");
+      }
     };
-    
 
-    const generateError = (err) => toast.error(err, {
-        autoClose: 1000, 
-        position: toast.POSITION.TOP_CENTER
-    })
+    useEffect(()=>{
+        fetchAdmin();
+    },[])
+    
+     const handleLogin = async (e) => {
+       e.preventDefault();
+       try {
+         const response = await AxiosAdmin.post(`adminLogin`, { ...admin });
+         if (response?.data.token) {
+           localStorage.setItem("admin", response.data.token);
+           dispatch(AddAdmin({ AdminToken: response.data.token }));
+           navigate("/admin");
+         }
+       } catch (error) {
+         const errorMessage = error?.response?.data?.message;
+         if (errorMessage) {
+           generateError(errorMessage);
+         } else {
+           generateError(error.message);
+         }
+       }
+     };
+      
+
+    const generateError = (err) =>
+      toast.error(err, {
+        autoClose: 1000,
+        position: toast.POSITION.TOP_CENTER,
+        className: "rounded",
+        style: {
+          fontSize: "14px",
+          maxWidth: "200px",
+        },
+      });
 
 
     return (
-        <div className='bodyAdminLogin'>
-            <div className="login-container">
-                <div class="admin-symbol">&#9812;</div>
-                <h1 className="login-header">Admin Login</h1>   
-                <form className="login-form">
-                    <input type="text" name="username" placeholder="Username" className="input-field" onChange={(e)=>setAdmin({...admin,[e.target.name]:e.target.value})} required />
-                    <input type="password" name="password" placeholder="Password" className="input-field" onChange={(e)=>setAdmin({...admin,[e.target.name]:e.target.value})} required />
-                    <button type="submit" onClick={handleLogin} className="login-button" >Login</button>
-                </form>
-            </div>
-            <ToastContainer />
+      <div className="bg-gray-200 h-screen flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-md text-center">
+          {/* <div className="admin-symbol">&#9812;</div> */}
+
+          <div class="flex justify-center items-center">
+            <img
+              class="w-[130px] h-[60px]"
+              src="/image/logoBlue.png"
+              alt="Logo"
+            />
+          </div>
+
+          {/* <h1 className="login-header">Admin Login</h1>    */}
+          <h1 className="mt-0 mb-4 text-3xl font-semibold text-gray-800">
+            Admin Login
+          </h1>
+          {/* <form className="login-form"> */}
+          <form className="flex flex-col">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              className="input-field"
+              onChange={(e) =>
+                setAdmin({ ...admin, [e.target.name]: e.target.value })
+              }
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="input-field"
+              onChange={(e) =>
+                setAdmin({ ...admin, [e.target.name]: e.target.value })
+              }
+              required
+            />
+            <button
+              type="submit"
+              onClick={handleLogin}
+              className="login-button"
+            >
+              Login
+            </button>
+          </form>
         </div>
-    )
+      </div>
+    );
 }
 
 export default AdminLogin
@@ -76,79 +112,3 @@ export default AdminLogin
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-// import React from 'react';
-// import './Login.css';
-// import  { useState } from 'react';
-
-// function Login() {
-
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const handleUsernameChange = (event) => {
-//     setUsername(event.target.value);
-//   };
-
-//   const handlePasswordChange = (event) => {
-//     setPassword(event.target.value);
-//   };
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     // Add your login logic here
-//     console.log('Username:', username);
-//     console.log('Password:', password);
-//   };
-
-//   return (
-//     <>
-//   <div className="signin">
-//   <div className="login-container">
-//       <h1>Admin Login</h1>
-//       <form onSubmit={handleSubmit}>
-//         <div className="form-group">
-//           <label htmlFor="username">Username:</label>
-//           <input
-//             type="text"
-//             id="username"
-//             name="username"
-//             value={username}
-//             onChange={handleUsernameChange}
-//             required
-//           />
-//         </div>
-//         <div className="form-group">
-//           <label htmlFor="password">Password:</label>
-//           <input
-//             type="password"
-//             id="password"
-//             name="password"
-//             value={password}
-//             onChange={handlePasswordChange}
-//             required
-//           />
-//         </div>
-//         <div className="form-group">
-//           <input type="submit" value="Login" />
-//         </div>
-//       </form>
-//     </div>
-//   </div>
-
-//     </>
-//   );
-// }
-
-// export default Login;

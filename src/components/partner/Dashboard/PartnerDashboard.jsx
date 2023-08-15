@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import Barchart from "./BarChart";
-import CountStatus from "./Counts";
+// import CountStatus from "./Counts";
 import { useNavigate } from "react-router-dom";
 import TopBar from "../sidebar/TopBar";
 import TopBar2 from "../sidebar/TopBar2";
@@ -8,16 +8,15 @@ import PartnerNavbar from "../header/partnerNavbar";
 import { AxiosPartner } from "../../../api/AxiosInstance";
 import { toast } from 'react-toastify'  // for error npm 
 import 'react-toastify/dist/ReactToastify.css';
+import LoadingFootball from '../../LoadingFootball';
 
 const PartnerDashboard = () => {
     const token = localStorage.getItem('partner');
     const [data, setData] = useState([]);
     const [counts, setCounts] = useState("");
-   
+    const [isLoading, setIsLoading] = useState(true);
     const Navigate=useNavigate()
     
-    // !token ? Navigate('/partner/login') : ''
-
     
     const fetchData = async () => {
       try {
@@ -27,9 +26,11 @@ const PartnerDashboard = () => {
           setCounts(response.data); 
           setData(response.data.dayWiseBookings)
           console.log(response.data.dayWiseBookings)
+          setIsLoading(false);
         }
       } catch (error) {
         toast.error(error);
+        setIsLoading(false);
       }
     };
 
@@ -37,14 +38,16 @@ const PartnerDashboard = () => {
       fetchData();
     }, []);
  
-
-    const blockedUser = "50";
    
   return (
     <div>
      <PartnerNavbar />
      <TopBar/>
      <TopBar2/>
+     {isLoading ? (
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
+      ) : (
+        <React.Fragment>
      <div className="m-5">
       {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -81,32 +84,18 @@ const PartnerDashboard = () => {
             </div>
           </div>
         </div>
-        {/* <div className="bg-white shadow-lg p-4 rounded-lg">
-          <div className="flex items-center">
-            <div>
-              <p className="mb-2 text-gray-500">Blocked User</p>
-              <div className="flex items-center">
-                <h5 className="mb-0 font-bold text-2xl">{blockedUser}</h5>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
 
 
       <div className="flex justify-between ">
         <Barchart  data={data}  />
-        {/* <LineGraph data={data} /> */}   
       </div>
 
 
-
+      </React.Fragment>
+      )}
     </div>
-
-
-
-
   );
 };
 export default PartnerDashboard;

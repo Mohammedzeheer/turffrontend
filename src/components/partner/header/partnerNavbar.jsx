@@ -144,16 +144,25 @@ const PartnerNavbar = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {isLogin && (
               <>
-                <a
+                {/* <a
                   href="/partner/profile"
                   className="text-gray-300 no-underline  hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md font-medium"
                 >
                   Profile
-                </a>
+                </a> */}
+
+                <button
+                  type="button"
+                  onClick={()=>Navigate('/partner/profile')}
+                  className="text-gray-300 hover:bg-customBlue hover:text-white block px-3 py-2 rounded-md font-medium"
+                >
+                  Profile
+                </button>
+
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md font-medium"
+                  className="text-gray-300 hover:bg-customBlue hover:text-white block px-3 py-2 rounded-md font-medium"
                 >
                   Logout
                 </button>
@@ -162,7 +171,7 @@ const PartnerNavbar = () => {
             {!isLogin && (
               <button
                 type="button"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white"
                 onClick={() => Navigate("/partner/login")}
               >
                 Get Started

@@ -19,9 +19,9 @@ const ImageCarousel = () => {
 
   return (
     <div className="carousel-container relative">
-      <div className="image-wrapper">
+      <div className="image-wrapper ">
         {images.map((image, index) => (
-          <img
+          <img 
             key={index}
             src={image}
             alt={`Turf Booking Banner ${index}`}

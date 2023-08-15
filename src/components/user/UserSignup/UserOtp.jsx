@@ -1,15 +1,13 @@
 import React, { useState,useEffect} from "react";
-import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify'  // for error npm 
 import 'react-toastify/dist/ReactToastify.css';
-import { UserPort } from '../../../store/port';
 import {AxiosUser} from '../../../api/AxiosInstance'
 
 const UserOtp = () => {
   const [otp, setOtp] = useState("");
   const navigate=useNavigate()
-  const [showResendButton, setShowResendButton] = useState(false); // New state variable
+  const [showResendButton, setShowResendButton] = useState(false); 
  
 
   const handleChange = (e) => {
@@ -21,10 +19,9 @@ const UserOtp = () => {
   };
 
   useEffect(() => {
-    // When the component mounts, set a timeout to show the "Resend" button after 30 SECONDS
     const timer = setTimeout(() => {
       setShowResendButton(true);
-    }, 30000); // 30SECONDS
+    }, 30000); 
     return () => clearTimeout(timer);
   }, []);
 
@@ -33,7 +30,6 @@ const UserOtp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        // Do something with the OTP, e.g., send it to the server for verification
         console.log("OTP entered:", otp);
         const { data } = await AxiosUser.post(`otpcheck`, {otp}, { withCredential: true })
           console.log(data, "---hello iam data of otp signup------")

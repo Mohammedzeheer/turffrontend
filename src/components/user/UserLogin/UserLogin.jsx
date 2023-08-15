@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'  //naviagete page path
-import {toast } from 'react-toastify'  // for error npm 
+import { useNavigate } from 'react-router-dom'  
+import {toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../redux/userSlice';
@@ -27,56 +27,44 @@ function UserLogin() {
     checkUser()
   },[])
 
-
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const response = await AxiosUser.post('userlogin', { ...user }, { withCredentials: true });
-      const data = response.data;
-
-      if (data.message) {
-        generateError(data.message);
-      } else if (data.errors) {
-        const { email, password } = data.errors;
-        if (email) generateError(email);
-        else if (password) generateError(password);
-      } else {
-        localStorage.setItem('user', JSON.stringify(data.token));
-        dispatch(
-          updateUser({
-            username: data.user.username,
-            userId: data.user._id,
-            image: data.user.image,
-            token: data.token,
-            email:data.user.email
-            
-          })
-        );
-        Navigate('/');
-      }
+      const response = await AxiosUser.post('userlogin', user, { withCredentials: true });
+      localStorage.setItem('user', JSON.stringify(response.data.token));
+      const userData = response.data.user;
+      dispatch(
+        updateUser({
+          username: userData.username,
+          userId: userData._id,
+          image: userData.image,
+          token: response.data.token,
+          email: userData.email
+        })
+      );
+      Navigate('/');
     } catch (error) {
-      if (error.response) {
-        const { status, data } = error.response;
-        if (status === 404 && data.message === 'User not found') {
-          generateError('User not found');
-        } else if (status === 403 && data.message === 'User is blocked') {
-          generateError('User is blocked');
-        } else {
-          generateError('Internal server error');
-        }
-      } else {
-        generateError('Something went wrong');
+      const errorMessage = error?.response?.data?.message;
+      if (errorMessage) {
+        generateError(errorMessage);
+      }else{
+        generateError(error.message);
       }
     }
   };
-
+  
 
   const generateError = (err) => toast.error(err, {
     autoClose: 1000,
-    position: toast.POSITION.TOP_CENTER
-  })
-
+    position: toast.POSITION.TOP_CENTER,
+    className:'rounded',
+    style: {
+      fontSize: '14px',   
+      maxWidth: '200px',
+    }
+  });
+  
 
   return (
     <Fragment>
@@ -98,7 +86,7 @@ function UserLogin() {
                 <div className="container">
                   <div className="row">
                     <div className="col-lg-10 col-xl-7 mx-auto">
-                      <h3 className="display-4">Aone Turf</h3>
+                      <h3 className="display-4">A-one Turf</h3>
 
                       <p className="text-muted mb-4">Please a login </p>
                       <form action="/userlogin" method="post">
@@ -177,3 +165,7 @@ function UserLogin() {
 }
 
 export default UserLogin
+
+
+
+

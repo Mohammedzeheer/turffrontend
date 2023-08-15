@@ -5,19 +5,17 @@ import "react-calendar/dist/Calendar.css";
 import "react-calendar/dist/Calendar.css";
 import Booking from "./Components/Booking";
 import ImageManage from "./Components/ImageManage";
-// import ReviewModal from "./Components/Review";
 import CardReview from "./Components/CardReview";
 import UserNavbar from "../userHeader/UserNavbar";
 import { AxiosUser } from "../../../api/AxiosInstance";
 import { toast } from "react-toastify";
 import UserFooter from "../userFooter/UserFooter";
 import { BsFillJournalBookmarkFill } from "react-icons/bs";
-// import { TfiWrite } from "react-icons/tfi";
 import { FaBackward } from "react-icons/fa";
 import LoadingFootball from "../../LoadingFootball";
-
-
+// import ReviewModal from "./Components/Review";
 // import './userTurfDetail.css'
+// import { TfiWrite } from "react-icons/tfi";
 
 export default function UserTurfDetails() {
   const token = localStorage.getItem("user");
@@ -31,7 +29,6 @@ export default function UserTurfDetails() {
   const [selectedSlot, setSelectedSlot] = useState("");
   const navigate = useNavigate();
 
-  const [isLogin, setLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchTurf = async () => {
@@ -50,9 +47,9 @@ export default function UserTurfDetails() {
     fetchTurf();
   }, []);
 
-  const toggleModal = () => {
-    setModalIsOpen(!modalIsOpen);
-  };
+  // const toggleModal = () => {
+  //   setModalIsOpen(!modalIsOpen);
+  // };
 
   return (
     <>
@@ -120,7 +117,7 @@ export default function UserTurfDetails() {
                     checked={selectedPrice === price5s}
                     onChange={() => {
                       setSelectedPrice(price5s);
-                      setSelectedSlot("5 v 5"); // Step 2: Update selectedSlot
+                      setSelectedSlot("5 v 5"); 
                     }}
                   />
                   <span className="text-base mr-3 ml-1">5 v 5</span>
@@ -176,14 +173,12 @@ export default function UserTurfDetails() {
                     <BsFillJournalBookmarkFill className="w-5 h-5 inline-block mr-1" />{" "}
                     Book Now
                   </button>
-
-                 
+            
                 </div>
               </div>
             </div>
           </>
-        )}
-       
+        )}  
       </section>
 
       
@@ -211,53 +206,3 @@ export default function UserTurfDetails() {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
- {/*    <button
-                    className="px-6 py-2 text-lg font-bold rounded-md text-white bg-indigo-500 hover:bg-indigo-600 border-none focus:outline-none"
-                    // onClick={() => setShowCalender(true)}
-                    onClick={() => {
-                      if (!selectedPrice) {
-                        toast.error("Please select a slot before booking.", {
-                          position: "top-center",
-                        });
-                      } else {
-                        setShowCalender(true);
-                      }
-                    }}
-                  >
-                    <BsFillJournalBookmarkFill className="w-5 h-5 inline-block mr-1" />{" "}
-                    Book Now
-                  </button> */}
-
-
-
-
-                   {/* {token && (
-                    <button
-                      className="px-6 py-2 text-lg font-bold rounded-md text-white bg-gray-500 hover:bg-gray-600 border-none focus:outline-none ml-4"
-                      onClick={toggleModal}
-                    >
-                      <TfiWrite className="w-5 h-5 inline-block mr-1" /> Add
-                      Review
-                    </button>
-                  )} */}
-
-
-                  {/* <ReviewModal
-        isOpen={modalIsOpen}
-        refresh={refresh}
-        setRefresh={setRefresh}
-        toggle={toggleModal}
-        turfId={ID}
-      /> */}
-
-      {/* <CardReview refresh={refresh} id={ID} /> */}

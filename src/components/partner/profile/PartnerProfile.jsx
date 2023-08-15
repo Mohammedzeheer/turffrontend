@@ -7,6 +7,7 @@ import {AxiosPartner} from '../../../api/AxiosInstance'
 import Loading from '../Loading'
 import {toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import LoadingFootball from '../../LoadingFootball';
 
 const PartnerProfile = () => {
   const partnerToken= localStorage.getItem('partner')
@@ -19,21 +20,22 @@ const PartnerProfile = () => {
   const [phonenumber, setPhonenumber] = useState();
   const [turfname, setTurfName] = useState();
   const [address, setAddress] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
     try {
         const response = await AxiosPartner.get('partnerprofile/', { headers });
         const { data } = response;
-
         setUserData(data.data);
         setUserName(data.data.username);
         setAddress(data.data.address);
         setTurfName(data.data.turfname);
         setPhonenumber(data.data.phonenumber);
-
+        setIsLoading(false);
     } catch (error) {
         console.error('Error fetching user data:', error);
         toast.error('Error fetching user data');
+        setIsLoading(false);
     }
 };
 
@@ -132,8 +134,13 @@ const PartnerProfile = () => {
     <>
       <PartnerNavbar />
       <TopBar />
+     
       <div className="m-4 sm:pt-10">
-        <div
+        {isLoading ? (
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
+      ) : (
+        <React.Fragment> 
+          <div
           className="container mx-auto px-4 py-8 pt-30"
           style={containerStyle}
         >
@@ -287,6 +294,8 @@ const PartnerProfile = () => {
             <div><Loading/>Loading...</div>
           )}
         </div>
+        </React.Fragment>
+      )}
       </div>
     </>
   );

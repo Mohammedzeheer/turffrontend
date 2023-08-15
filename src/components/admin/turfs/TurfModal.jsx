@@ -1,6 +1,4 @@
 import React from 'react';
-import {UserPort } from "../../../store/port";
-import {AxiosUser} from '../../../api/AxiosInstance'
 
 function TurfModal({ open, onClose, user }) {
   return (

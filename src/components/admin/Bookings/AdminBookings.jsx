@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { AiFillEye } from "react-icons/ai";
-// import Button from "@mui/material/Button";
-// import { AiOutlinePullRequest } from "react-icons/ai";
 import "../users/AdminUsers.css";
 import Pagination from "../pagination";
 import { AxiosAdmin } from "../../../api/AxiosInstance";
 import BookingModal from "./BookingModal";
 import LoadingFootball from "../../LoadingFootball";
 import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
 
 
 function AdminBookings() {
 
   const admintoken= localStorage.getItem('admin')
   const headers = {authorization:admintoken}
-
   const [bookings, setBookings] = useState([]);
   const [query, setQuery] = useState("");
-  // const [refreshFlag, setRefreshFlag] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -42,7 +37,7 @@ function AdminBookings() {
     FetchData();
   }, []);
 
-  // Function to handle opening and closing the modal
+
   const handleModalOpen = (booking) => {
     setSelectedBooking(booking);
   };
@@ -174,12 +169,3 @@ function AdminBookings() {
 }
 
 export default AdminBookings;
-
-
-
-
-
-
-
-
-

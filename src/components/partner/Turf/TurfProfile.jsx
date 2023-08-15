@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import axios from 'axios'
-import { UserPort, PartnerPort } from "../../../store/port";
 import Carousel from "./Carousel";
 import { toast } from "react-hot-toast";
 import { AxiosPartner } from "../../../api/AxiosInstance";
 
 
-
 const TurfPorfile = () => {
-    const token = localStorage.getItem('turfToken')
+    const token = localStorage.getItem('partner')
     const [data, setData] = useState({});
     const [editMode, setEditMode] = useState(false);
     const [image, setImage] = useState([])
@@ -30,7 +27,7 @@ const TurfPorfile = () => {
     const updateData = async () => {
         try {
             const headers = { authorization: token }
-            const response = await axios.put(`${PartnerPort}updateProfile`, { data, image },)
+            const response = await AxiosPartner.put(`updateProfile`, { data, image },)
             setRefresh(!refresh)
             toast.success(response.data.message)
             setEditMode(false);

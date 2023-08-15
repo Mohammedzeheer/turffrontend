@@ -17,28 +17,22 @@ import VenueDetail from '../components/partner/venue/VenueDetail';
 function PartnerRouter() {
   return (
     <>
-    <Routes>
+    <Routes>        
+        <Route path='/' element={<PartnerDashboard/>}>  </Route>
         <Route path='/login' element={<PartnerLogin/>}>  </Route>
         <Route path='/signup' element={<PartnerSignup/>}>  </Route>
-        <Route path='/' element={<PartnerDashboard/>}>  </Route>
         <Route path='/partnernavbar' element={<PartnerNavbar/>}>  </Route>
         <Route path='/addturf' element={<AddTurf/>}>  </Route>
         <Route path='/partnerturfs' element={<PartnerTurfs/>}>  </Route>
-
-        <Route  path='/venuehome' element={<VenueHome/>}>  </Route>
-        
+        <Route  path='/venuehome' element={<VenueHome/>}>  </Route>      
         <Route path='/turfprofile' element={<TurfPorfile/>}>  </Route>
         <Route path='/booking' element={<Bookings/>}>  </Route>
         <Route path='/otp' element={<PartnerOtp/>}>  </Route>
         <Route path='/profile' element={<PartnerProfile/>}>  </Route>
-
-        {/* <Route path="/venue-details/:turfId" component={VenueDetail} /> */}
-        <Route path="/venue-details/:turfId"  element={<VenueDetail/>} />
-     
+        <Route path="/venue-details/:turfId"  element={<VenueDetail/>} />     
     </Routes>
     </>
   )
 }
 
 export default PartnerRouter
-

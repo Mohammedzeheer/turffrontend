@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 const Carousel = ({ images }) => {
     const [currentImage, setCurrentImage] = useState(0);
     const handlePrevClick = () => {

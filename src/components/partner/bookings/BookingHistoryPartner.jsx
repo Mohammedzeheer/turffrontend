@@ -22,17 +22,7 @@ const handleCardClick = (booking) => {
   setModalOpen(true);
 };
 
-const fetchData1 = async()=>{
-   try {
-    const response=await AxiosPartner.get(`bookingsData`,{headers})
-    console.log(response,'-------------------------response partner booking history')
-    setBookingData(response.data)
-    setIsLoading(false);
-   } catch (error) {
-    toast.error(error)
-    setIsLoading(false); 
-   }
-}
+
 
 const fetchData = async () => {
   try {

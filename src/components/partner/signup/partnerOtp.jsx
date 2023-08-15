@@ -1,9 +1,9 @@
 import React, { useState,useEffect} from "react";
-import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify'  // for error npm 
 import 'react-toastify/dist/ReactToastify.css';
-import { PartnerPort } from '../../../store/port';
+import { AxiosPartner } from "../../../api/AxiosInstance";
+
 
 const PartnerOtp = () => {
   const [otp, setOtp] = useState("");
@@ -13,17 +13,15 @@ const PartnerOtp = () => {
 
   const handleChange = (e) => {
     const value = e.target.value;
-    // Limit input to 6 digits and only allow numeric values
     if (/^\d{0,6}$/.test(value)) {
       setOtp(value);
     }
   };
 
   useEffect(() => {
-    // When the component mounts, set a timeout to show the "Resend" button after 30 SECONDS
     const timer = setTimeout(() => {
       setShowResendButton(true);
-    }, 30000); // 30SECONDS
+    }, 30000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -32,10 +30,8 @@ const PartnerOtp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        // Do something with the OTP, e.g., send it to the server for verification
         console.log("OTP entered:", otp);
-        const { data } = await axios.post(`${PartnerPort}otppartnersubmit`, {otp}, { withCredential: true })
-          console.log(data, "---hello iam data of otp signup------")
+        const { data } = await AxiosPartner.post(`otppartnersubmit`, {otp}, { withCredential: true })
          if (data) {
              if (data.errors) {
                  generateError(data.errors)
@@ -53,7 +49,7 @@ const PartnerOtp = () => {
     e.preventDefault();
     try {
         console.log("OTP entered:", otp);
-        const { data } = await axios.post(`${PartnerPort}resendpartnerotp`, {otp}, { withCredential: true })
+        const { data } = await AxiosPartner.post(`resendpartnerotp`, {otp}, { withCredential: true })
          if (data) {
           if(data.otp){
             navigate("/partner/otp")

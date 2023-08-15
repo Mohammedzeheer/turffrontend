@@ -27,7 +27,6 @@ function UserSignup() {
   const navigate = useNavigate();
 
   const usernameRegex = /^[a-zA-Z0-9_]{4,20}$/;
-  const passwordRegex1 = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -67,9 +66,7 @@ function UserSignup() {
       }
       newErrors.password = passwordErrors;
       isValid = false;
-    }
-  
-     
+    }   
   
     // Email validation
     if (!emailRegex.test(user.email)) {
@@ -102,7 +99,6 @@ function UserSignup() {
     if (validateForm()) {
       try {
         const { data } = await AxiosUser.post(`signup`, { ...user }, { withCredentials: true });
-        console.log(data, '---hello iam data------');
         if (data) {
           if (data.errors) {
             const { username, password, email, phonenumber } = data.errors;
@@ -114,7 +110,6 @@ function UserSignup() {
             navigate('/userotp');
           } else {
             navigate('/userotp');
-            // navigate("/login");
           }
         }
       } catch (error) {
@@ -134,20 +129,20 @@ function UserSignup() {
       <section>
         <div className="container-fluid">
           <div className="row no-gutter">
-            <div className="col-md-6 d-none d-md-flex  bg-light">
+            <div className="col-md-6 d-none d-md-flex">
               <img
-                src="/image/turf7.png"
-                style={{ width: '55vw', height: '100vh', paddingTop: '70px' }}
+                src="/image/1692012406136.png"
+                style={{ width: '55vw', height: '100vh', paddingTop: '20px' }}
                 alt=""
               />
             </div>
 
-            <div className="col-md-6 bg-light">
-              <div className="login d-flex align-items-center py-5">
+            <div className="col-md-6">
+              <div className="login d-flex align-items-center sm:py-5">
                 <div className="container">
                   <div className="row">
                     <div className="col-lg-10 col-xl-7 mx-auto">
-                      <h3 className="display-4">Aone Turf</h3>
+                      <h3 className="display-4">A-one Turf</h3>
                       <p className="text-muted mb-4">Register Here</p>
                       <form>
                         <div className="form-group mb-3">
@@ -245,10 +240,7 @@ function UserSignup() {
                             
                           </div>                          
                         </div>
-
-
-                        
-                       
+    
 
                         <button
                           type="submit"
