@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosUser } from '../../../../api/AxiosInstance';
 import Rating from '@mui/material/Rating';
-import { FaUserAlt } from "react-icons/fa";// Replace with the correct import for the Rating component
+import { FaUserAlt } from "react-icons/fa";
 import './CardReview.css'
 import LoadingFootball from '../../../LoadingFootball';
-
 
 const CardReview = ({ id, refresh }) => {
   const [reviews, setReviews] = useState([]);
@@ -15,7 +14,6 @@ const CardReview = ({ id, refresh }) => {
   const fetchReviews = async (id) => {
     try {
       const response = await AxiosUser.get(`getReviews/${id}`);
-      console.log(response.data.reviews, "get response of review -----------------------");
       setReviews(response.data.reviews);
       setIsLoading(false); 
     } catch (error) {
@@ -31,10 +29,10 @@ const CardReview = ({ id, refresh }) => {
   return (
     <div className="flex flex-col items-center mt-8 mb-5">
        {isLoading ? (
-        <div className="mt-[140px]  content-center"><LoadingFootball/></div> // Display a loading message while data is being fetched
+        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
       ) : (
         <React.Fragment>
-      <h1 className="text-xl font-bold mb-4">Reviews</h1>
+      <h1 className="text-lg sm:text-2xl font-bold mb-4">Reviews</h1>
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg">
         {visibleReviews.length > 0 ? (
           visibleReviews.map((review, index) => (
@@ -73,15 +71,6 @@ const CardReview = ({ id, refresh }) => {
                 >
                   {review.review}
                 </p>
-
-                {/* <div className="text-gray-400 text-sm text-right mt-2">
-                  {new Date(review.createdAt).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </div> */}
-                
 
               </div>
               <div className="text-gray-400 text-sm text-right mt-2 ml-auto">

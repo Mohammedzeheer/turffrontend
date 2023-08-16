@@ -2,13 +2,13 @@ import React, { Fragment } from 'react'
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'  
 import {toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../redux/userSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import {AxiosUser} from '../../../api/AxiosInstance'
 import './UserLogin.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 function UserLogin() {
   const Navigate = useNavigate()

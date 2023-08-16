@@ -7,15 +7,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AiOutlineSend } from "react-icons/ai";
 import io from 'socket.io-client';
 import { ServerPort } from '../../../api/ServerPort';
+import ChatLoading from './chatLoading';
+
 
 
 const UserChat = () => {
   const userToken = localStorage.getItem('user');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [isLoading,setIsLoading]=useState(true)
   const headers = { authorization: userToken };
   
-
   const socket = io(ServerPort);
 
   useEffect(() => {
@@ -36,10 +38,11 @@ const UserChat = () => {
         (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
       );
       setMessages(sortedMessages);
+      setIsLoading(false)
     } catch (error) {
       console.log('Error fetching messages:', error);
       setMessages([]);
-      // toast.error('Error fetching messages');
+      setIsLoading(false)
     }
   };
 
@@ -58,7 +61,6 @@ const UserChat = () => {
     }
   };
 
- 
 
   function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
@@ -78,19 +80,17 @@ const UserChat = () => {
     return date.toLocaleString(undefined, options);
   }
 
-
-
-
   return (
     <>
       <UserNavbar />
-      <div className="flex flex-col items-center justify-center sm:m:1 m-5 ">
+      <div className="flex flex-col items-center justify-center m-2">
         <div className="w-full max-w-xl bg-gray-500 h-6"></div>
         <div className="w-full max-w-xl bg-white shadow-lg rounded-lg pt-4">
           <div className="mb-4 h-[350px] overflow-y-auto p-4">
             {/* Display messages */}
-            {messages === null ? (
-              <p>Loading messages...</p>
+            {isLoading ? (
+              // <p>Loading messages...</p>
+              <ChatLoading/>
             ) : messages.length === 0 ? (
               <p>No messages to display.</p>
             ) : (

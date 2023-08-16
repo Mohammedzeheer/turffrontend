@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PieChart from "./PieChart";
 import BarChart from "./BarChart";
 import {AxiosAdmin} from '../../../api/AxiosInstance'
+import {toast} from 'react-toastify' 
 
 function AdminDashboard() {
   const token=localStorage.getItem('admin')

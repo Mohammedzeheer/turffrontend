@@ -23,8 +23,8 @@ function UserHome() {
         <ImageCarousel/>
         <div className={`w-full h-[15rem] sm:h-[40rem]`}></div>
         <div className="button-container absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-          <button onClick={handleBookSlotClick} className="bg-green-500 text-white px-4 py-2 rounded-full cursor-pointer text-sm sm:text-lg m-2 outline-none">Book Your Slot</button>
-          <button onClick={() => navigate('/partner/signup')} className="bg-gray-300 text-black px-4 py-2 rounded-full cursor-pointer text-sm sm:text-lg m-2 outline-none">Partner with Us</button>
+          <button onClick={handleBookSlotClick} className="bg-green-500 hover:bg-customGreen text-white px-4 py-2 rounded-full cursor-pointer text-sm sm:text-lg m-2 outline-none">Book Your Slot</button>
+          <button onClick={() => navigate('/partner/signup')} className="bg-gray-300 hover:bg-white text-black px-4 py-2 rounded-full cursor-pointer text-sm sm:text-lg m-2 outline-none">Partner with Us</button>
         </div>
       </div>
     </div>

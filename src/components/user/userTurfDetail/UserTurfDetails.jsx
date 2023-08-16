@@ -28,8 +28,7 @@ export default function UserTurfDetails() {
   let [selectedPrice, setSelectedPrice] = useState();
   const [selectedSlot, setSelectedSlot] = useState("");
   const navigate = useNavigate();
-
-  const [isLoading, setIsLoading] = useState(true);
+   const [isLoading, setIsLoading] = useState(true);
 
   const fetchTurf = async () => {
     try {
@@ -55,8 +54,10 @@ export default function UserTurfDetails() {
     <>
       <UserNavbar />
       <section className="text-gray-600 body-font">
-      {isLoading ? ( 
-          <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
+        {isLoading ? (
+          <div className="my-[200px]  content-center">
+            <LoadingFootball />
+          </div>
         ) : showCalender ? (
           <Booking
             closingTime={data.closingTime}
@@ -114,10 +115,11 @@ export default function UserTurfDetails() {
                 >
                   <input
                     type="checkbox"
+                    className="cursor-pointer"
                     checked={selectedPrice === price5s}
                     onChange={() => {
                       setSelectedPrice(price5s);
-                      setSelectedSlot("5 v 5"); 
+                      setSelectedSlot("5 v 5");
                     }}
                   />
                   <span className="text-base mr-3 ml-1">5 v 5</span>
@@ -137,10 +139,11 @@ export default function UserTurfDetails() {
                 >
                   <input
                     type="checkbox"
+                    className="cursor-pointer"
                     checked={selectedPrice === price7s}
                     onChange={() => {
                       setSelectedPrice(price7s);
-                      setSelectedSlot("7 v 7"); 
+                      setSelectedSlot("7 v 7");
                     }}
                   />
                   <span className="text-base mr-3 ml-1">7 v 7</span>
@@ -156,8 +159,6 @@ export default function UserTurfDetails() {
                 </h3>
 
                 <div className="flex justify-center items-center mb-4 mt-4">
-                 
-
                   <button
                     className="px-6 py-2 text-lg font-bold rounded-md text-white bg-customGreen hover:bg-green-800  border-none focus:outline-none"
                     onClick={() => {
@@ -173,18 +174,37 @@ export default function UserTurfDetails() {
                     <BsFillJournalBookmarkFill className="w-5 h-5 inline-block mr-1" />{" "}
                     Book Now
                   </button>
-            
                 </div>
               </div>
             </div>
           </>
-        )}  
+        )}
+
+
+{!isLoading && !showCalender && <CardReview refresh={refresh} id={ID} />}
+
+<div className="flex justify-center items-center mb-3 body-font">
+    {!showCalender && (
+      <button
+        type="button"
+        style={{
+          marginLeft: "auto",
+          marginRight: "auto",
+          display: "flex", 
+          alignItems: "center",
+        }}
+        onClick={() => navigate(-1)}
+        className="p-[10px] py-2 font-semibold rounded-full bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75"
+      >
+        <FaBackward style={{ marginRight: "5px" }} /> Go Back
+      </button>
+    )}
+  </div>
       </section>
 
-      
-      {!showCalender && <CardReview refresh={refresh} id={ID} />}
+      {/* {!isLoading && !showCalender && <CardReview refresh={refresh} id={ID} />}
 
-      <div className="flex justify-center items-center mb-3">
+      <div className="flex justify-center items-center mb-3 body-font">
           {!showCalender && (
             <button
               type="button"
@@ -200,7 +220,8 @@ export default function UserTurfDetails() {
               <FaBackward style={{ marginRight: "5px" }} /> Go Back
             </button>
           )}
-        </div>
+        </div> */}
+
 
       <UserFooter />
     </>

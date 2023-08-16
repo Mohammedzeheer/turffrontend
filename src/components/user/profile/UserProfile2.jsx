@@ -129,7 +129,7 @@ const UserProfile2 = () => {
       <ButtonBooking/>
       <div className="sm-pt-5 md:pt-[20px] m-10 md:mb-[80px]">
       {isLoading ? (
-        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
+        <div className="my-[178px] sm:my-[140px] content-center"><LoadingFootball/></div> 
       ) : (
         <React.Fragment>
   {userData ? (

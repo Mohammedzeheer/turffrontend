@@ -1,13 +1,14 @@
+import React,{ useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { useEffect, useState } from "react";
 import { stripeKey } from "../../../../helpers/StripeKey";
 import { AxiosUser } from "../../../../api/AxiosInstance";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { FaBackward } from "react-icons/fa";
 import UserNavbar from "../../userHeader/UserNavbar";
 import UserFooter from "../../userFooter/UserFooter";
-import { FaBackward } from "react-icons/fa";
+import LoadingFootball from "../../../LoadingFootball";
 
 const BookingDetail = () => {
   const location = useLocation();
@@ -17,17 +18,18 @@ const BookingDetail = () => {
   const token = localStorage.getItem("user");
   const [loading, setLoading] = useState(false);
   const [turfData, setTurfData] = useState();
-  const Navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("stripe");
+  const Navigate = useNavigate();
 
   const fetchTurf = async () => {
     try {
-      console.log(ID, "id");
       const response = await AxiosUser.get(`viewTurf/${ID}`);
       setTurfData(response.data.turf);
-      console.log(turfData);
+      setIsLoading(false);
     } catch (error) {
       toast.error(error);
+      setIsLoading(false);
     }
   };
 
@@ -45,7 +47,6 @@ const BookingDetail = () => {
         { ID, date, time, price, slot, email,selectedPaymentMethod },
         { headers: { authorization: token } }
       );
-      console.log(response,'----------------response')
      
       if (response && response.status === 200) {
         if (selectedPaymentMethod === "stripe") {
@@ -90,6 +91,10 @@ const BookingDetail = () => {
     <>
       <UserNavbar />
       <section className="text-gray-600 body-font m-5">
+      {isLoading ? (
+        <div className="my-[200px]  content-center"><LoadingFootball/></div> 
+      ) : (
+        <React.Fragment>
         <div className="container mx-auto flex flex-wrap justify-center items-center">
           <div className="w-full lg:w-1/2 mb-10 lg:mb-0">
             <img
@@ -112,14 +117,14 @@ const BookingDetail = () => {
         <p className="mb-2">Time: {time}</p>
         <p className="mb-2">Price: {price}</p>
         <p className="mb-2">Slot: {slot}</p>
-        <div className="space-y-4 flex flex-col items-start">
+        <div className="space-y-2 flex flex-col items-start">
           <label className="flex items-center space-x-2 cursor-pointer">
             <input
               type="radio"
               value="stripe"
               checked={selectedPaymentMethod === "stripe"}
               onChange={() => setSelectedPaymentMethod("stripe")}
-              className="form-radio h-4 w-4 text-indigo-600"
+              className="form-radio h-4 w-4 text-indigo-600 cursor-pointer"
             />
             <span className="text-gray-700">Pay with Online</span>
           </label>
@@ -129,7 +134,7 @@ const BookingDetail = () => {
               value="wallet"
               checked={selectedPaymentMethod === "wallet"}
               onChange={() => setSelectedPaymentMethod("wallet")}
-              className="form-radio h-4 w-4 text-indigo-600"
+              className="form-radio h-4 w-4 text-indigo-600 cursor-pointer"
             />
             <span className="text-gray-700">Pay with Wallet</span>
           </label>
@@ -155,7 +160,7 @@ const BookingDetail = () => {
             style={{
               marginLeft: "auto",
               marginRight: "auto",
-              display: "flex", // Use flex display to align items in the same row
+              display: "flex", 
               alignItems: "center",
             }}
             className="p-[10px] py-2 font-semibold rounded-full bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 mt-5"
@@ -163,6 +168,8 @@ const BookingDetail = () => {
             <FaBackward style={{ marginRight: "5px" }} /> Go Back
           </button>
         </div>
+        </React.Fragment>
+      )}
       </section>
 
       <UserFooter />

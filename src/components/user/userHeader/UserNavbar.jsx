@@ -49,13 +49,13 @@ const PartnerNavbar = () => {
                   <div>
                     <button
                       type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-600 hover:text-gray-500"
-                      onClick={() => setIsOpen(!isOpen)}
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md hover:bg-customBlue text-indigo-600 hover:text-gray-500"
+                      // onClick={() => setIsOpen(!isOpen)}
+                      onMouseEnter={() => setIsOpen(!isOpen)}
                     >
-                      {isLogin && <span className="text-white mr-1">{username}</span>}
+                      {isLogin && <span className="text-white mr-1 ">{username}</span>}
                       <span className="text-white"><FiChevronDown /></span>
                     </button>
-
 
 
                   </div>
@@ -66,7 +66,7 @@ const PartnerNavbar = () => {
                         <button
                           type="button"
                           onClick={() => Navigate('/profile')}
-                          className="block px-4 py-2 font-medium text-sm text-customBlue hover:bg-gray-100 hover:text-gray-900"
+                          className="block px-4 py-2 font-medium text-sm text-customBlue  hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
                         >
                           Profile
@@ -74,7 +74,7 @@ const PartnerNavbar = () => {
                         <button
                           type="button"
                           onClick={() => Navigate('/message')}
-                          className="block px-4 py-2 font-medium text-sm text-customBlue hover:bg-gray-100 hover:text-gray-900"
+                          className="block px-4 py-2 font-medium text-sm text-customBlue  hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
                         >
                           Contact
@@ -82,7 +82,7 @@ const PartnerNavbar = () => {
                         <button
                           type="button"
                           onClick={handleLogout}
-                          className="block px-4 py-2 font-medium text-sm text-customBlue hover:bg-gray-100 hover:text-gray-900"
+                          className="block px-4 py-2 font-medium text-sm text-customBlue  hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
                         >
                           Logout
@@ -95,7 +95,7 @@ const PartnerNavbar = () => {
               {!isLogin && (
                 <button
                   type="button"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-transparent hover:bg-indigo-700"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white  hover:bg-customBlue"
                   onClick={() => Navigate("/login")}
                 >
                   Get Started
@@ -108,11 +108,12 @@ const PartnerNavbar = () => {
               <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                // className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-customBlue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-customBlue focus:outline-none  focus:ring-offset-2 focus:ring-offset-gray-800"
                 aria-controls="mobile-menu"
                 aria-expanded="false"
               >
-                <span className="sr-only">isOpen main menu</span>
+                {/* <span className="sr-only">isOpen main menu</span> */}
                 {isOpen ? (
                   <svg
                     className="block h-6 w-6"
@@ -160,37 +161,29 @@ const PartnerNavbar = () => {
               <>
                 <a
                   href="/profile"
-                  className="text-gray-300 hover:bg-customBlue w-[85px] hover:text-white block px-3 py-2 rounded-md font-medium no-underline"
+                  className="text-gray-300 hover:bg-customBlue w-[85px] hover:text-white block px-3 py-1 rounded-md font-medium no-underline"
                 >
                   Profile
                 </a>
                 <a
                   href="/message"
-                  className="text-gray-300 hover:bg-customBlue w-[85px] hover:text-white block px-3 py-2 rounded-md font-medium no-underline"
+                  className="text-gray-300 hover:bg-customBlue w-[85px] hover:text-white block px-3 py-1 rounded-md font-medium no-underline"
                 >
                   Contact
                 </a>
                 <a
                   onClick={handleLogout}
-                  className="text-gray-300 hover:bg-customBlue w-[85px] hover:text-white block px-3 py-2 rounded-md font-medium no-underline"
+                  className="text-gray-300 hover:bg-customBlue w-[85px] hover:text-white block px-3 py-1 rounded-md font-medium no-underline"
                 >
                   Logout
                 </a>
-
-                {/* <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="text-gray-300 hover:bg-customBlue hover:text-white block px-3 py-2 rounded-md font-small"
-                >
-                  Logout
-                </button> */}
               </>
             )}
             {!isLogin && (
               <button
                 type="button"
                 // className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-transparent hover:bg-indigo-700"              
+                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white  hover:bg-customBlue"              
                 onClick={() => Navigate("/login")}
               >
                 Get Started

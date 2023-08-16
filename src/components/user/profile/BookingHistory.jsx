@@ -82,7 +82,7 @@ const BookingHistory = () => {
       <UserNavbar />
       <div className="p-4">
       {isLoading ? (
-        <div className="mt-[140px] mb-[140px] content-center"><LoadingFootball/></div> 
+        <div className="my-[200px] sm:my-[160px] content-center"><LoadingFootball/></div> 
       ) : (
         <React.Fragment>
         <h1 className="text-2xl font-bold mb-4">Booking History</h1>
