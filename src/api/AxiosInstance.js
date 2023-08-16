@@ -1,19 +1,18 @@
 import axios from 'axios';
 
-// Create Axios instances
 export const AxiosUser = axios.create({
-  baseURL: 'http://localhost:4000/',
-   //baseURL: 'https://aoneturfserver.onrender.com/',
+  //baseURL: 'http://localhost:4000/',
+   baseURL: 'https://aoneturfserver.onrender.com/',
 });
 
 export const AxiosAdmin = axios.create({
-  baseURL: 'http://localhost:4000/admin/',
-  //baseURL: 'https://aoneturfserver.onrender.com/admin/',
+ //baseURL: 'http://localhost:4000/admin/',
+   baseURL: 'https://aoneturfserver.onrender.com/admin/',
 });
 
 export const AxiosPartner = axios.create({
-  baseURL: 'http://localhost:4000/partner/',
- // baseURL: 'https://aoneturfserver.onrender.com/partner/',
+  //baseURL: 'http://localhost:4000/partner/',
+   baseURL: 'https://aoneturfserver.onrender.com/partner/',
 });
 
 
