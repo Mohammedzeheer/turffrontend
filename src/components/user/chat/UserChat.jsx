@@ -83,7 +83,7 @@ const UserChat = () => {
   return (
     <>
       <UserNavbar />
-      <div className="flex flex-col items-center justify-center m-2">
+      <div className="min-h-screen flex flex-col items-center justify-center m-2">
         <div className="w-full max-w-xl bg-gray-500 h-6"></div>
         <div className="w-full max-w-xl bg-white shadow-lg rounded-lg pt-4">
           <div className="mb-4 h-[350px] overflow-y-auto p-4">

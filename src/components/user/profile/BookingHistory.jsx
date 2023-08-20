@@ -80,9 +80,10 @@ const BookingHistory = () => {
   return (
     <>
       <UserNavbar />
-      <div className="p-4">
+      {/* <div className="p-4 md:mb-[10rem] "> */}
+      <div className="min-h-screen  p-4 ">
       {isLoading ? (
-        <div className="my-[200px] sm:my-[160px] content-center"><LoadingFootball/></div> 
+        <div className="my-[200px] sm:my-[170px] content-center"><LoadingFootball/></div> 
       ) : (
         <React.Fragment>
         <h1 className="text-2xl font-bold mb-4">Booking History</h1>
@@ -197,7 +198,7 @@ const BookingHistory = () => {
               ))}
           </div>
         ) : (
-          <div className="flex justify-center my-[200px] sm:my-50">
+          <div className="flex justify-center my-[200px] sm:my-50">         
             No Booking Found .......
           </div>
         )}

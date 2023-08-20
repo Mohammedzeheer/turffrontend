@@ -6,8 +6,8 @@ import { AiOutlinePullRequest } from "react-icons/ai";
 import Pagination from '../pagination';
 import {AxiosAdmin} from '../../../api/AxiosInstance'
 import LoadingFootball from "../../LoadingFootball";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 import {toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
 import '../users/AdminUsers.css';
 // import { useNavigate } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
@@ -27,6 +27,8 @@ function AdminTurfs() {
   const [refreshFlag, setRefreshFlag] = useState(false); 
   const [selectedUser, setSelectedUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasMoreData, setHasMoreData] = useState(true); 
+
 
 
   const handleModalOpen = (user) => {
@@ -40,7 +42,7 @@ function AdminTurfs() {
 
 //pagination    ----------------start--------------------
 const [currentPage, setCurrentPage] = useState(1);
-const itemsPerPage = 5; 
+const itemsPerPage = 7; 
 
 const filteredUsers = users.filter(
   (user) => user.courtName.toLowerCase().includes(query.toLowerCase())
@@ -54,8 +56,14 @@ const getCurrentItems = () => {
   return filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
 };
 
+// const handleNextPage = () => {
+//   setCurrentPage((prevPage) => prevPage + 1);
+// };
+
 const handleNextPage = () => {
-  setCurrentPage((prevPage) => prevPage + 1);
+  if (currentPage < getTotalPages() && hasMoreData) {
+    setCurrentPage((prevPage) => prevPage + 1);
+  }
 };
 
 const handlePrevPage = () => {
@@ -142,7 +150,7 @@ const handlePrevPage = () => {
               <tr key={index}>
                 <td>
                   {user.images ? (
-                    <img src={user.images[0]} alt="loading" width={100} />
+                    <img src={user.images[0]} alt="loading"  className='h-8 w-[3rem]'/>
                   ) : (
                     <img
                       src="https://static-00.iconduck.com/assets.00/profile-minor-icon-256x256-6u3v5w0z.png"
@@ -172,7 +180,10 @@ const handlePrevPage = () => {
                       Approve
                     </Button>
                   ) : (
-                    <h5>approved</h5>
+                    <div className="inline-flex items-center">
+                    <h6 className="mr-1 mt-2"><BsFillCheckCircleFill/></h6>
+                    <p className="m-0">approved</p>
+                  </div>
                   )}             
                 </td>
 
@@ -189,6 +200,7 @@ const handlePrevPage = () => {
       totalPages={getTotalPages}
       handlePrevPage={handlePrevPage}
       handleNextPage={handleNextPage}
+      hasMoreData={hasMoreData}
     />
 </React.Fragment>
       )}

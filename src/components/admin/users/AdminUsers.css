@@ -15,7 +15,7 @@
   }
   
   table {
-    width: 700px;
+    width:90%;
     margin: 20px auto;
     background-color: #eeeeee;
   }
@@ -24,7 +24,7 @@
     border: 1px solid white;
     border-collapse: collapse;
     padding: 10px;
-    text-align: center;
+    text-align: left;
     text-transform: capitalize;
     font-size: 17px;
   }
@@ -65,9 +65,6 @@
   .bottom {
     border-bottom: 2px solid #009688;
   }
-
-
-
 
 .userHead{
   margin-top: 40px;

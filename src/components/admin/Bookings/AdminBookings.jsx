@@ -16,7 +16,7 @@ function AdminBookings() {
   const [query, setQuery] = useState("");
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [hasMoreData, setHasMoreData] = useState(true); 
 
   const FetchData = async () => {
     try {
@@ -63,13 +63,24 @@ function AdminBookings() {
   };
 
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    if (currentPage < getTotalPages() && hasMoreData) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
+
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
   //pagination    ----------------end--------------------
+
+  function formatDate(timestamp) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(timestamp);
+    return date.toLocaleString(undefined, options);
+  }
+
+
 
   return (
     <div>
@@ -115,6 +126,8 @@ function AdminBookings() {
             <th>Name</th>
             <th>District</th>
             <th>Location</th>
+            <th>Date</th>
+            <th>Time</th>
             <th>User</th>
             <th>Status</th>
             <th>view</th>
@@ -127,6 +140,9 @@ function AdminBookings() {
                 <td>{booking.turf.courtName}</td>
                 <td>{booking.turf.district}</td>
                 <td>{booking.turf.location}</td>
+                {/* <td>{booking.bookDate}</td>  */}
+                <td>{formatDate(booking.bookDate)}</td> 
+                <td>{booking.time}</td>
                 <td>{booking.user.username}</td>
 
                 <td>
@@ -161,6 +177,7 @@ function AdminBookings() {
         totalPages={getTotalPages}
         handlePrevPage={handlePrevPage}
         handleNextPage={handleNextPage}
+        hasMoreData={hasMoreData}
       />
       </React.Fragment>
       )}

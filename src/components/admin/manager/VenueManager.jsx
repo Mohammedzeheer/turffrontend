@@ -23,6 +23,8 @@ function VenueManager() {
   const [selectedManager, setSelectedManager] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasMoreData, setHasMoreData] = useState(true); 
+
 
   
   const FetchData = async () => {
@@ -106,7 +108,7 @@ const handleCloseModal = () => {
 
 //pagination    ----------------start--------------------
 const [currentPage, setCurrentPage] = useState(1);
-const itemsPerPage = 5; 
+const itemsPerPage = 7; 
 
 const filteredUsers = manager.filter(
   (user) => user.username.toLowerCase().includes(query.toLowerCase())
@@ -120,9 +122,16 @@ const getCurrentItems = () => {
   return filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
 };
 
+// const handleNextPage = () => {
+//   setCurrentPage((prevPage) => prevPage + 1);
+// };
+
 const handleNextPage = () => {
-  setCurrentPage((prevPage) => prevPage + 1);
+  if (currentPage < getTotalPages() && hasMoreData) {
+    setCurrentPage((prevPage) => prevPage + 1);
+  }
 };
+
 
 const handlePrevPage = () => {
   setCurrentPage((prevPage) => prevPage - 1);
@@ -178,7 +187,7 @@ const handlePrevPage = () => {
               <tr key={index}>
                 <td>
                   {user.image ? (
-                    <img src={user.image} alt="placeholder" width={100} />
+                    <img src={user.image} alt="placeholder" width={30} />
                   ) : (
                     <img
                       src="https://static-00.iconduck.com/assets.00/profile-minor-icon-256x256-6u3v5w0z.png"
@@ -223,6 +232,7 @@ const handlePrevPage = () => {
       totalPages={getTotalPages}
       handlePrevPage={handlePrevPage}
       handleNextPage={handleNextPage}
+      hasMoreData={hasMoreData}
     />
       <ManagerDetail
         open={modalOpen}

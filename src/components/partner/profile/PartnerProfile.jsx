@@ -51,7 +51,6 @@ const PartnerProfile = () => {
       const formData = { username, phonenumber, address, turfname };
       const response = await AxiosPartner.post(`updateprofile`, {formData}, { headers });
       const responseData = response.data;
-
       if (responseData.status) {
         setUserData(responseData.data);
         toast.success('Updated Succesfully')

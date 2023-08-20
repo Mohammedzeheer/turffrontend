@@ -18,6 +18,8 @@ function AdminUsers() {
   const [query, setQuery] = useState("");
   const [refreshFlag, setRefreshFlag] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasMoreData, setHasMoreData] = useState(true); 
+
 
   ////for view  user datail modaal   ----------------start--------------
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,18 +35,9 @@ function AdminUsers() {
   };
 
 
-////for view  user datail modaal   ---------------end-------------
-
-  // const getCurrentItems = () => {
-  //   const indexOfLastItem = currentPage * itemsPerPage;
-  //   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  //   return users.slice(indexOfFirstItem, indexOfLastItem);
-  // };
-
-
  //pagination    ----------------start--------------------
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 7; // Change this number to adjust the number of items per page
+  const itemsPerPage = 7; 
 
   const filteredUsers = users.filter(
     (user) => user.username.toLowerCase().includes(query.toLowerCase())
@@ -58,9 +51,16 @@ function AdminUsers() {
     return filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
   };
 
+  // const handleNextPage = () => {
+  //   setCurrentPage((prevPage) => prevPage + 1);
+  // };
+
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    if (currentPage < getTotalPages() && hasMoreData) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
+
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
@@ -236,6 +236,7 @@ function AdminUsers() {
       totalPages={getTotalPages}
       handlePrevPage={handlePrevPage}
       handleNextPage={handleNextPage}
+      hasMoreData={hasMoreData}
     />
 
       <UserDetailsModal

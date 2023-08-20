@@ -3,7 +3,8 @@ import { AxiosPartner } from "../../../api/AxiosInstance";
 import TopBar from "../sidebar/TopBar";
 import PartnerNavbar from "../header/partnerNavbar";
 import { useParams, useNavigate } from "react-router-dom";
-import Loading from '../Loading'
+import LoadingFootball from "../../LoadingFootball";
+// import Loading from '../Loading'
 
 
 function VenueDetail() {
@@ -30,16 +31,16 @@ function VenueDetail() {
   }, [turfId]);
 
 
-  const handleEditClick = () => {
-    navigate(`/edit-venue/${turfId}`);
-  };
+  // const handleEditClick = () => {
+  //   navigate(`/edit-venue/${turfId}`);
+  // };
 
   const handleGoBack = () => {
     navigate(-1); 
   };
 
   if (loading) {
-    return <div> <span className="mr-1"><Loading/></span> Loading...</div>;
+    <div className="my-[200px] content-center"><LoadingFootball/></div> 
   }
 
   if (!selectedTurf) {
@@ -104,40 +105,3 @@ function VenueDetail() {
 
 
 export default VenueDetail;
-
-
-
-
-
-
-
-// import React from "react";
-// import { UserPort } from "../../../store/port";
-
-// function VenueDetailModal({ turf, onClose }) {
-//   return (
-//     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-//       <div className="bg-white rounded-lg p-6 max-w-md">
-//         <img
-//           src={`${UserPort}images/${turf.images[0]}`}
-//           alt="/"
-//           style={{ width: "100%", height: "auto" }}
-//         />
-//         <h2 className="text-2xl font-bold text-center mt-4">{turf.courtName}</h2>
-//         <p className="text-center font-medium mt-2">District: {turf.district}</p>
-//         <p className="text-center font-medium mt-2">Mobile Number: {turf.mobileNumber}</p>
-//         {/* Add other turf details here as needed */}
-
-//         {/* Close button */}
-//         <button
-//           className="mt-4 bg-customBlue text-white py-2 px-4 rounded-md w-full"
-//           onClick={onClose}
-//         >
-//           Close
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default VenueDetailModal;

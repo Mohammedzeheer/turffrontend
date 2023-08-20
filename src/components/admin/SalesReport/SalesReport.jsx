@@ -16,8 +16,10 @@ function SalesReport() {
   const headers={authorization:adminToken}
   const [bookings, setBookings] = useState([]);
   const [query, setQuery] = useState("");
-  const tableRef = useRef(); // Reference to the table element
+  const tableRef = useRef(); 
   const [isLoading, setIsLoading] = useState(true);
+  const [hasMoreData, setHasMoreData] = useState(true); 
+
 
   const FetchData = async () => {
     try {
@@ -51,9 +53,10 @@ function SalesReport() {
     return filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
   };
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    if (currentPage < getTotalPages() && hasMoreData) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
-
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
@@ -129,6 +132,7 @@ function SalesReport() {
             totalPages={getTotalPages}
             handlePrevPage={handlePrevPage}
             handleNextPage={handleNextPage}
+            hasMoreData={hasMoreData}
           />
         </React.Fragment>
       )}

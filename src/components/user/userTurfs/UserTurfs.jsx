@@ -47,12 +47,12 @@ const UserTurfs = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 pt-[20px]">
+      <div className="min-h-screen pt-[20px]">
       {isLoading ? (
-        <div className="mt-[140px]  content-center"><LoadingFootball/></div> 
+        <div className="mt-[140px] content-center"><LoadingFootball/></div> 
       ) : (
         <React.Fragment>
-        <section className="py-16 sm:py-16 bg-gray-100 text-black">
+        <section className="py-16 sm:py-16 text-black">
           <div className="container p-6 mx-auto space-y-8 relative">
             <div className="space-y-2 text-center">
               <h2 className="text-3xl font-bold">Let's Play Together</h2>

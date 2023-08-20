@@ -126,10 +126,10 @@ const UserProfile2 = () => {
   return (
     <>
       <UserNavbar />
-      <ButtonBooking/>
-      <div className="sm-pt-5 md:pt-[20px] m-10 md:mb-[80px]">
+      <div className="min-h-screen mx-10 mt-10 sm:m-2">
+      <ButtonBooking/>    
       {isLoading ? (
-        <div className="my-[178px] sm:my-[140px] content-center"><LoadingFootball/></div> 
+        <div className="my-[178px] sm:my-[160px] content-center"><LoadingFootball/></div> 
       ) : (
         <React.Fragment>
   {userData ? (
@@ -269,8 +269,9 @@ const UserProfile2 = () => {
             </div>   
         </div>
          ) : (
-          <div className="flex justify-center my-[200px] sm:my-40">
-            Data Not Found .......
+          // <div className="flex sm:font-extrabold justify-center my-[200px] sm:my-[180px] md:my-[220px]">
+          <div className="flex sm:font-extrabold justify-center my-[200px]">
+             Data Not Found .......
           </div>
 
         )}

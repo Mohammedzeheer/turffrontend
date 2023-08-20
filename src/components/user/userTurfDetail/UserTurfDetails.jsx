@@ -53,7 +53,7 @@ export default function UserTurfDetails() {
   return (
     <>
       <UserNavbar />
-      <section className="text-gray-600 body-font">
+      <section className=" min-h-screen text-gray-600 body-font">
         {isLoading ? (
           <div className="my-[200px]  content-center">
             <LoadingFootball />
@@ -163,7 +163,7 @@ export default function UserTurfDetails() {
                     className="px-6 py-2 text-lg font-bold rounded-md text-white bg-customGreen hover:bg-green-800  border-none focus:outline-none"
                     onClick={() => {
                       if (!selectedPrice) {
-                        toast.error("Please select a slot before booking.", {
+                        toast.error("Select a slot", {
                           position: "top-center",
                         });
                       } else {

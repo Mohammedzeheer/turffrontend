@@ -90,7 +90,7 @@ const BookingDetail = () => {
   return (
     <>
       <UserNavbar />
-      <section className="text-gray-600 body-font m-5">
+      <section className=" min-h-screen text-gray-600 body-font m-5">
       {isLoading ? (
         <div className="my-[200px]  content-center"><LoadingFootball/></div> 
       ) : (

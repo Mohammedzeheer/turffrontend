@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom"
 import { AxiosUser } from '../../../../api/AxiosInstance';
 import UserNavbar from "../../userHeader/UserNavbar";
 import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import UserFooter from "../../userFooter/UserFooter";
 
 const SuccessPage = () => {
     const [details, setDetails] = useState({})
@@ -29,8 +29,7 @@ const SuccessPage = () => {
     return (
       <>
       <UserNavbar/>
-      {/* <Toaster/> */}
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-200">
+        <div className="flex flex-col items-center justify-center h-screen">
             <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-2xl">
                 <svg className="w-16 h-16 text-green-500 mb-6 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M18.707 5.293a1 1 0 00-1.414 0L8 14.586 3.707 10.293A1 1 0 102.293 11.707l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z" clipRule="evenodd" />
@@ -43,6 +42,7 @@ const SuccessPage = () => {
                 <Link className="no-underline" to={'/'}>   <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg block mx-auto">Go Back to Home</button></Link>
             </div>
         </div>
+        <UserFooter/>
       </>
     );
 
