@@ -7,9 +7,9 @@ import { TfiWrite } from "react-icons/tfi";
 import ReviewModal from "../userTurfDetail/Components/Review";
 import CancelBookingModal from "./CancelBookingModal"; 
 import LoadingFootball from "../../LoadingFootball";
+import { FaBackward } from "react-icons/fa";
 import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
-
+import { useNavigate } from "react-router-dom";
 
 const BookingHistory = () => {
   const usertoken=localStorage.getItem('user')
@@ -20,8 +20,7 @@ const BookingHistory = () => {
   const [selectedTurfId, setSelectedTurfId] = useState(null);
   const [selectedBookingId, setSelectedBookingId] = useState(null);
   const [isLoading,setIsLoading]=useState(true)
-
-
+  const Navigate=useNavigate()
   const headers = { authorization: usertoken }
 
   const fetchData = async () => {
@@ -82,63 +81,71 @@ const BookingHistory = () => {
       <UserNavbar />
       {/* <div className="p-4 md:mb-[10rem] "> */}
       <div className="min-h-screen  p-4 ">
-      {isLoading ? (
-        <div className="my-[200px] sm:my-[170px] content-center"><LoadingFootball/></div> 
-      ) : (
-        <React.Fragment>
-        <h1 className="text-2xl font-bold mb-4">Booking History</h1>
-        {bookingData && bookingData.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {bookingData &&
-              bookingData.map((booking) => (
-                <div key={booking._id} className="border rounded-lg p-4">
-                  <div className="flex justify-center space-x-4">
-                    {booking.turf.images[0] && (
-                      <img
-                        src={booking.turf.images[0]}
-                        alt={booking.turf.courtName}
-                        className="w-20 h-20 object-cover mb-2"
-                      />
-                    )}
-                    {booking.turf.images[1] && (
-                      <img
-                        src={booking.turf.images[1]}
-                        alt={booking.turf.courtName}
-                        className="w-20 h-20 object-cover mb-2"
-                      />
-                    )}
-                    {booking.turf.images[2] && (
-                      <img
-                        src={booking.turf.images[2]}
-                        alt={booking.turf.courtName}
-                        className="w-20 h-20 object-cover mb-2"
-                      />
-                    )}
-                   
-                  </div>
-                  <p className="text-gray-500 mb-2">
-                    Booking ID: {booking._id}
-                  </p>
-                 
-                  <p className="font-bold mb-2">{booking.turf.courtName}</p>
-                  <p className="text-sm mb-2">{booking.turf.location}</p>
-                  <p className="text-sm mb-2">
-                    Date:{" "}
-                    {new Date(booking.bookDate).toLocaleDateString("en-US", {weekday: "short", month: "short",day: "numeric",year: "numeric",
-                    })}
-                  </p>
-                  <p className="text-sm mb-2">Time: {booking.time}</p>
-                  <p className="text-sm mb-2">Slot: {booking.slot}</p>
-                  <p className="text-sm mb-2">Price: {booking.price}</p>
-                  <p
-                    className={`text-${
-                      booking.payment === "Success" ? "green" : "red"
-                    }-500 font-bold mb-2`}
-                  >
-                    Payment: {booking.payment}
-                  </p>
+        {isLoading ? (
+          <div className="my-[200px] sm:my-[170px] content-center">
+            <LoadingFootball />
+          </div>
+        ) : (
+          <React.Fragment>
+            <h1 className="text-2xl font-bold mb-4">Booking History</h1>
+            {bookingData && bookingData.length > 0 ? (
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {bookingData &&
+                  bookingData.map((booking) => (
+                    <div key={booking._id} className="border rounded-lg p-4">
+                      <div className="flex justify-center space-x-4">
+                        {booking.turf.images[0] && (
+                          <img
+                            src={booking.turf.images[0]}
+                            alt={booking.turf.courtName}
+                            className="w-20 h-20 object-cover mb-2"
+                          />
+                        )}
+                        {booking.turf.images[1] && (
+                          <img
+                            src={booking.turf.images[1]}
+                            alt={booking.turf.courtName}
+                            className="w-20 h-20 object-cover mb-2"
+                          />
+                        )}
+                        {booking.turf.images[2] && (
+                          <img
+                            src={booking.turf.images[2]}
+                            alt={booking.turf.courtName}
+                            className="w-20 h-20 object-cover mb-2"
+                          />
+                        )}
+                      </div>
+                      <p className="text-gray-500 mb-2">
+                        Booking ID: {booking._id}
+                      </p>
 
-                  {/* <button
+                      <p className="font-bold mb-2">{booking.turf.courtName}</p>
+                      <p className="text-sm mb-2">{booking.turf.location}</p>
+                      <p className="text-sm mb-2">
+                        Date:{" "}
+                        {new Date(booking.bookDate).toLocaleDateString(
+                          "en-US",
+                          {
+                            weekday: "short",
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          }
+                        )}
+                      </p>
+                      <p className="text-sm mb-2">Time: {booking.time}</p>
+                      <p className="text-sm mb-2">Slot: {booking.slot}</p>
+                      <p className="text-sm mb-2">Price: {booking.price}</p>
+                      <p
+                        className={`text-${
+                          booking.payment === "Success" ? "green" : "red"
+                        }-500 font-bold mb-2`}
+                      >
+                        Payment: {booking.payment}
+                      </p>
+
+                      {/* <button
                     onClick={() => handleCancelBooking(booking._id)}
                     className="text-sm text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-500 hover:text-white"
                   >
@@ -146,20 +153,20 @@ const BookingHistory = () => {
                     <MdCancel className="w-4 h-4 inline-block mr-1" />
                   </button> */}
 
-            
+                      {isFutureBooking(booking.bookDate) &&
+                      !booking.cancelBooking ? (
+                        <button
+                          onClick={() => toggleCancelModal(booking._id)}
+                          className="text-sm text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-500 hover:text-white"
+                        >
+                          Cancel Booking{" "}
+                          <MdCancel className="w-4 h-4 inline-block mr-1" />
+                        </button>
+                      ) : (
+                        ""
+                      )}
 
-{isFutureBooking(booking.bookDate) && !booking.cancelBooking ? (
-        <button
-          onClick={() => toggleCancelModal(booking._id)}
-          className="text-sm text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-500 hover:text-white"
-        >
-          Cancel Booking <MdCancel className="w-4 h-4 inline-block mr-1" />
-        </button>
-      ) : (
-        ""
-      )}
-
-                  {/* <button
+                      {/* <button
                     onClick={() => toggleModal(booking.turf._id)} // Pass the turf ID to the toggleModal function
                     className="m-1 text-sm text-grey-500 border border-gray-500 px-3 py-1 rounded-md hover:bg-gray-500 hover:text-white"
                   >
@@ -167,7 +174,7 @@ const BookingHistory = () => {
                     Review
                   </button> */}
 
-                  {/*  {booking.cancelBooking ? (
+                      {/*  {booking.cancelBooking ? (
                     <p className="text-red-500 font-bold mb-2">Status: booking canceled</p>
                   ) : (
                     <button
@@ -179,31 +186,46 @@ const BookingHistory = () => {
                     </button>
                   )} */}
 
-                  {booking.cancelBooking ? (
-                    <p className="text-red-500 font-bold mb-2">
-                      Status: booking canceled
-                    </p>
-                  ) : isBookingTimePassed(booking.bookDate) ? (
-                    <button
-                      onClick={() => toggleModal(booking.turf._id)}
-                      className="m-1 text-sm text-grey-500 border border-gray-500 px-3 py-1 rounded-md hover:bg-gray-500 hover:text-white"
-                    >
-                      <TfiWrite className="w-4 h-4 inline-block mr-1" /> Add
-                      Review
-                    </button>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              ))}
-          </div>
-        ) : (
-          <div className="flex justify-center my-[200px] sm:my-50">         
-            No Booking Found .......
-          </div>
+                      {booking.cancelBooking ? (
+                        <p className="text-red-500 font-bold mb-2">
+                          Status: booking canceled
+                        </p>
+                      ) : isBookingTimePassed(booking.bookDate) ? (
+                        <button
+                          onClick={() => toggleModal(booking.turf._id)}
+                          className="m-1 text-sm text-grey-500 border border-gray-500 px-3 py-1 rounded-md hover:bg-gray-500 hover:text-white"
+                        >
+                          <TfiWrite className="w-4 h-4 inline-block mr-1" /> Add
+                          Review
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  ))}
+              </div>
+            ) : (
+              <div className="flex justify-center my-[200px] sm:my-50">
+                No Booking Found .......
+              </div>
+            )}
+            <div>
+              <button
+                type="button"
+                onClick={() => Navigate(-1)}
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                className="p-[10px] py-2 font-semibold rounded-full bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 mt-5"
+              >
+                <FaBackward style={{ marginRight: "5px" }} /> Go Back
+              </button>
+            </div>
+          </React.Fragment>
         )}
-         </React.Fragment>
-      )}
       </div>
       <ReviewModal
         isOpen={modalIsOpen}

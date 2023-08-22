@@ -6,13 +6,16 @@ import AdminRouter from './router/AdminRouter';
 import PartnerRouter from './router/PartnerRouter';
 
 import PageNotFound from './components/404';
+import Layout from './components/user/chat/Layout';
+
 
 function App() {
   return (
 
     <BrowserRouter>
       <Routes>     
-        <Route path='/*' element={<UserRouter/>}> </Route>
+        {/* <Route path='/*' element={<UserRouter/>}> </Route> */}
+        <Route path='/*' element={<Layout><UserRouter /></Layout>} />     
         <Route path='/admin/*' element={<AdminRouter/>}> </Route>
         <Route  path='/partner/*' element={<PartnerRouter/>}> </Route>
 

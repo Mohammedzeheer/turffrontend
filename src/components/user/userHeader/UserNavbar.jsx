@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { FiChevronDown } from "react-icons/fi";
+import { AiOutlineMessage } from "react-icons/ai";
 import { logoutUser } from '../../../redux/userSlice'; 
 
 const PartnerNavbar = () => {
@@ -39,10 +40,15 @@ const PartnerNavbar = () => {
       <nav className="bg-customGreen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div onClick={()=>Navigate('/')} className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-white">
-              <Image/>
+            <div
+              onClick={() => Navigate("/")}
+              className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-white"
+            >
+              <Image />
               {/* A one Turf */}
             </div>
+            
+
             <div className="hidden md:block flex items-center space-x-4">
               {isLogin && (
                 <div className="relative inline-block text-left">
@@ -53,19 +59,25 @@ const PartnerNavbar = () => {
                       // onClick={() => setIsOpen(!isOpen)}
                       onMouseEnter={() => setIsOpen(!isOpen)}
                     >
-                      {isLogin && <span className="text-white mr-1 ">{username}</span>}
-                      <span className="text-white"><FiChevronDown /></span>
+                      {isLogin && (
+                        <span className="text-white mr-1 ">{username}</span>
+                      )}
+                      <span className="text-white">
+                        <FiChevronDown />
+                      </span>
                     </button>
-
-
                   </div>
                   {isOpen && (
-                   <div className="origin-top-right absolute right-0 mt-2 w-30 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
-                   <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-
+                    <div className="origin-top-right absolute right-0 mt-2 w-30 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                      <div
+                        className="py-1"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-labelledby="options-menu"
+                      >
                         <button
                           type="button"
-                          onClick={() => Navigate('/profile')}
+                          onClick={() => Navigate("/profile")}
                           className="block px-4 py-2 font-medium text-sm text-customBlue  hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
                         >
@@ -73,7 +85,7 @@ const PartnerNavbar = () => {
                         </button>
                         <button
                           type="button"
-                          onClick={() => Navigate('/message')}
+                          onClick={() => Navigate("/message")}
                           className="block px-4 py-2 font-medium text-sm text-customBlue  hover:bg-gray-100 hover:text-gray-900"
                           role="menuitem"
                         >
@@ -103,7 +115,6 @@ const PartnerNavbar = () => {
               )}
             </div>
 
-            
             <div className="-mr-2 flex md:hidden">
               <button
                 type="button"
@@ -183,7 +194,7 @@ const PartnerNavbar = () => {
               <button
                 type="button"
                 // className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white  hover:bg-customBlue"              
+                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white  hover:bg-customBlue"
                 onClick={() => Navigate("/login")}
               >
                 Get Started

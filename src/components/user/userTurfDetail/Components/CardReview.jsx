@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosUser } from '../../../../api/AxiosInstance';
 import Rating from '@mui/material/Rating';
-import { FaUserAlt } from "react-icons/fa";
+// import { FaUserAlt } from "react-icons/fa";
+import { MdAccountCircle } from "react-icons/md";
+
 import './CardReview.css'
 import LoadingFootball from '../../../LoadingFootball';
 
@@ -45,11 +47,11 @@ const CardReview = ({ id, refresh }) => {
                 {review.userId.image ? (
                   <img
                     src={review.userId.image}
-                    alt="Review Image"
+                    alt="user"
                     className="w-12 h-12 rounded-full"
                   />
                 ) : (
-                  <FaUserAlt className="w-10 h-10 rounded-full"/>
+                  <MdAccountCircle className="w-12 h-12 rounded-full text-customGreen"/>
                 )}
 
                 <p className="text-gray-600 font-thin text-center">

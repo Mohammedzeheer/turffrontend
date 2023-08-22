@@ -13,12 +13,16 @@ import BookingHistory from "../components/user/profile/BookingHistory";
 import BookingDetail from "../components/user/userTurfDetail/Components/BookingDetail";
 import UserChat from "../components/user/chat/UserChat";
 import PageNotFound from "../components/404";
+import ChatIcon from "../components/user/chat/ChatIcon";
+
 // import UserProtectedRoute from './protectedRouter/UserProtectRouter';
 // import Booking from '../components/user/userTurfDetail/Components/Booking';
 
 function UserRouter() {
   return (
-    <Routes>
+
+    <Routes>   
+
       <Route path="/" element={<UserHomePage />} />
       <Route path="/signup" element={<UserSignup />} />
       <Route path="/login" element={<UserLogin />} />
@@ -31,6 +35,24 @@ function UserRouter() {
       <Route path="/booking/history" element={<BookingHistory />} />
       <Route path="/message" element={<UserChat />} />
       <Route path="*" element={<PageNotFound />} />
+
+       {/* <Route path="/" element={<ChatIcon><UserHomePage /></ChatIcon>} />
+      <Route path="/signup" element={<ChatIcon><UserSignup /></ChatIcon>} />
+      <Route path="/login" element={<ChatIcon><UserLogin /></ChatIcon>} />
+      <Route path="/turfs" element={<ChatIcon><UserTurfPage /></ChatIcon>} />
+      <Route path="/profile" element={<ChatIcon><UserProfile2 /></ChatIcon>} />
+      <Route path="/turfs-details" element={<ChatIcon><UserTurfDetail /></ChatIcon>} />
+      <Route path="/booking-detail" element={<ChatIcon><BookingDetail /></ChatIcon>} />
+      <Route path="/userotp" element={<ChatIcon><UserOtp /></ChatIcon>} />
+      <Route path="/success/:id" element={<ChatIcon><SuccessPage /></ChatIcon>} />
+      <Route path="/booking/history" element={<ChatIcon><BookingHistory /></ChatIcon>} />
+      <Route path="/message" element={<ChatIcon><UserChat /></ChatIcon>} />
+      <Route path="*" element={<ChatIcon><PageNotFound /></ChatIcon>} /> */}
+   
+
+
+
+
       {/* <Route path="/turfs-details" element={<UserProtectedRoute><UserTurfDetail /></UserProtectedRoute>} /> */}
       {/* <Route path="/booking" element={<UserProtectedRoute><Booking /></UserProtectedRoute>} />*/}
     </Routes>

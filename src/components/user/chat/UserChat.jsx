@@ -168,7 +168,18 @@ const UserChat = () => {
               }}
             />
 
-            <button className="bg-customGreen hover:bg-green-800 text-white rounded-r-full h-10 px-4 flex items-center">
+             {/* <button
+              className="bg-customGreen hover:bg-green-800 text-white rounded-r-md h-10 px-4"
+              onClick={sendMessage}
+            >
+              Send
+              <AiOutlineSend className="inline mb-1" />
+            </button>  */}
+
+
+
+            <button onClick={sendMessage} className="bg-customGreen hover:bg-green-800 text-white rounded-r-full h-10 px-4 flex items-center">
+              
               <span className="block md:hidden">
                 <AiOutlineSend className="inline mb-1" />
               </span>
