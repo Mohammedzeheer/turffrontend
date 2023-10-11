@@ -1,5 +1,5 @@
 import TurfCard from "./TurfCard";
-import React,{ useEffect, useState } from "react";
+import React,{ useEffect, useState ,memo} from "react";
 import Pagination from "./Pagination";
 import { AxiosUser } from "../../../api/AxiosInstance";
 import UserFooter from "../userFooter/UserFooter";
@@ -7,7 +7,7 @@ import LoadingFootball from "../../LoadingFootball";
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
-const UserTurfs = () => {
+const UserTurfs = memo(() => {
   const [turfs, setTurfs] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +25,7 @@ const UserTurfs = () => {
           toast.error(error);
         setIsLoading(false);
     }
-  } 
+  }
 
 
   useEffect(() => {
@@ -105,7 +105,7 @@ const UserTurfs = () => {
       <UserFooter />
     </>
   );
-};
+})
 
 export default UserTurfs;
 

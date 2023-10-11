@@ -8,6 +8,7 @@ import UserFooter from "../../userFooter/UserFooter";
 const SuccessPage = () => {
     const [details, setDetails] = useState({})
     const { id } = useParams()
+    const [loading, setLoading] = useState(true);
 
   
     const updateSuccess = async () => {
@@ -15,7 +16,9 @@ const SuccessPage = () => {
           const response = await AxiosUser.post(`booking-success/${id}`);
           if (response?.status === 200) {
             setDetails(response.data);
+            setLoading(false);
             toast.success("Payment Success")
+            
           }
         } catch (error) {
           console.log(error);
@@ -35,10 +38,12 @@ const SuccessPage = () => {
                     <path fillRule="evenodd" d="M18.707 5.293a1 1 0 00-1.414 0L8 14.586 3.707 10.293A1 1 0 102.293 11.707l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z" clipRule="evenodd" />
                 </svg>
                 <h1 className="text-3xl font-bold text-gray-800 mb-4 text-center">Your booking is confirmed!</h1>
+                {loading ? <p>loading...</p> : (
                 <div className="bg-gray-200 p-4 mx-5 text-center shadow-2xl  text-lg justify-center rounded-lg mb-6">
                     <p>Booked Date: <span className="font-bold">{new Date(details.bookDate).toLocaleDateString()}</span></p>
                     <p>Booked Time: <span className="font-bold">{details.time}</span></p>
                 </div>
+                )}
                 <Link className="no-underline" to={'/'}>   <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg block mx-auto">Go Back to Home</button></Link>
             </div>
         </div>

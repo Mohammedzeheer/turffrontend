@@ -75,7 +75,7 @@ const CardReview = ({ id, refresh }) => {
                 </p>
 
               </div>
-              <div className="text-gray-400 text-sm text-right mt-2 ml-auto">
+              <div className="text-gray-400 text-xs text-right mt-2 ml-auto">
                   {new Date(review.createdAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
